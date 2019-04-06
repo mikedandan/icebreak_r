@@ -1,9 +1,19 @@
-/**
- * @format
- */
+// import libraries 
+import React from 'react';
+import { AppRegistry, Text, View } from 'react-native';
+import RouterComp  from './src/Router';
+import Boilerplate from './src/components/Boilerplate';
+// Create a component 
 
-import {AppRegistry} from 'react-native';
-import App from './App';
-import {name as appName} from './app.json';
+const App = () => {
+    return (
+       
+             <Boilerplate />
+      
+  
+      
+    );
+};
 
-AppRegistry.registerComponent(appName, () => App);
+// Render it to the device 
+AppRegistry.registerComponent('icebreakr', () => App);
