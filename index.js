@@ -9,7 +9,7 @@ import ThisPage from './src/pages/ThisPage';
 const App = () => {
     return (
        
-             <ThisPage />
+             <RouterComp />
       
   
       
