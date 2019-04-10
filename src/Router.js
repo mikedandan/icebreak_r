@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Scene, Router, Actions } from 'react-native-router-flux';
+import { Scene, Router, Actions, ActionConst } from 'react-native-router-flux';
 import Boilerplate from './components/Boilerplate';
-
+import Home from './pages/Home';
+import Page2 from './pages/page2';
 const RouterComp = () => {
 
 
@@ -10,8 +11,9 @@ const RouterComp = () => {
         <Router>
             <Scene key="root">
 
-                <Scene key="boiler" component={Boilerplate} />
-
+                <Scene key="page2" component={Page2}  hideNavBar='true'  type={ActionConst.REPLACE}  />
+                <Scene key="home" component={Home}  hideNavBar='true' type={ActionConst.REPLACE} initial />
+                
             </Scene>
         </Router>
     );
