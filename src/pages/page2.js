@@ -11,7 +11,7 @@ export default class Page2 extends Component {
             <View>
                 <Nav />
                 <Text style={styles.thisIsAStyle}> this is page Two</Text>
-                <Text style={styles.redTex} onPress={() =>  Actions.home()}>go home page </Text>
+                <Text style={styles.redTex} onPress={() =>  Actions.main()}>go to main page </Text>
             </View>
         );
     }
