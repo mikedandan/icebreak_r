@@ -6,8 +6,9 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -18,12 +19,39 @@ const instructions = Platform.select({
 
 type Props = {};
 export default class App extends Component<Props> {
+  constructor(props) {
+    super(props);
+    this.state = {position: "No where yet"};
+  }
+
+  setPosition(pos){
+    this.setState({ position: pos });
+  }
+
+  componentDidMount() {
+    // Instead of navigator.geolocation, just use Geolocation.
+    if (hasLocationPermission) {
+      Geolocation.getCurrentPosition(
+        (position) => {
+          console.log(position);
+          this.setPosition(position);
+        },
+        (error) => {
+          // See error code charts below.
+          console.log(error.code, error.message);
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      );
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome to Derek Native!</Text>
         <Text style={styles.instructions}>To get started, edit App.js</Text>
         <Text style={styles.instructions}>{instructions}</Text>
+        <Text style={styles.instructions}>Test Loc: {this.state.position}</Text>
       </View>
     );
   }
