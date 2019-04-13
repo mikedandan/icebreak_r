@@ -35,7 +35,7 @@ export default class Main extends Component {
                 style={styles.button} /> */}
                 
                     <Button style={styles.button}><Text style={{ color: 'black' }} onPress={() => Actions.signup()}>Sign up with email</Text></Button>
-
+                    <Button style={styles.button}><Text style={{ color: 'black' }} onPress={() => Actions.eventSetup()}>Create Event</Text></Button>
                     <Text style={{ color: 'white' }} onPress={() => Actions.login()}>or Login</Text>
 
                 </View>
