@@ -4,7 +4,7 @@ import Boilerplate from './components/Boilerplate';
 import Main from './pages/Main';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-
+import eventSetup from './pages/eventSetup'; // imports create event page
 import { Text, View, PermissionsAndroid } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 
@@ -75,7 +75,9 @@ export default class RouterComp extends Component {
 
                 <Scene key="login" component={Login}  hideNavBar='true'  type={ActionConst.REPLACE} initial />
                 <Scene key="signup" component={Signup}  hideNavBar='true'  type={ActionConst.REPLACE}  />
-                <Scene key="main" component={Main}  hideNavBar='true' type={ActionConst.REPLACE}  />
+                <Scene key="eventSetup" component={eventSetup}  hideNavBar='true'  type={ActionConst.REPLACE}  />
+                <Scene key="main" component={Main}  hideNavBar='true' type={ActionConst.REPLACE} initial />
+
                 
             </Scene>
         </Router>
