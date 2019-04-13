@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Text, View, PermissionsAndroid } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
+import axios from 'axios';
+import io from 'socket.io-client'
 
 export default class ThisPage extends Component {
     constructor(props) {
@@ -8,7 +10,8 @@ export default class ThisPage extends Component {
         this.state = {
             lat: 0,
             long: 0,
-            permission: false
+            permission: false,
+            data: {}
         };
     }
 
@@ -78,12 +81,26 @@ export default class ThisPage extends Component {
     }
 
     async componentDidMount() {
-        await this.requestGeoPermission();
-        let hasLocationPermission;
-        await this.checkPermission();
-        hasLocationPermission = this.state.permission;
-        await this.getLocation(hasLocationPermission);
+        // let socket = io("http://169.234.78.150:3000");
+        // await this.requestGeoPermission();
+        // let hasLocationPermission;
+        // await this.checkPermission();
+        // hasLocationPermission = this.state.permission;
+        // await this.getLocation(hasLocationPermission);
+        await this.getDataFromDb();
     }
+
+    getDataFromDb = () => {
+        console.log("VOID")
+        axios.get('https://rallycoding.herokuapp.com/api/music_albums')
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+    };
 
     render() {
 
