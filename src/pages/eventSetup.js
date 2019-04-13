@@ -5,8 +5,6 @@ import Nav from '../components/Nav';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
-
-
 export default class Signup extends Component {
 
   render() {
@@ -18,36 +16,40 @@ export default class Signup extends Component {
           colors={['#42AAD8', '#A8D7F7']}
           style={styles.container}>
 
+
+
+
           <View style={{ zIndex: 97 }}>
             <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
-            <Text style={{ textAlign: 'center', marginBottom: 25 }}>SIGN UP</Text>
+            <Text style={{ textAlign: 'center', marginBottom: 25 }}>EVENT SETUP</Text>
             <Image source={require('../images/AddImage.png')} style={{ alignSelf: 'center' }} />
 
-            <Text style={{ color: 'white', textAlign: 'center', marginTop: 15, marginBottom: 35 }}>Randomly selected Meme icon</Text>
+            {/* <Text style={{ color: 'white', textAlign: 'center', marginTop: 15, marginBottom: 35 }}>Randomly selected Meme icon</Text> */}
             {/* <Text style={{ textAlign: 'center', marginTop: 30, marginBottom: 15 }}>Randomly selected Name</Text> */}
 
             <Form style={styles.form}>
               <Item >
-                <Label>Randomly selected Name</Label>
+                <Label>Event Setup</Label>
               </Item>
               <Item floatingLabel>
-                <Label>Email</Label>
+                <Label>Event Name</Label>
                 <Input />
               </Item>
               <Item floatingLabel>
-                <Label>Password</Label>
+                <Label>Event Location</Label>
                 <Input />
               </Item>
               <Item floatingLabel last>
-                <Label>Confirm Password</Label>
+                <Label>Event Time</Label>
                 <Input />
               </Item>
-
-
             </Form >
-            <View style={{ backgroundColor: '#F5FCFF', marginTop: -30 }}>
-              <Text style={{ textAlign: 'center', marginTop: 50, marginBottom: 30 }}>Your Gender</Text>
-              <Grid>
+
+            {/* <View style={{ backgroundColor: '#F5FCFF', zIndex: 98 }}> */}
+            <View style={{ backgroundColor: '#F5FCFF', zIndex: 98 }}>
+              <Text style={{ textAlign: 'center', marginTop: 30, marginBottom: 15 }}>Your Event Details</Text>
+              <Text style={{ textAlign: 'center', marginTop: 30, marginBottom: 15 }}>Your event chat will be specific to your event. Only people with your event QR code or ID will be able to join yor event</Text>
+              {/* <Grid>
                 <Col>
                   <ListItem>
                     <Left>
@@ -78,11 +80,12 @@ export default class Signup extends Component {
                     </Right>
                   </ListItem>
                 </Col>
-              </Grid>
+              </Grid> */}
 
-              <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} onPress={() => Actions.signup()}>CREATE ACCOUNT</Text></Button>
+              <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} onPress={() => Actions.main()}>SETUP EVENT</Text></Button>
 
             </View>
+
           </View>
         </LinearGradient>
 
@@ -117,8 +120,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 99,
-    width: 330,
-    minHeight: 300,
+    width: 330
   },
   container: {
     flex: 1,

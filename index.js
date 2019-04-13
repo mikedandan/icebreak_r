@@ -7,11 +7,12 @@ import ThisPage from './src/pages/ThisPage';
 import GeoLoc from "./src/pages/test"
 // Create a component 
 
+
 const App = () => {
     return (
 
-            <GeoLoc />
-            // <RouterComp />
+            // <GeoLoc />
+            <RouterComp />
     
     );
 };
