@@ -13,8 +13,9 @@
     "react-native-easy-grid": "^0.2.1",
     "react-native-geolocation-service": "^2.0.0",
     "react-native-gesture-handler": "^1.1.0",
+    "react-native-linear-gradient": "^2.5.4",
     "react-native-router-flux": "^4.0.6",
-    "react-navigation": "^3.6.1"
+    "react-navigation": "^3.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
