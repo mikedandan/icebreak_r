@@ -102,6 +102,20 @@ export default class ThisPage extends Component {
 
     };
 
+    createUser = () => {
+        console.log("DUPLEX VOID")
+        axios.post('https://icebreakr-serv.herokuapp.com/api/register', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+          })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
     render() {
 
         return (
