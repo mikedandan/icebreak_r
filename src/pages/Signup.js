@@ -5,6 +5,8 @@ import Nav from '../components/Nav';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
+
+
 export default class Signup extends Component {
 
   render() {
@@ -15,9 +17,6 @@ export default class Signup extends Component {
         <LinearGradient
           colors={['#42AAD8', '#A8D7F7']}
           style={styles.container}>
-
-
-
 
           <View style={{ zIndex: 97 }}>
             <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
@@ -46,8 +45,8 @@ export default class Signup extends Component {
 
 
             </Form >
-            <View style={{ backgroundColor: '#F5FCFF', zIndex: 98 }}>
-              <Text style={{ textAlign: 'center', marginTop: 30, marginBottom: 30 }}>Your Gender</Text>
+            <View style={{ backgroundColor: '#F5FCFF', marginTop: -30 }}>
+              <Text style={{ textAlign: 'center', marginTop: 50, marginBottom: 30 }}>Your Gender</Text>
               <Grid>
                 <Col>
                   <ListItem>
@@ -118,7 +117,8 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 99,
-    width: 330
+    width: 330,
+    minHeight: 300,
   },
   container: {
     flex: 1,

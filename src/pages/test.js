@@ -3,6 +3,8 @@ import { Text, View, PermissionsAndroid } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 
 export default class ThisPage extends Component {
+
+    
     constructor(props) {
         super(props);
         this.state = {

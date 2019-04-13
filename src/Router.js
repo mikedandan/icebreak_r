@@ -4,24 +4,86 @@ import Boilerplate from './components/Boilerplate';
 import Main from './pages/Main';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-const RouterComp = () => {
+
+import { Text, View, PermissionsAndroid } from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
 
 
+export default class RouterComp extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            lat: 0,
+            long: 0,
+            permission: false
+        };
+    }
+
+    setPermission(bool) {
+        this.setState({ permission: bool })
+    }
+    async requestGeoPermission() {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                {
+                    title: 'IceBreakr Location Permission',
+                    message:
+                        'Icebreakr needs access to your camera ' +
+                        'so you can creep on people.',
+                    buttonNeutral: 'Ask Me Later',
+                    buttonNegative: 'Cancel',
+                    buttonPositive: 'OK',
+                },
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log('You can use geolocation');
+                this.setPermission(true);
+            } else {
+                console.log('Location permission denied');
+                this.setPermission(false);
+            }
+        } catch (err) {
+            console.warn(err);
+        }
+    }
+
+    checkPermission = () => {
+        navigator.geolocation
+            .getCurrentPosition(
+                () => this.setPermission(true),
+                () => this.setPermission(false)
+            );
+    }
+
+   
+
+    async componentDidMount() {
+        await this.requestGeoPermission();
+        let hasLocationPermission;
+        await this.checkPermission();
+        hasLocationPermission = this.state.permission;
+
+    }
+
+
+    render() {
     return (
         <Router>
             <Scene key="root">
 
-                <Scene key="login" component={Login}  hideNavBar='true'  type={ActionConst.REPLACE}  />
+                <Scene key="login" component={Login}  hideNavBar='true'  type={ActionConst.REPLACE} initial />
                 <Scene key="signup" component={Signup}  hideNavBar='true'  type={ActionConst.REPLACE}  />
-                <Scene key="main" component={Main}  hideNavBar='true' type={ActionConst.REPLACE} initial />
+                <Scene key="main" component={Main}  hideNavBar='true' type={ActionConst.REPLACE}  />
                 
             </Scene>
         </Router>
     );
+    };
 
-}
+};
 
-export default RouterComp;
+
 
 
