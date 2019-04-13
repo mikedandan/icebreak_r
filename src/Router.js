@@ -4,6 +4,8 @@ import Boilerplate from './components/Boilerplate';
 import Main from './pages/Main';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import eventSetup from './pages/eventSetup'; // imports create event page
+
 const RouterComp = () => {
 
 
@@ -14,6 +16,7 @@ const RouterComp = () => {
 
                 <Scene key="login" component={Login}  hideNavBar='true'  type={ActionConst.REPLACE}  />
                 <Scene key="signup" component={Signup}  hideNavBar='true'  type={ActionConst.REPLACE}  />
+                <Scene key="eventSetup" component={eventSetup}  hideNavBar='true'  type={ActionConst.REPLACE}  />
                 <Scene key="main" component={Main}  hideNavBar='true' type={ActionConst.REPLACE} initial />
                 
             </Scene>
