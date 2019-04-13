@@ -4,6 +4,8 @@ import { Container, Text, Header, Left, Right, Icon, Button, Body, Title, Conten
 import Nav from '../components/Nav';
 import { Actions } from 'react-native-router-flux';
 import { StackNavigator } from 'react-navigation';
+import axios from 'axios';
+
 
 export default class Signup extends Component {
 
@@ -15,50 +17,59 @@ export default class Signup extends Component {
         }
     }
     componentDidMount() {
-        this.loadInitialState().done();
+        // this.loadInitialState().done();
+
+        axios.get('https://icebreakr.azurewebsites.net/')
+            .then(function (response) {
+                console.log( response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
     }
 
     loadInitialState = async () => {
-        var value = await AsyncStorage.getItem( 'user');
+        var value = await AsyncStorage.getItem('user');
         if (value !== null) {
             this.props.Actions.main();
         }
     }
-    signup =() => {
-        console.log( 'hello' +this.state.username);
+    signup = () => {
+        console.log('hello' + this.state.username);
     }
-    
+
     render() {
 
         return (
             <View>
-                
+
                 {/* <Text style={styles.thisIsAStyle}> this is the signup page</Text> */}
                 <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
 
                 <Form>
                     <Item floatingLabel >
                         <Label>Username</Label>
-                        <Input  onChangeText={ (value) => this.setState({username: value})} />
+                        <Input onChangeText={(value) => this.setState({ username: value })} />
                     </Item>
                     <Item floatingLabel last >
                         <Label>Password</Label>
-                        <Input  onChangeText={ (value) => this.setState({password: value})} />
+                        <Input onChangeText={(value) => this.setState({ password: value })} />
                     </Item>
                     <Button style={styles.button} onPress={this.signup}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} >Sign in</Text></Button>
 
                 </Form>
                 <View style={{
-                alignItems: 'center',
-                justifyContent: 'center'
-            }}>
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
                     <Text>FORGOT PASSWORD? GET NEW!</Text>
                     <Text onPress={() => Actions.signup()}>DON'T HAVE AN ACCOUNT? Signup!</Text>
                 </View>
             </View >
         );
     }
-    
+
 }
 
 
