@@ -10,8 +10,8 @@ import GeoLoc from "./src/pages/test"
 const App = () => {
     return (
 
-            <GeoLoc />
-            // <RouterComp />
+            // <GeoLoc />
+            <RouterComp />
     
     );
 };
