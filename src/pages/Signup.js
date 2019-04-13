@@ -19,7 +19,7 @@ export default class Signup extends Component {
 
 
 
-          <View style={{ zIndex: 97}}>
+          <View style={{ zIndex: 97 }}>
             <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
             <Text style={{ textAlign: 'center', marginBottom: 25 }}>SIGN UP</Text>
             <Image source={require('../images/AddImage.png')} style={{ alignSelf: 'center' }} />
@@ -80,8 +80,8 @@ export default class Signup extends Component {
                   </ListItem>
                 </Col>
               </Grid>
-              
-              <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} onPress={() => Actions.signup()}>Create Account</Text></Button>
+
+              <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} onPress={() => Actions.signup()}>CREATE ACCOUNT</Text></Button>
 
             </View>
           </View>
