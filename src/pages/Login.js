@@ -16,16 +16,25 @@ export default class Signup extends Component {
             password: '',
         }
     }
-    componentDidMount() {
-        // this.loadInitialState().done();
 
-        axios.get('https://icebreakr.azurewebsites.net/')
+    checkLogin = () => {
+        console.log("VOID ENTERED")
+        axios.post('localhost:3000/api/users/login', {
+                email: this.state.username,
+                password: this.state.password
+        })
             .then(function (response) {
-                console.log( response);
+                console.log(response);
             })
             .catch(function (error) {
                 console.log(error);
             });
+    }
+
+    componentDidMount() {
+        // this.loadInitialState().done();
+
+       
 
     }
 
@@ -34,9 +43,6 @@ export default class Signup extends Component {
         if (value !== null) {
             this.props.Actions.main();
         }
-    }
-    signup = () => {
-        console.log('hello' + this.state.username);
     }
 
     render() {
@@ -56,7 +62,7 @@ export default class Signup extends Component {
                         <Label>Password</Label>
                         <Input onChangeText={(value) => this.setState({ password: value })} />
                     </Item>
-                    <Button style={styles.button} onPress={this.signup}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} >Sign in</Text></Button>
+                    <Button style={styles.button} onPress={this.checkLogin}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} >Sign in user</Text></Button>
 
                 </Form>
                 <View style={{
