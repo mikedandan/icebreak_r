@@ -18,12 +18,12 @@ export default class Signup extends Component {
           colors={['#42AAD8', '#A8D7F7']}
           style={styles.container}>
 
-          <View style={{ zIndex: 97 }}>
+          <View>
             <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
-            <Text style={{ textAlign: 'center', marginBottom: 25 }}>SIGN UP</Text>
+            <Text style={{ textAlign: 'center', marginBottom: 20 }}>SIGN UP</Text>
             <Image source={require('../images/AddImage.png')} style={{ alignSelf: 'center' }} />
 
-            <Text style={{ color: 'white', textAlign: 'center', marginTop: 15, marginBottom: 35 }}>Randomly selected Meme icon</Text>
+            <Text style={{ color: 'white', textAlign: 'center', marginTop: 10, marginBottom: 30 }}>Randomly selected Meme icon</Text>
             {/* <Text style={{ textAlign: 'center', marginTop: 30, marginBottom: 15 }}>Randomly selected Name</Text> */}
 
             <Form style={styles.form}>
@@ -45,8 +45,8 @@ export default class Signup extends Component {
 
 
             </Form >
-            <View style={{ backgroundColor: '#F5FCFF', marginTop: -30 }}>
-              <Text style={{ textAlign: 'center', marginTop: 50, marginBottom: 30 }}>Your Gender</Text>
+            <View style={{ backgroundColor: '#F5FCFF', marginTop: -55 }}>
+              <Text style={{ textAlign: 'center', marginTop: 70, marginBottom: 25 }}>Your Gender</Text>
               <Grid>
                 <Col>
                   <ListItem>
@@ -96,7 +96,7 @@ export default class Signup extends Component {
 const styles = {
   thisIsAStyle: {
     fontSize: 50,
-    marginTop: 40
+    marginTop: 35
   },
   redTex: {
     color: 'red'
@@ -104,7 +104,7 @@ const styles = {
   button: {
     // backgroundColor: 'white',
     alignSelf: 'center',
-    marginBottom: 25,
+    marginBottom: 20,
     marginTop: 20,
     borderRadius: 10
   },
@@ -118,7 +118,7 @@ const styles = {
     alignItems: 'center',
     zIndex: 99,
     width: 330,
-    minHeight: 300,
+    minHeight: 280,
   },
   container: {
     flex: 1,
