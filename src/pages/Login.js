@@ -18,8 +18,8 @@ export default class Signup extends Component {
     }
 
     checkLogin = () => {
-        console.log("VOID ENTERED")
-        axios.post('localhost:3000/api/users/login', {
+        console.log(`VOID ENTERED \n User: ${this.state.username} \n PW: ${this.state.password} \n Remeber to comment this log out`)
+        axios.post('https://icebreakr-serv.herokuapp.com/api/user/login', {
                 email: this.state.username,
                 password: this.state.password
         })
