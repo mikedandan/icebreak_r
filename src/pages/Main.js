@@ -38,8 +38,9 @@ export default class Main extends Component {
                     <Button style={styles.button}><Text style={{ color: 'black' }} onPress={() => Actions.eventSetup()}>Create Event</Text></Button>
                     <Button style={styles.button}><Text style={{ color: 'black' }} onPress={() => Actions.groupChat()}>Test Chat</Text></Button>
                     <Text style={{ color: 'white' }} onPress={() => Actions.login()}>or Login</Text>
-
+                    <Text style={styles.redTex} onPress={() => Actions.dashboard()}>go dashboard page </Text>
                 </View>
+                
             </LinearGradient>
         );
     }

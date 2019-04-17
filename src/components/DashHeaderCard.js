@@ -5,33 +5,33 @@ import { Container, Header, Content, Card, CardItem, Text, Body } from "native-b
 
 export default class DashHeaderCard extends Component {
 
-    
+
     render() {
         return (
-          <View>
-            <Header />
-            <Content padder>
-              <Card transparent>
-                <CardItem>
-                  <Body>
-                    <Text>
-                      This is just a transparent card with some text to boot.
+            <Container>
+                <Header></Header>
+                
+                    <Card>
+                        <CardItem>
+                            <Body>
+                                <Text style={styles.thisIsAStyle}>
+                                    This is just a transparent card with some text to boot.
                     </Text>
-                  </Body>
-                </CardItem>
-              </Card>
-            </Content>
-          </View>
+                            </Body>
+                        </CardItem>
+                    </Card>
+                
+            </Container>
         );
-      }
     }
+}
 
 
-// const styles = {
-//     thisIsAStyle: {
-//         fontSize: 20,
-//         backgroundColor: 'red',
-//         height: 25
-    // },
-// };
+const styles = {
+    thisIsAStyle: {
+        fontSize: 20,
+        backgroundColor: 'red',
+        height: 25
+    },
+};
 

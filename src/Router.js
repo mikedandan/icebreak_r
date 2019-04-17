@@ -8,6 +8,7 @@ import GroupChat from './pages/GroupChat'
 import eventSetup from './pages/eventSetup'; // imports create event page
 import { Text, View, PermissionsAndroid } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
+import Dashboard from './pages/Dashboard';
 
 
 export default class RouterComp extends Component {
@@ -59,7 +60,8 @@ export default class RouterComp extends Component {
         <Router>
             <Scene key="root">
 
-                <Scene key="login" component={Login}  hideNavBar='true'  type={ActionConst.REPLACE} initial />
+                <Scene key="login" component={Login}  hideNavBar='true'  type={ActionConst.REPLACE} />
+                <Scene key="dashboard" component={Dashboard}  hideNavBar='true'  type={ActionConst.REPLACE} />
                 <Scene key="signup" component={Signup}  hideNavBar='true'  type={ActionConst.REPLACE}  />
                 <Scene key="eventSetup" component={eventSetup}  hideNavBar='true'  type={ActionConst.REPLACE}  />
                 <Scene key="main" component={Main}  hideNavBar='true' type={ActionConst.REPLACE} initial/>
