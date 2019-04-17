@@ -4,6 +4,7 @@ import Boilerplate from './components/Boilerplate';
 import Main from './pages/Main';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import GroupChat from './pages/GroupChat'
 import eventSetup from './pages/eventSetup'; // imports create event page
 import { Text, View, PermissionsAndroid } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
@@ -39,32 +40,17 @@ export default class RouterComp extends Component {
             );
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
                 console.log('You can use geolocation');
-                this.setPermission(true);
             } else {
                 console.log('Location permission denied');
-                this.setPermission(false);
             }
         } catch (err) {
             console.warn(err);
         }
     }
-
-    checkPermission = () => {
-        navigator.geolocation
-            .getCurrentPosition(
-                () => this.setPermission(true),
-                () => this.setPermission(false)
-            );
-    }
-
    
 
     async componentDidMount() {
         await this.requestGeoPermission();
-        let hasLocationPermission;
-        await this.checkPermission();
-        hasLocationPermission = this.state.permission;
-
     }
 
 
@@ -76,9 +62,8 @@ export default class RouterComp extends Component {
                 <Scene key="login" component={Login}  hideNavBar='true'  type={ActionConst.REPLACE} initial />
                 <Scene key="signup" component={Signup}  hideNavBar='true'  type={ActionConst.REPLACE}  />
                 <Scene key="eventSetup" component={eventSetup}  hideNavBar='true'  type={ActionConst.REPLACE}  />
-                <Scene key="main" component={Main}  hideNavBar='true' type={ActionConst.REPLACE} initial />
-
-                
+                <Scene key="main" component={Main}  hideNavBar='true' type={ActionConst.REPLACE} initial/>
+                <Scene key="groupChat" component={GroupChat}  hideNavBar='true' type={ActionConst.REPLACE} />          
             </Scene>
         </Router>
     );
