@@ -12,6 +12,7 @@
     "react": "16.8.3",
     "react-native": "^0.59.4",
     "react-native-easy-grid": "^0.2.1",
+    "react-native-fontawesome": "^6.0.1",
     "react-native-geolocation-service": "^2.0.0",
     "react-native-gesture-handler": "^1.1.0",
     "react-native-linear-gradient": "^2.5.4",
@@ -30,5 +31,10 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
   }
 }

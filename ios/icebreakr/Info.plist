@@ -73,6 +73,15 @@
 		<string>rubicon-icon-font.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>fa-brands-400.ttf</string>
+		<string>fa-brands-400.woff</string>
+		<string>fa-brands-400.woff2</string>
+		<string>fa-regular-400.ttf</string>
+		<string>fa-regular-400.woff</string>
+		<string>fa-regular-400.woff2</string>
+		<string>fa-solid-900.ttf</string>
+		<string>fa-solid-900.woff</string>
+		<string>fa-solid-900.woff2</string>
 	</array>
 </dict>
 </plist>
