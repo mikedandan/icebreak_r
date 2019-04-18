@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, KeyboardAvoidingView} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../components/BackButton';
-import { ChatWindow, Message } from '../components/ChatWindow';
+import { ChatWindow, Message, ChatFooter } from '../components/ChatWindow';
 
 
 export default class GroupChat extends Component {
@@ -16,7 +16,8 @@ export default class GroupChat extends Component {
             lat: 0,
             long: 0,
             permission: false,
-            messages: []
+            messages: [],
+            socket: ""
         };
     }
 
@@ -83,10 +84,18 @@ export default class GroupChat extends Component {
         await this.getChatHistory();
     }
 
+    handleMessageSent = () => {
+        console.log("WEEEWOO");
+
+        //send to database
+
+        //send update chat window
+    }
+
     render() {
 
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
                 <LinearGradient colors={['#42AAD8', '#A8D7F7']} style={{ flex: 1 }}>
 
                     {/* BackButton */}
@@ -95,7 +104,7 @@ export default class GroupChat extends Component {
                     </View>
 
                     {/* Chat Container */}
-                    <View style={{ backgroundColor: '#FFFFFF', flex: 7 }}>
+                    <View style={{ backgroundColor: '#E3E9EC', flex: 7 }}>
                         <ChatWindow>
                             {this.state.messages.map((r, i) =>
                                 <Message
@@ -109,15 +118,15 @@ export default class GroupChat extends Component {
                     </View>
 
                     {/* Chat Footer */}
-                    <View style={{ flex: 1 }}>
-                        <View style={{alignSelf: "flex-end", borderWidth: 1}}>
-
-                        </View>
+                    <View style={{ flex: 1 , backgroundColor:'#FFFFFF'}}>
+                        <ChatFooter
+                            onClick={this.handleMessageSent.bind(this)}
+                        />
                     </View>
 
                     {/* <Text style={styles.instructions}>Test Loc: Long: {this.state.long} Lat: {this.state.lat}</Text> */}
                 </LinearGradient>
-            </View>
+            </KeyboardAvoidingView>
 
 
         );

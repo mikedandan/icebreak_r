@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View} from 'react-native';
-import { List, ListItem } from 'native-base';
-
+import { Text, View } from 'react-native';
+import { List, ListItem, Icon, Textarea, Form } from 'native-base';
 
 export function ChatWindow({ children }) {
     return <List>{children}</List>;
 }
 
 export class Message extends Component {
-
     render() {
-
         return (
             <ListItem>
                 <Text>TEST</Text>
@@ -22,10 +19,32 @@ export class Message extends Component {
     }
 }
 
+export class ChatFooter extends Component {
+    render() {
+        return (
+            <View style={styles.inputContainer}>
+
+                <Form>
+                    <Textarea rowSpan={2} placeholder="Your message here"/>
+                </Form>
+
+                <Icon style={styles.sendButton} type="FontAwesome" name="arrow-right" onPress={this.props.onClick}/>
+
+            </View>
+        );
+    }
+}
+
 
 const styles = {
-    thisIsAStyle: {
-        fontSize: 50,
+    sendButton: {
+        // color: "#42AAD8"
+        color: "#FF7F4F",
     },
+    inputContainer:{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between"
+    }
 };
 
