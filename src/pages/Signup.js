@@ -5,10 +5,48 @@ import Nav from '../components/Nav';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
-
+import axios from 'axios';
+import generateName from 'sillyname';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class Signup extends Component {
 
+  
+    state = {
+      myName: 'sdfd',
+      email: '',
+      password: '',
+      picture: ''
+    }
+  
+
+  componentWillMount = () =>{
+this.generate();
+  }
+  generate = () => {
+   console.log('sup');
+    let nickname = generateName();
+    this.setState({ myName: nickname})
+  };
+ 
+  checkRegister = () => {
+    
+
+    console.log(this.state)
+    console.log(`VOID ENTERED \n email: ${this.state.email} \n password: ${this.state.password} \n Remeber to comment this log out`)
+    axios.post('https://icebreakr-serv.herokuapp.com/api/user/register', {
+      name: this.state.myName,
+      email: this.state.email,
+      password: this.state.password,
+      picture: this.state.picture
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error.response);
+      });
+  }
   render() {
 
     return (
@@ -23,25 +61,34 @@ export default class Signup extends Component {
             <Text style={{ textAlign: 'center', marginBottom: 20 }}>SIGN UP</Text>
             <Image source={require('../images/AddImage.png')} style={{ alignSelf: 'center' }} />
 
-            <Text style={{ color: 'white', textAlign: 'center', marginTop: 10, marginBottom: 30 }}>Randomly selected Meme icon</Text>
+            <Text style={{ color: 'white', textAlign: 'center', marginTop: 10, marginBottom: 30 }}>{this.state.myName}</Text>
+          <Button transparent onPress={() => this.generate()} style={{ alignSelf: 'center', marginTop: -20, marginBottom: 30}}>
+                        <Icon style={{fontSize: 20, color: 'white',}}name="sync" />
+
+          </Button>
             {/* <Text style={{ textAlign: 'center', marginTop: 30, marginBottom: 15 }}>Randomly selected Name</Text> */}
 
             <Form style={styles.form}>
               <Item >
-                <Label>Randomly selected Name</Label>
+                <Label>Sign Up</Label>
               </Item>
               <Item floatingLabel>
                 <Label>Email</Label>
-                <Input />
+                <Input onChangeText={(value) => this.setState({ email: value })} />
               </Item>
-              <Item floatingLabel>
+            
+              <Item floatingLabel last>
                 <Label>Password</Label>
-                <Input />
+                <Input onChangeText={(value) => this.setState({ password: value })} />
               </Item>
               <Item floatingLabel last>
+                <Label>picture</Label>
+                <Input onChangeText={(value) => this.setState({ picture: value })} />
+              </Item>
+              {/* <Item floatingLabel last>
                 <Label>Confirm Password</Label>
                 <Input />
-              </Item>
+              </Item> */}
 
 
             </Form >
@@ -80,7 +127,7 @@ export default class Signup extends Component {
                 </Col>
               </Grid>
 
-              <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} onPress={() => Actions.signup()}>CREATE ACCOUNT</Text></Button>
+              <Button onPress={() => this.checkRegister()} info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} >CREATE ACCOUNT</Text></Button>
 
             </View>
           </View>
@@ -124,4 +171,3 @@ const styles = {
     flex: 1,
   }
 };
-
