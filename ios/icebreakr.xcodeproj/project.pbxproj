@@ -60,6 +60,18 @@
 		6868CBC310D74AD2B02210F6 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56395DD328FA4BD9830DC6A9 /* libRNGestureHandler.a */; };
 		E27D167633B34320B238A233 /* libRNGestureHandler-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A6FAC6848E249299ADCD557 /* libRNGestureHandler-tvOS.a */; };
 		A47949070C044DC596E0F350 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E42CC4F0EBA44989C7C2552 /* libBVLinearGradient.a */; };
+		C3E34B0747A3429BBF9146EE /* fa-brands-400.svg in Resources */ = {isa = PBXBuildFile; fileRef = CCD2C50E553B4985B89D3C55 /* fa-brands-400.svg */; };
+		8C5D4BBB274D4D61BAE60F1F /* fa-regular-400.svg in Resources */ = {isa = PBXBuildFile; fileRef = D433A2E73873477385F52251 /* fa-regular-400.svg */; };
+		A5C48C4BB9C64BC1AF7CE64E /* fa-solid-900.svg in Resources */ = {isa = PBXBuildFile; fileRef = 8FA92E6D487B4A22AC1FD4AA /* fa-solid-900.svg */; };
+		45279516ADF040EA860A493C /* fa-brands-400.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0EA8780938D34E24A324EE69 /* fa-brands-400.ttf */; };
+		921018067C204DF3B4DF68B9 /* fa-brands-400.woff in Resources */ = {isa = PBXBuildFile; fileRef = 04698E95A9064BD39F919188 /* fa-brands-400.woff */; };
+		164442FB7D184BB6872D07EA /* fa-brands-400.woff2 in Resources */ = {isa = PBXBuildFile; fileRef = F22B2FD76E434E4CB4900DA0 /* fa-brands-400.woff2 */; };
+		4CE3C6252845417E8320C8AE /* fa-regular-400.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6FB9A472CDDB42ACB8302F4C /* fa-regular-400.ttf */; };
+		4BD03AE5F3FF4390889D2CA8 /* fa-regular-400.woff in Resources */ = {isa = PBXBuildFile; fileRef = B48515AE37C444749F861D83 /* fa-regular-400.woff */; };
+		D691BD747BF94488B812D18B /* fa-regular-400.woff2 in Resources */ = {isa = PBXBuildFile; fileRef = 3E4485EA8C354BEFA08C8A03 /* fa-regular-400.woff2 */; };
+		C7E67F9E7B9745059ACB827C /* fa-solid-900.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A354DA8C1EB4D72B5BB3D46 /* fa-solid-900.ttf */; };
+		B0E8490181254A8098914387 /* fa-solid-900.woff in Resources */ = {isa = PBXBuildFile; fileRef = 490E07D4EF5B4712B4F1700B /* fa-solid-900.woff */; };
+		BE073F66A6994BE3A9B43B1B /* fa-solid-900.woff2 in Resources */ = {isa = PBXBuildFile; fileRef = 3F1E17BF00A143E2957B64D8 /* fa-solid-900.woff2 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -390,6 +402,18 @@
 		3A6FAC6848E249299ADCD557 /* libRNGestureHandler-tvOS.a */ = {isa = PBXFileReference; name = "libRNGestureHandler-tvOS.a"; path = "libRNGestureHandler-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		B684566D26FD498F8EF461A2 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; name = "BVLinearGradient.xcodeproj"; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		1E42CC4F0EBA44989C7C2552 /* libBVLinearGradient.a */ = {isa = PBXFileReference; name = "libBVLinearGradient.a"; path = "libBVLinearGradient.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		CCD2C50E553B4985B89D3C55 /* fa-brands-400.svg */ = {isa = PBXFileReference; name = "fa-brands-400.svg"; path = "../assets/fonts/fa-brands-400.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D433A2E73873477385F52251 /* fa-regular-400.svg */ = {isa = PBXFileReference; name = "fa-regular-400.svg"; path = "../assets/fonts/fa-regular-400.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8FA92E6D487B4A22AC1FD4AA /* fa-solid-900.svg */ = {isa = PBXFileReference; name = "fa-solid-900.svg"; path = "../assets/fonts/fa-solid-900.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0EA8780938D34E24A324EE69 /* fa-brands-400.ttf */ = {isa = PBXFileReference; name = "fa-brands-400.ttf"; path = "../assets/fonts/fa-brands-400.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		04698E95A9064BD39F919188 /* fa-brands-400.woff */ = {isa = PBXFileReference; name = "fa-brands-400.woff"; path = "../assets/fonts/fa-brands-400.woff"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F22B2FD76E434E4CB4900DA0 /* fa-brands-400.woff2 */ = {isa = PBXFileReference; name = "fa-brands-400.woff2"; path = "../assets/fonts/fa-brands-400.woff2"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6FB9A472CDDB42ACB8302F4C /* fa-regular-400.ttf */ = {isa = PBXFileReference; name = "fa-regular-400.ttf"; path = "../assets/fonts/fa-regular-400.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B48515AE37C444749F861D83 /* fa-regular-400.woff */ = {isa = PBXFileReference; name = "fa-regular-400.woff"; path = "../assets/fonts/fa-regular-400.woff"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3E4485EA8C354BEFA08C8A03 /* fa-regular-400.woff2 */ = {isa = PBXFileReference; name = "fa-regular-400.woff2"; path = "../assets/fonts/fa-regular-400.woff2"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3A354DA8C1EB4D72B5BB3D46 /* fa-solid-900.ttf */ = {isa = PBXFileReference; name = "fa-solid-900.ttf"; path = "../assets/fonts/fa-solid-900.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		490E07D4EF5B4712B4F1700B /* fa-solid-900.woff */ = {isa = PBXFileReference; name = "fa-solid-900.woff"; path = "../assets/fonts/fa-solid-900.woff"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3F1E17BF00A143E2957B64D8 /* fa-solid-900.woff2 */ = {isa = PBXFileReference; name = "fa-solid-900.woff2"; path = "../assets/fonts/fa-solid-900.woff2"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -681,6 +705,18 @@
 				FC50F0E22A6C43189F044D34 /* rubicon-icon-font.ttf */,
 				1A3FA497B7C7498B9FFB74FC /* SimpleLineIcons.ttf */,
 				3990E19BC1584850A0FEE6CE /* Zocial.ttf */,
+				CCD2C50E553B4985B89D3C55 /* fa-brands-400.svg */,
+				D433A2E73873477385F52251 /* fa-regular-400.svg */,
+				8FA92E6D487B4A22AC1FD4AA /* fa-solid-900.svg */,
+				0EA8780938D34E24A324EE69 /* fa-brands-400.ttf */,
+				04698E95A9064BD39F919188 /* fa-brands-400.woff */,
+				F22B2FD76E434E4CB4900DA0 /* fa-brands-400.woff2 */,
+				6FB9A472CDDB42ACB8302F4C /* fa-regular-400.ttf */,
+				B48515AE37C444749F861D83 /* fa-regular-400.woff */,
+				3E4485EA8C354BEFA08C8A03 /* fa-regular-400.woff2 */,
+				3A354DA8C1EB4D72B5BB3D46 /* fa-solid-900.ttf */,
+				490E07D4EF5B4712B4F1700B /* fa-solid-900.woff */,
+				3F1E17BF00A143E2957B64D8 /* fa-solid-900.woff2 */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1150,6 +1186,18 @@
 				7235FEA128044CE7AD22E471 /* rubicon-icon-font.ttf in Resources */,
 				675C5C46344743B9B87EE6C4 /* SimpleLineIcons.ttf in Resources */,
 				BAE9BB7BC75A4F07A4D107A8 /* Zocial.ttf in Resources */,
+				C3E34B0747A3429BBF9146EE /* fa-brands-400.svg in Resources */,
+				8C5D4BBB274D4D61BAE60F1F /* fa-regular-400.svg in Resources */,
+				A5C48C4BB9C64BC1AF7CE64E /* fa-solid-900.svg in Resources */,
+				45279516ADF040EA860A493C /* fa-brands-400.ttf in Resources */,
+				921018067C204DF3B4DF68B9 /* fa-brands-400.woff in Resources */,
+				164442FB7D184BB6872D07EA /* fa-brands-400.woff2 in Resources */,
+				4CE3C6252845417E8320C8AE /* fa-regular-400.ttf in Resources */,
+				4BD03AE5F3FF4390889D2CA8 /* fa-regular-400.woff in Resources */,
+				D691BD747BF94488B812D18B /* fa-regular-400.woff2 in Resources */,
+				C7E67F9E7B9745059ACB827C /* fa-solid-900.ttf in Resources */,
+				B0E8490181254A8098914387 /* fa-solid-900.woff in Resources */,
+				BE073F66A6994BE3A9B43B1B /* fa-solid-900.woff2 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
