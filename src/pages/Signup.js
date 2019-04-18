@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView } from 'react-native';
+import { Text, View, Image, ScrollView, ToastAndroid } from 'react-native';
 import { Container, Header, Left, Right, Icon, Button, Radio, ListItem, Body, Title, Content, Form, Input, Label, Item } from 'native-base';
 import Nav from '../components/Nav';
 import { Col, Row, Grid } from 'react-native-easy-grid';
@@ -8,15 +8,23 @@ import LinearGradient from 'react-native-linear-gradient';
 import axios from 'axios';
 import generateName from 'sillyname';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+
+var gender = [
+  {label: "Male ", value: 0},
+  {label: "Female ", value: 1},
+  {label: "Prefer not to say", value: 2},
+];
 
 export default class Signup extends Component {
 
-  
+  //test
     state = {
       myName: 'sdfd',
       email: '',
       password: '',
-      picture: ''
+      picture: '',
+      gender: []
     }
   
 
@@ -81,8 +89,8 @@ this.generate();
                 <Label>Password</Label>
                 <Input onChangeText={(value) => this.setState({ password: value })} />
               </Item>
-              <Item floatingLabel last>
-                <Label>picture</Label>
+              <Item floatingLabel >
+                <Label></Label>
                 <Input onChangeText={(value) => this.setState({ picture: value })} />
               </Item>
               {/* <Item floatingLabel last>
@@ -93,7 +101,15 @@ this.generate();
 
             </Form >
             <View style={{ backgroundColor: '#F5FCFF', marginTop: -55 }}>
-              <Text style={{ textAlign: 'center', marginTop: 70, marginBottom: 25 }}>Your Gender</Text>
+            
+            <RadioForm
+            style={{alignSelf: 'center', marginTop: 70}}
+            radio_props={gender} 
+            initial={2}
+            formHorizontal={true}
+            onPress={(value) => this.setState({ gender: value })}
+            />
+              {/* <Text style={{ textAlign: 'center', marginTop: 70, marginBottom: 25 }}>Your Gender</Text>
               <Grid>
                 <Col>
                   <ListItem>
@@ -125,7 +141,7 @@ this.generate();
                     </Right>
                   </ListItem>
                 </Col>
-              </Grid>
+              </Grid> */}
 
               <Button onPress={() => this.checkRegister()} info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} >CREATE ACCOUNT</Text></Button>
 
