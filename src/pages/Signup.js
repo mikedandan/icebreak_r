@@ -10,7 +10,7 @@ import generateName from 'sillyname';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 
-var gender = [
+const gender = [
   {label: "Male ", value: 0},
   {label: "Female ", value: 1},
   {label: "Prefer not to say", value: 2},
@@ -46,7 +46,8 @@ this.generate();
       name: this.state.myName,
       email: this.state.email,
       password: this.state.password,
-      picture: this.state.picture
+      picture: this.state.picture,
+      gender: this.state.gender
     })
       .then(function (response) {
         console.log(response);
