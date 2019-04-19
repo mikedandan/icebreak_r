@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, AppRegistry } from 'react-native';
 import DashHeaderCard from '../components/DashHeaderCard';
 import { Container, Header, Button, Content, Card, CardItem, Text, Body } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
+import { Col, Row, Grid } from "react-native-easy-grid";
 
 // import { Actions } from 'react-native-router-flux';
 
@@ -31,9 +32,16 @@ export default class Dashboard extends Component {
                                 </CardItem>
                                 <Text style={{ color: 'black', textAlign: 'center', marginTop: 10, marginBottom: 10 }}>Private Message</Text>
                                 <Body>
-                                    <Text>
-                                    //Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                                    </Text>
+                                    <View style={{
+                                        flex: 1,
+                                        // flexDirection: 'column',
+                                        justifyContent: 'center',
+                                        alignItems: 'stretch',
+                                    }}>
+                                        <View style={{ width: 50, height: 50, backgroundColor: 'powderblue' }} />
+                                        <View style={{ height: 50, backgroundColor: 'skyblue' }} />
+                                        <View style={{ height: 100, backgroundColor: 'steelblue' }} />
+                                    </View>
                                 </Body>
                                 {/* </CardItem> */}
 
@@ -51,10 +59,13 @@ export default class Dashboard extends Component {
                                     <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 10 }}>
                                         Chat with a bunch of people. Answer questions and meet meme-able people like yourself
                                         </Text>
-                                    
-
+                                    <Grid style={{ textAlign: 'center', marginTop: 10, marginBottom: 30 }}>
+                                        <Col><Text style={{ textAlign: 'center' }}>People around</Text></Col>
+                                        <Text>|</Text>
+                                        <Col><Text style={{ textAlign: 'center' }}>Already chatted with</Text></Col>
+                                    </Grid>
                                 </Body>
-                                <Button style={styles.button}warning><Text style={{textAlign: 'center', width: 300}} onPress={() => Actions.signup()}> JOIN GROUP CHAT </Text></Button>
+                                <Button style={styles.button} warning><Text style={{ textAlign: 'center', width: 300 }} onPress={() => Actions.signup()}> JOIN GROUP CHAT </Text></Button>
 
                             </Card>
 
@@ -65,10 +76,10 @@ export default class Dashboard extends Component {
                                 {/* <CardItem> */}
                                 <Body>
                                     <Image source={require('../images/calendar-icon.png')} style={{ alignSelf: 'center' }} />
-                                    <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 10 }}>
+                                    <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 30 }}>
                                         Set up an event in your area. A social meetup or hangout with people.
                                         </Text>
-                                        <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} onPress={() => Actions.signup()}>SET UP EVENT</Text></Button>
+                                    <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 300 }} onPress={() => Actions.signup()}>SET UP EVENT</Text></Button>
 
 
                                 </Body>
@@ -94,6 +105,7 @@ const styles = {
         alignSelf: 'center',
         marginBottom: 25,
         borderRadius: 10
-    }
-    };
+    },
+
+};
 
