@@ -54,7 +54,8 @@ export default class Dashboard extends Component {
                                     
 
                                 </Body>
-                                <Button warning info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 300 }} onPress={() => Actions.signup()}>JOIN GROUP CHAT</Text></Button>
+                                <Button style={styles.button}warning><Text style={{textAlign: 'center', width: 300}} onPress={() => Actions.signup()}> JOIN GROUP CHAT </Text></Button>
+
                             </Card>
 
                             <Card>
@@ -67,7 +68,8 @@ export default class Dashboard extends Component {
                                     <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 10 }}>
                                         Set up an event in your area. A social meetup or hangout with people.
                                         </Text>
-                                    <Text style={{ color: 'black', textAlign: 'center', marginTop: 10, marginBottom: 10 }}>Set Up Event</Text>
+                                        <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} onPress={() => Actions.signup()}>SET UP EVENT</Text></Button>
+
 
                                 </Body>
                                 {/* </CardItem> */}
@@ -87,4 +89,11 @@ const styles = {
         fontSize: 20,
         height: 25
     },
-};
+    button: {
+        // backgroundColor: 'orange',
+        alignSelf: 'center',
+        marginBottom: 25,
+        borderRadius: 10
+    }
+    };
+
