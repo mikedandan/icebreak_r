@@ -25,7 +25,7 @@ export default class Signup extends Component {
         }
     }
     signup =() => {
-        console.log( 'hello' +this.state.username);
+        console.log( 'hello ' +this.state.username);
     }
     
     render() {
