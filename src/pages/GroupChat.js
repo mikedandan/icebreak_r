@@ -1,131 +1,151 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView } from 'react-native';
-import { Container, Header, Left, Right, Icon, Button, Radio, ListItem, Body, Title, Content, Form, Input, Label, Item } from 'native-base';
-import Nav from '../components/Nav';
-import { Col, Row, Grid } from 'react-native-easy-grid';
+import { Text, View, ScrollView, KeyboardAvoidingView} from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
+import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
-import SocketIOClient from 'socket.io-client';
+import BackButton from '../components/BackButton';
+import { ChatWindow, Message, ChatFooter } from '../components/ChatWindow';
 
 
 export default class GroupChat extends Component {
 
-  constructor(props){
-    super(props);
-    this.socket = SocketIOClient('http://192.168.1.123:3000');
-    this.socket.on('group chat', function(msg){
-      console.log(msg);
-    })
-    console.log("is this running");
-    this.socket.emit('group chat', 'Testing a message from emit')
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            lat: 0,
+            long: 0,
+            permission: false,
+            messages: [],
+            socket: ""
+        };
+    }
 
-  render() {
+    setPosition(pos) {
+        console.log(pos.coords.latitude);
+        console.log(pos.coords.longitude);
+        this.setState({
+            lat: pos.coords.latitude,
+            long: pos.coords.longitude
+        });
+    }
 
-    return (
-      <ScrollView >
+    setPermission(bool) {
+        this.setState({ permission: bool });
+    }
 
-        <LinearGradient
-          colors={['#42AAD8', '#A8D7F7']}
-          style={styles.container}>
+    setMessages(array) {
+        this.setState({ messages: array });
+    }
+
+    getLocation(hasLocationPermission) {
+        console.log("ENTERED VOID");
+        console.log(hasLocationPermission);
+        if (hasLocationPermission) {
+            Geolocation.getCurrentPosition(
+                (position) => {
+                    console.log(position);
+                    this.setPosition(position);
+                },
+                (error) => {
+                    // See error code charts below.
+                    console.log(error.code, error.message);
+                },
+                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+            );
+        }
+    }
+
+    getChatHistory() {
+        const self = this;
+        console.log("VOID")
+        axios.get('https://icebreakr-serv.herokuapp.com/api/user')
+            .then(function (response) {
+                self.setMessages(response.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+
+    async checkPermission() {
+        await navigator.geolocation.getCurrentPosition(
+            () => this.setPermission(true),
+            () => this.setPermission(false)
+        )
+        return this.setPermission;
+    }
+
+    async componentDidMount() {
+        // let socket = io("http://169.234.78.150:3000");
+        let hasLocationPermission = this.checkPermission();
+        console.log("Permission Status: " + hasLocationPermission);
+        await this.getLocation(hasLocationPermission);
+        await this.getChatHistory();
+    }
+
+    handleMessageSent = () => {
+        console.log("WEEEWOO");
+
+        //send to database
+
+        //send update chat window
+    }
+
+    render() {
+
+        return (
+            <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+                <LinearGradient colors={['#42AAD8', '#A8D7F7']} style={{ flex: 1 }}>
+
+                    {/* BackButton */}
+                    <View style={styles.backButton}>
+                        <BackButton />
+                    </View>
+
+                    {/* Chat Container */}
+                    <View style={{ backgroundColor: '#E3E9EC', flex: 7 }}>
+                        <ChatWindow>
+                            {this.state.messages.map((r, i) =>
+                                <Message
+                                    displayName={r.displayName}
+                                    email={r.href}
+                                    id={r._id}
+                                    key={i}
+                                />
+                            )}
+                        </ChatWindow>
+                    </View>
+
+                    {/* Chat Footer */}
+                    <View style={{ flex: 1 , backgroundColor:'#FFFFFF'}}>
+                        <ChatFooter
+                            onClick={this.handleMessageSent.bind(this)}
+                        />
+                    </View>
+
+                    {/* <Text style={styles.instructions}>Test Loc: Long: {this.state.long} Lat: {this.state.lat}</Text> */}
+                </LinearGradient>
+            </KeyboardAvoidingView>
 
 
-
-
-          <View style={{ zIndex: 97 }}>
-            <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
-            <Text style={{ textAlign: 'center', marginBottom: 25 }}>SIGN UP</Text>
-            <Image source={require('../images/AddImage.png')} style={{ alignSelf: 'center' }} />
-
-            <Text style={{ color: 'white', textAlign: 'center', marginTop: 15, marginBottom: 35 }}>Randomly selected Meme icon</Text>
-            {/* <Text style={{ textAlign: 'center', marginTop: 30, marginBottom: 15 }}>Randomly selected Name</Text> */}
-
-            <Form style={styles.form}>
-             
-           
-              <Item floatingLabel last>
-                <Label>Type something</Label>
-                <Input />
-              </Item>
-
-
-            </Form >
-            <View style={{ backgroundColor: '#F5FCFF', zIndex: 98 }}>
-              <Text style={{ textAlign: 'center', marginTop: 30, marginBottom: 30 }}>Your Gender</Text>
-              <Grid>
-                <Col>
-                  <ListItem>
-                    <Left>
-                      <Text>Man</Text>
-                    </Left>
-                    <Right>
-                      <Radio selected={false} />
-                    </Right>
-                  </ListItem>
-                </Col>
-                <Col>
-                  <ListItem>
-                    <Left>
-                      <Text>Women</Text>
-                    </Left>
-                    <Right>
-                      <Radio selected={false} />
-                    </Right>
-                  </ListItem>
-                </Col>
-                <Col>
-                  <ListItem>
-                    <Left>
-                      <Text>Prefer not to say</Text>
-                    </Left>
-                    <Right>
-                      <Radio selected={false} />
-                    </Right>
-                  </ListItem>
-                </Col>
-              </Grid>
-
-              <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} onPress={() => Actions.signup()}>CREATE ACCOUNT</Text></Button>
-
-            </View>
-          </View>
-        </LinearGradient>
-
-
-      </ScrollView>
-    );
-  }
+        );
+    }
 }
 
 
 const styles = {
-  thisIsAStyle: {
-    fontSize: 50,
-    marginTop: 40
-  },
-  redTex: {
-    color: 'red'
-  },
-  button: {
-    // backgroundColor: 'white',
-    alignSelf: 'center',
-    marginBottom: 25,
-    marginTop: 20,
-    borderRadius: 10
-  },
-  form: {
-    backgroundColor: 'white',
-    textAlign: 'center',
-    alignSelf: 'center',
-    // position:'absolute',
-    elevation: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 99,
-    width: 330
-  },
-  container: {
-    flex: 1,
-  }
+    thisIsAStyle: {
+        fontSize: 50,
+    },
+    container: {
+        flex: 1,
+        flexDirection: "column"
+    },
+    backButton: {
+        left: 0,
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+    }
 };
-
