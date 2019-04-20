@@ -60,7 +60,7 @@ export default class RouterComp extends Component {
         <Router>
             <Scene key="root">
 
-                <Scene key="login" component={Login}  hideNavBar='true'  type={ActionConst.REPLACE} />
+                <Scene key="login" component={Login}  hideNavBar='true' />
                 <Scene key="dashboard" component={Dashboard}  hideNavBar='true'  type={ActionConst.REPLACE} />
                 <Scene key="signup" component={Signup}  hideNavBar='true'  type={ActionConst.REPLACE}  />
                 <Scene key="eventSetup" component={eventSetup}  hideNavBar='true'  type={ActionConst.REPLACE}  />
