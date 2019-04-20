@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { View, AsyncStorage, KeyboardAvoidingView, Navigation, Image } from 'react-native';
-import { Container, Header, Text, Left, Right, Icon, Button, Body, Title, Content, Form, Input, Label, Item } from 'native-base';
+import { Container, Text, Header, Left, Right, Icon, Button, Body, Title, Content, Form, Input, Label, Item } from 'native-base';
 import Nav from '../components/Nav';
 import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
-// import { StackNavigator } from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
 import axios from 'axios';
 
 
@@ -63,7 +63,6 @@ export default class Signup extends Component {
             this.props.Actions.main();
         }
     }
-
     render() {
 
         return (
@@ -73,19 +72,16 @@ export default class Signup extends Component {
                 style={styles.container}>
 
 
-                {/* <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text> */}
-
                 <Image source={require('../images/icebreakr-logo-icon.png')} style={{ position: 'absolute', top: 15, alignSelf: 'center' }} />
-
                 <View style={{ height: '100%', justifyContent: 'center', }} >
 
-                    <View style={{  marginBottom: 130 }}>
+                    <View style={{ marginBottom: 130 }}>
                         <Text style={{ color: 'white', textAlign: 'center', fontSize: 40 }}>Log In</Text>
                     </View>
                     <View style={{ marginBottom: -25 }}>
                         <Form style={styles.form}>
                             <Item floatingLabel >
-                                <Label>Email</Label>
+                                <Label>Username</Label>
                                 <Input onChangeText={(value) => this.setState({ username: value })} />
                             </Item>
                         </Form>
@@ -98,7 +94,6 @@ export default class Signup extends Component {
 
                         </Form>
                     </View>
-
                 </View>
                 <View style={{
                     backgroundColor: '#F5FCFF',
@@ -139,18 +134,18 @@ const styles = {
     },
     form: {
         backgroundColor: 'white',
-        textAlign: 'center',
+        // textAlign: 'center',
         alignSelf: 'center',
         // position:'absolute',
-        elevation: 2,
+        elevation: 3,
         // justifyContent: 'center',
         alignItems: 'center',
+        zIndex: 99,
         width: 330,
         // minHeight: 280,
         marginTop: 10
     },
     container: {
         flex: 1,
-    }
+    },
 };
-
