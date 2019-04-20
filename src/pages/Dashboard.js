@@ -94,8 +94,8 @@ export default class Dashboard extends Component {
                                     }}>
                                         <View style={{ width: 50, height: 50, backgroundColor: 'powderblue' }} />
                                         <View style={{ height: 50, backgroundColor: 'skyblue' }} />
-                                        <View style={{ height: 100, backgroundColor: 'steelblue' }} /> */}
-                                    </View>
+                                        <View style={{ height: 100, backgroundColor: 'steelblue' }} /> 
+                                    </View>*/}
                                     
                                 </Body>
                                 {/* </CardItem> */}
