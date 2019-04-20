@@ -9,16 +9,24 @@ import eventSetup from './pages/eventSetup'; // imports create event page
 import { Text, View, PermissionsAndroid } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import Dashboard from './pages/Dashboard';
-
+import decode from 'jwt-decode';
 
 export default class RouterComp extends Component {
+
+
 
     constructor(props) {
         super(props);
         this.state = {
             lat: 0,
             long: 0,
-            permission: false
+            permission: false,
+            userInfo: {
+                id: '',
+                email: '',
+                picture: '',
+                name: '',
+            }
         };
     }
 
@@ -48,30 +56,50 @@ export default class RouterComp extends Component {
             console.warn(err);
         }
     }
-   
+
 
     async componentDidMount() {
         await this.requestGeoPermission();
+     
+    }
+
+     handlesomthing (token) {
+
+        var decoded = decode(token);
+        console.log(decoded);
+        
+
+        this.setState({ 
+            userInfo :{
+                email: decoded.email,
+                id: decoded.id,
+                picture: decoded.picture,
+                name: decoded.name
+            } 
+        });
+        console.log(this.state.userInfo);
+
     }
 
 
     render() {
-    return (
-        <Router>
-            <Scene key="root">
+        return (
+            <Router>
+                <Scene key="root">
 
-                <Scene key="login" component={Login}  hideNavBar='true' />
-                <Scene key="dashboard" component={Dashboard}  hideNavBar='true'  type={ActionConst.REPLACE} />
-                <Scene key="signup" component={Signup}  hideNavBar='true'  type={ActionConst.REPLACE}  />
-                <Scene key="eventSetup" component={eventSetup}  hideNavBar='true'  type={ActionConst.REPLACE}  />
-                <Scene key="main" component={Main}  hideNavBar='true' type={ActionConst.REPLACE} initial/>
-                <Scene key="groupChat" component={GroupChat}  hideNavBar='true' type={ActionConst.REPLACE} />          
-            </Scene>
-        </Router>
-    );
+                    <Scene key="login" handlesomthing={(e) => this.handlesomthing(e)} component={Login} hideNavBar='true' type={ActionConst.REPLACE} />
+                    <Scene key="dashboard" component={Dashboard} hideNavBar='true' type={ActionConst.REPLACE} />
+                    <Scene key="signup" component={Signup} hideNavBar='true' type={ActionConst.REPLACE} />
+                    <Scene key="eventSetup" component={eventSetup} hideNavBar='true' type={ActionConst.REPLACE} />
+                    <Scene key="main" component={Main} hideNavBar='true' type={ActionConst.REPLACE} initial />
+                    <Scene key="groupChat" userInfo = {this.state.userInfo} component={GroupChat} hideNavBar='true' type={ActionConst.REPLACE} />
+                </Scene>
+            </Router>
+        );
     };
 
 };
+
 
 
 
