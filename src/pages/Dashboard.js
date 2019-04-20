@@ -40,7 +40,7 @@ export default class Dashboard extends Component {
                                 </CardItem>
                                 <Text style={{ color: 'black', textAlign: 'center', marginTop: 10, marginBottom: 10 }}>Private Message</Text>
                                 <Body>
-                                    <View style={{
+                                    {/* <View style={{
                                         flex: 1,
                                         // flexDirection: 'column',
                                         justifyContent: 'center',
@@ -48,8 +48,9 @@ export default class Dashboard extends Component {
                                     }}>
                                         <View style={{ width: 50, height: 50, backgroundColor: 'powderblue' }} />
                                         <View style={{ height: 50, backgroundColor: 'skyblue' }} />
-                                        <View style={{ height: 100, backgroundColor: 'steelblue' }} />
+                                        <View style={{ height: 100, backgroundColor: 'steelblue' }} /> */}
                                     </View>
+                                    
                                 </Body>
                                 {/* </CardItem> */}
 
