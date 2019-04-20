@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, KeyboardAvoidingView} from 'react-native';
+import { Text, View, ScrollView, KeyboardAvoidingView } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../components/BackButton';
 import { ChatWindow, Message, ChatFooter } from '../components/ChatWindow';
+import io from 'socket.io-client'
 
 
 export default class GroupChat extends Component {
@@ -17,7 +18,7 @@ export default class GroupChat extends Component {
             long: 0,
             permission: false,
             messages: [],
-            socket: ""
+            userInput: ""
         };
     }
 
@@ -36,6 +37,10 @@ export default class GroupChat extends Component {
 
     setMessages(array) {
         this.setState({ messages: array });
+    }
+
+    setUserInput(value) {
+        this.setState({ userInput: value });
     }
 
     getLocation(hasLocationPermission) {
@@ -59,7 +64,7 @@ export default class GroupChat extends Component {
     getChatHistory() {
         const self = this;
         console.log("VOID")
-        axios.get('https://icebreakr-serv.herokuapp.com/api/user')
+        axios.get('http://10.0.2.2:3000/api/message/')
             .then(function (response) {
                 self.setMessages(response.data);
             })
@@ -77,19 +82,49 @@ export default class GroupChat extends Component {
     }
 
     async componentDidMount() {
-        // let socket = io("http://169.234.78.150:3000");
         let hasLocationPermission = this.checkPermission();
         console.log("Permission Status: " + hasLocationPermission);
         await this.getLocation(hasLocationPermission);
         await this.getChatHistory();
     }
 
-    handleMessageSent = () => {
+    async postMessage(newMessage) {
+        let messageArray = this.state.messages;
+        await messageArray.push(newMessage);
+        const self = this;
+        axios.post('http://10.0.2.2:3000/api/message/new', newMessage)
+            .then(function (response) {
+                console.log(response);
+                //after pushing to database, clear the input
+                self.setUserInput("");
+                self.setMessages(messageArray);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    handleMessageSent = async () => {
         console.log("WEEEWOO");
-
-        //send to database
-
-        //send update chat window
+        const username = "Potato";
+        const newMessage = {
+            "nickName":username,
+            "message": this.state.userInput,
+            "picture":"test.png",
+            "userID":"12345",
+            "lon": this.state.long,
+            "lat": this.state.lat,
+            "namespace": "group",
+            "date":Date.now()
+        }
+        //https://icebreakr-serv.herokuapp.com/
+        let socket = io(`http://10.0.2.2:3000`, {
+            query: {
+                username
+            }
+        });
+        await socket.emit('GroupMsgToServer', this.state.userInput);
+        await this.postMessage(newMessage);
     }
 
     render() {
@@ -108,8 +143,8 @@ export default class GroupChat extends Component {
                         <ChatWindow>
                             {this.state.messages.map((r, i) =>
                                 <Message
-                                    displayName={r.displayName}
-                                    email={r.href}
+                                    displayName={r.nickName}
+                                    message={r.message}
                                     id={r._id}
                                     key={i}
                                 />
@@ -118,9 +153,10 @@ export default class GroupChat extends Component {
                     </View>
 
                     {/* Chat Footer */}
-                    <View style={{ flex: 1 , backgroundColor:'#FFFFFF'}}>
+                    <View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
                         <ChatFooter
                             onClick={this.handleMessageSent.bind(this)}
+                            onInputChange={this.setUserInput.bind(this)}
                         />
                     </View>
 
