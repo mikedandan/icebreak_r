@@ -43,13 +43,16 @@ export default class Signup extends Component {
             .catch(function (error) {
                 console.log(error);
             });
+
+
+
     }
 
     _storeData = (e) => {
    
             AsyncStorage.setItem('token', e);
             this._retrieveData();
-      
+            Actions.dashboard();
     };
     _retrieveData = async () => {
         try {
