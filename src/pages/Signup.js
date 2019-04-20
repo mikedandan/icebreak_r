@@ -9,12 +9,21 @@ import axios from 'axios';
 import generateName from 'sillyname';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+import image1 from '../images/AddImage.png'
+import image2 from '../images/calendar-icon.png'
+import image3 from '../images/AddImage2x.png'
 
+
+const picArr = [image1, image2, image3]
 const gender = [
   { label: "Male ", value: 0 },
   { label: "Female ", value: 1 },
   { label: "Prefer not to say", value: 2 },
 ];
+
+// var avatarArr = ['../images/AddImage.png'];
+// var randomItem = avatarArr[Math.floor(Math.random() * avatarArr.length)];
+
 
 export default class Signup extends Component {
 
@@ -29,7 +38,11 @@ export default class Signup extends Component {
 
 
   componentWillMount = () => {
+
+    const index = picArr[Math.floor(Math.random() * picArr.length)]
     this.generate();
+    this.setState({ picture: index })
+
   }
   generate = () => {
     console.log('sup');
@@ -57,30 +70,33 @@ export default class Signup extends Component {
       });
   }
   render() {
-
+    console.log(this.state.picture)
     return (
       <ScrollView >
 
         <LinearGradient
           colors={['#42AAD8', '#A8D7F7']}
           style={styles.container}>
-
           <View>
             <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
-            <Text style={{ textAlign: 'center', marginBottom: 20 }}>SIGN UP</Text>
-            <Image source={require('../images/AddImage.png')} style={{ alignSelf: 'center' }} />
+            <Text style={{ color: 'white', textAlign: 'center', marginBottom: 20 }}>SIGN UP</Text>
+            <Image source={ this.state.picture} />
 
-            <Text style={{ color: 'white', textAlign: 'center', marginTop: 10, marginBottom: 30 }}>{this.state.myName}</Text>
-            <Button transparent onPress={() => this.generate()} style={{ alignSelf: 'center', marginTop: -20, marginBottom: 30 }}>
-              <Icon style={{ fontSize: 20, color: 'white', }} name="sync" />
 
-            </Button>
             {/* <Text style={{ textAlign: 'center', marginTop: 30, marginBottom: 15 }}>Randomly selected Name</Text> */}
 
             <Form style={styles.form}>
-              <Item >
+              {/* <Item >
                 <Label>Sign Up</Label>
-              </Item>
+              </Item> */}
+              <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 20, marginTop: 10, paddingLeft: 10 }}>{this.state.myName}</Text>
+                <Button transparent onPress={() => this.generate()} >
+                  {/* style={{ alignSelf: 'center' }} */}
+                  <Icon style={{ fontSize: 20 }} name="sync" />
+
+                </Button>
+              </View>
               <Item floatingLabel>
                 <Label>Email</Label>
                 <Input onChangeText={(value) => this.setState({ email: value })} />
@@ -101,50 +117,17 @@ export default class Signup extends Component {
 
 
             </Form >
-            <View style={{ backgroundColor: '#F5FCFF', marginTop: -55 }}>
-
+            <View style={{ backgroundColor: '#F5FCFF' }}>
+              <Text style={{ fontSize: 20, textAlign: 'center' }}>Your Gender</Text>
               <RadioForm
-                style={{ alignSelf: 'center', marginTop: 70 }}
+                style={{ alignSelf: 'center', marginTop: 15 }}
                 radio_props={gender}
                 initial={2}
                 formHorizontal={true}
                 onPress={(value) => this.setState({ gender: value })}
               />
-              {/* <Text style={{ textAlign: 'center', marginTop: 70, marginBottom: 25 }}>Your Gender</Text>
-              <Grid>
-                <Col>
-                  <ListItem>
-                    <Left>
-                      <Text>Man</Text>
-                    </Left>
-                    <Right>
-                      <Radio selected={false} />
-                    </Right>
-                  </ListItem>
-                </Col>
-                <Col>
-                  <ListItem>
-                    <Left>
-                      <Text>Women</Text>
-                    </Left>
-                    <Right>
-                      <Radio selected={false} />
-                    </Right>
-                  </ListItem>
-                </Col>
-                <Col>
-                  <ListItem>
-                    <Left>
-                      <Text>Prefer not to say</Text>
-                    </Left>
-                    <Right>
-                      <Radio selected={false} />
-                    </Right>
-                  </ListItem>
-                </Col>
-              </Grid> */}
 
-              <Button onPress={() => this.checkRegister()} info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} >CREATE ACCOUNT</Text></Button>
+              <Button onPress={() => this.checkRegister()} info style={styles.button}><Text style={{ fontSize: 15, color: 'white', textAlign: 'center' }} >CREATE ACCOUNT</Text></Button>
 
             </View>
           </View>
@@ -168,23 +151,26 @@ const styles = {
   button: {
     // backgroundColor: 'white',
     alignSelf: 'center',
+    width: 200,
     marginBottom: 20,
     marginTop: 20,
-    borderRadius: 10
+    borderRadius: 15,
+    justifyContent: 'center',
+
   },
   form: {
     backgroundColor: 'white',
-    textAlign: 'center',
+    // textAlign: 'center',
     alignSelf: 'center',
     // position:'absolute',
     elevation: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 99,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // zIndex: 99,
     width: 330,
-    minHeight: 280,
+    minHeight: 250,
   },
   container: {
-    flex: 1,
+    flex: 2,
   }
 };

@@ -111,7 +111,7 @@ export default class Signup extends Component {
                     <View style={{ marginBottom: 0 }}>
                         <Form style={styles.form}>
                             <Item floatingLabel >
-                                <Label>Username</Label>
+                                <Label>Email</Label>
                                 <Input onChangeText={(value) => this.setState({ username: value })} />
                             </Item>
                         </Form>
