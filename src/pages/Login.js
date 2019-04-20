@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, AsyncStorage, KeyboardAvoidingView, Navigation, Image } from 'react-native';
+import { View, AsyncStorage, Navigation, Image } from 'react-native';
 import { Container, Text, Header, Left, Right, Icon, Button, Body, Title, Content, Form, Input, Label, Item } from 'native-base';
 import Nav from '../components/Nav';
 import LinearGradient from 'react-native-linear-gradient';
@@ -25,19 +25,46 @@ export default class Signup extends Component {
         // console.log(`VOID ENTERED \n User: ${this.state.username} \n PW: ${this.state.password} \n Remeber to comment this log out`)
         axios.post('https://icebreakr-serv.herokuapp.com/api/user/login', {
             email: this.state.username,
-            password: this.state.password
+            password: this.state.password,
         })
             .then(function (response) {
-                console.log(response.data.token);
+                // console.log(response.data.token);
                 // let tok = response.data.token;
-                self.props.handlesomthing(response.data.token);
-          
+                // self.props.handlesomthing(response.data.token);
+
+                self._storeData(response.data.token);
+
+                // try {
+                //     await AsyncStorage.setItem('token', response.data.token);
+                //   } catch (error) {
+                //     // Error saving data
+                //   }
             })
             .catch(function (error) {
                 console.log(error);
             });
     }
 
+    _storeData = (e) => {
+   
+            AsyncStorage.setItem('token', e);
+            this._retrieveData();
+      
+    };
+    _retrieveData = async () => {
+        try {
+
+            const value = await AsyncStorage.getItem('token');
+
+            // if (value !== null) {
+            //     // We have data!!
+                console.log(value);
+            // }
+
+        } catch (error) {
+            // Error retrieving data
+        }
+    };
 
     componentDidMount() {
         // this.loadInitialState().done();
@@ -75,10 +102,10 @@ export default class Signup extends Component {
                 <Image source={require('../images/icebreakr-logo-icon.png')} style={{ position: 'absolute', top: 15, alignSelf: 'center' }} />
                 <View style={{ height: '100%', justifyContent: 'center', }} >
 
-                    <View style={{ marginBottom: 130 }}>
+                    <View style={{ marginBottom: 90 }}>
                         <Text style={{ color: 'white', textAlign: 'center', fontSize: 40 }}>Log In</Text>
                     </View>
-                    <View style={{ marginBottom: -25 }}>
+                    <View style={{ marginBottom: 0 }}>
                         <Form style={styles.form}>
                             <Item floatingLabel >
                                 <Label>Username</Label>
@@ -105,7 +132,7 @@ export default class Signup extends Component {
                     justifyContent: 'flex-end',
 
                 }}>
-                    <Button info style={styles.button} onPress={this.checkLogin}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} >Sign in user</Text></Button>
+                    <Button info style={styles.button} onPress={this.checkLogin}><Text style={{ color: 'white', textAlign: 'center', width: 150, alignSelf: 'center' }} >Sign in user</Text></Button>
                     <Text>FORGOT PASSWORD? GET NEW!</Text>
                     <Text style={{ marginBottom: 30 }} onPress={() => Actions.signup()}>DON'T HAVE AN ACCOUNT? Signup!</Text>
                 </View>
@@ -128,9 +155,13 @@ const styles = {
     button: {
         // backgroundColor: 'white',
         alignSelf: 'center',
+        // alignItems: 'center',
+        justifyContent: 'center',
         marginTop: 10,
         marginBottom: 25,
-        borderRadius: 10
+        borderRadius: 10,
+        width: "80%",
+        height: 50
     },
     form: {
         backgroundColor: 'white',

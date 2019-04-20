@@ -6,20 +6,66 @@ import { ScrollView } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
 import { Col, Row, Grid } from "react-native-easy-grid";
+import decode from 'jwt-decode';
 // import { getTopFrame } from 'jest-message-util';
 
 // import { Actions } from 'react-native-router-flux';
 
-_handleLogOut = () => {
-    console.log('hello world');
-    AsyncStorage.removeItem('jwt');
-    alert('You have been logged out.');
-    
-}
+
 
 export default class Dashboard extends Component {
+    state = {
+        userInfo : {
 
+        }
+    }
+    componentDidMount = () =>{
+        console.log('sup');
+        this._retrieveData();
+    }
 
+    _handleLogOut = () => {
+        console.log('hello world');
+        AsyncStorage.removeItem('token');
+        alert('You have been logged out.');
+        Actions.main();
+    }
+
+    _retrieveData = async () => {
+        console.log('hello');
+        try {
+
+            const token = await AsyncStorage.getItem('token');
+
+            if (token !== null) {
+                // We have data!!
+                console.log('user saved locally');
+                console.log(token);
+                var decoded = decode(token);
+            
+                
+        
+                this.setState({ 
+                    userInfo :{
+                        email: decoded.email,
+                        id: decoded.id,
+                        picture: decoded.picture,
+                        name: decoded.name
+                    } 
+                });
+                console.log(this.state.userInfo);
+                
+            }else {
+
+                console.log('no data');
+
+            }
+
+        } catch (error) {
+            // Error retrieving data
+        }
+    };
+    
     render() {
         return (
             <ScrollView >

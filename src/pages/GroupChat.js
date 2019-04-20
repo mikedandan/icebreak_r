@@ -82,6 +82,8 @@ export default class GroupChat extends Component {
     }
 
     async componentDidMount() {
+      
+
         let hasLocationPermission = this.checkPermission();
         console.log("Permission Status: " + hasLocationPermission);
         await this.getLocation(hasLocationPermission);

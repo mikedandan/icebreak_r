@@ -5,7 +5,9 @@ import { Actions } from 'react-native-router-flux';
 
 
 export default class BackButton extends Component {
-
+ componentDidMount = () => {
+     
+ }
     render() {
 
         return (
