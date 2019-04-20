@@ -57,8 +57,22 @@ export default class RouterComp extends Component {
         }
     }
 
+    _retrieveData = async () => {
+        try {
+
+            const value = await AsyncStorage.getItem('token');
+
+            if (value !== null) {
+                // We have data!!
+                console.log('my val: ' +value);
+            }
+        } catch (error) {
+            // Error retrieving data
+        }
+    };
 
     async componentDidMount() {
+        this._retrieveData();
         await this.requestGeoPermission();
      
     }
@@ -87,12 +101,13 @@ export default class RouterComp extends Component {
             <Router>
                 <Scene key="root">
 
-                    <Scene key="login" handlesomthing={(e) => this.handlesomthing(e)} component={Login} hideNavBar='true' type={ActionConst.REPLACE} />
-                    <Scene key="dashboard" component={Dashboard} hideNavBar='true' type={ActionConst.REPLACE} />
+                    <Scene key="login" handlesomthing={(e) => this.handlesomthing(e)} component={Login} hideNavBar='true'  />
+                    <Scene key="dashboard" userInfo = {this.state.userInfo} component={Dashboard} hideNavBar='true' type={ActionConst.REPLACE} />
                     <Scene key="signup" component={Signup} hideNavBar='true' type={ActionConst.REPLACE} />
                     <Scene key="eventSetup" component={eventSetup} hideNavBar='true' type={ActionConst.REPLACE} />
                     <Scene key="main" component={Main} hideNavBar='true' type={ActionConst.REPLACE} initial />
-                    <Scene key="groupChat" userInfo = {this.state.userInfo} component={GroupChat} hideNavBar='true' type={ActionConst.REPLACE} />
+                    <Scene key="groupChat"  component={GroupChat} hideNavBar='true' type={ActionConst.REPLACE} />
+            
                 </Scene>
             </Router>
         );
