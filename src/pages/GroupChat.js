@@ -43,7 +43,7 @@ export default class GroupChat extends Component {
         this.setState({ userInput: value });
     }
 
-    getLocation(hasLocationPermission) {
+    setLocation(hasLocationPermission) {
         console.log("ENTERED VOID");
         console.log(hasLocationPermission);
         if (hasLocationPermission) {
@@ -86,7 +86,7 @@ export default class GroupChat extends Component {
 
         let hasLocationPermission = this.checkPermission();
         console.log("Permission Status: " + hasLocationPermission);
-        await this.getLocation(hasLocationPermission);
+        await this.setLocation(hasLocationPermission);
         await this.getChatHistory();
     }
 
