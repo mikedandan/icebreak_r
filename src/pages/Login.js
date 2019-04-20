@@ -62,7 +62,7 @@ export default class Signup extends Component {
                 <View style={{ height: '100%', justifyContent: 'center', }} >
 
                     <View style={{  marginBottom: 130 }}>
-                        <Text style={{ color: 'white', textAlign: 'center', fontSize: 30 }}>LOGIN</Text>
+                        <Text style={{ color: 'white', textAlign: 'center', fontSize: 40 }}>Log In</Text>
                     </View>
                     <View style={{ marginBottom: -25 }}>
                         <Form style={styles.form}>
