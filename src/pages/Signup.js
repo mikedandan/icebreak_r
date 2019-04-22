@@ -9,12 +9,17 @@ import axios from 'axios';
 import generateName from 'sillyname';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
-import image1 from '../images/AddImage.png'
-import image2 from '../images/calendar-icon.png'
-import image3 from '../images/AddImage2x.png'
+import image1 from '../images/avatars/RandomAnimals_brown_bear.png';
+import image2 from '../images/avatars/RandomAnimals_dog.png';
+import image3 from '../images/avatars/RandomAnimals_dolphin.png';
+import image4 from '../images/avatars/RandomAnimals_elephant.png';
+import image5 from '../images/avatars/RandomAnimals_fox.png';
+import image6 from '../images/avatars/RandomAnimals_gariffe.png';
+import image7 from '../images/avatars/RandomAnimals_hedgehog.png';
 
+// const picArr = ["../images/avatars/RandomAnimals_brown_bear.png"]
+const picArr = [image1, image2, image3, image4, image5, image6, image7];
 
-const picArr = [image1, image2, image3]
 const gender = [
   { label: "Male ", value: 0 },
   { label: "Female ", value: 1 },
@@ -38,14 +43,17 @@ export default class Signup extends Component {
 
 
   componentWillMount = () => {
+    const ran = Math.floor(Math.random() * picArr.length)
+    // const randomPic = picArr[ran]
+    console.log("nani the fuck:" + picArr[ran])
 
-    const index = picArr[Math.floor(Math.random() * picArr.length)]
     this.generate();
-    this.setState({ picture: index })
+    this.setState({ picture: ran }, () => console.log("we here bois" + this.state.picture))
 
+    console.log("the random number is" + ran)
   }
   generate = () => {
-    console.log('sup');
+
     let nickname = generateName();
     this.setState({ myName: nickname })
   };
@@ -53,10 +61,10 @@ export default class Signup extends Component {
   checkRegister = () => {
 
 
-    console.log(this.state)
-    console.log(`VOID ENTERED \n email: ${this.state.email} \n password: ${this.state.password} \n Remeber to comment this log out`)
+    // console.log(this.state)
+    console.log(`VOID ENTERED \n email: ${this.state.email} \n password: ${this.state.password} \n picture: ${this.state.picture} \n Remeber to comment this log out`)
     axios.post('https://icebreakr-serv.herokuapp.com/api/user/register', {
-      name: this.state.myName,
+      displayName: this.state.myName,
       email: this.state.email,
       password: this.state.password,
       picture: this.state.picture,
@@ -70,71 +78,57 @@ export default class Signup extends Component {
       });
   }
   render() {
-    console.log(this.state.picture)
+    // console.log(this.state.picture)
     return (
-      <ScrollView >
 
-        <LinearGradient
-          colors={['#42AAD8', '#A8D7F7']}
-          style={styles.container}>
+
+      <LinearGradient
+        colors={['#42AAD8', '#A8D7F7']}
+        style={styles.container}>
+        <Text style={{ color: 'white' }} onPress={() => Actions.main()}>go to Main</Text>
+
+        <Text style={{ color: 'white', textAlign: 'center', marginBottom: 20 }}>SIGN UP</Text>
+        <View style={{ alignSelf: 'center' }}>
+          <Image source={this.state.picture} />
+        </View>
+
+        <Form style={styles.form}>
           <View>
-            <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
-            <Text style={{ color: 'white', textAlign: 'center', marginBottom: 20 }}>SIGN UP</Text>
-            <Image source={ this.state.picture} />
+            <Text style={{ fontSize: 20, marginTop: 10, paddingLeft: 10 }}>{this.state.myName}</Text>
+            <Button transparent onPress={() => this.generate()} >
+              <Icon style={{ fontSize: 20 }} name="sync" />
 
-
-            {/* <Text style={{ textAlign: 'center', marginTop: 30, marginBottom: 15 }}>Randomly selected Name</Text> */}
-
-            <Form style={styles.form}>
-              {/* <Item >
-                <Label>Sign Up</Label>
-              </Item> */}
-              <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={{ fontSize: 20, marginTop: 10, paddingLeft: 10 }}>{this.state.myName}</Text>
-                <Button transparent onPress={() => this.generate()} >
-                  {/* style={{ alignSelf: 'center' }} */}
-                  <Icon style={{ fontSize: 20 }} name="sync" />
-
-                </Button>
-              </View>
-              <Item floatingLabel>
-                <Label>Email</Label>
-                <Input onChangeText={(value) => this.setState({ email: value })} />
-              </Item>
-
-              <Item floatingLabel last>
-                <Label>Password</Label>
-                <Input onChangeText={(value) => this.setState({ password: value })} />
-              </Item>
-              <Item floatingLabel >
-                <Label></Label>
-                <Input onChangeText={(value) => this.setState({ picture: value })} />
-              </Item>
-              {/* <Item floatingLabel last>
-                <Label>Confirm Password</Label>
-                <Input />
-              </Item> */}
-
-
-            </Form >
-            <View style={{ backgroundColor: '#F5FCFF' }}>
-              <Text style={{ fontSize: 20, textAlign: 'center' }}>Your Gender</Text>
-              <RadioForm
-                style={{ alignSelf: 'center', marginTop: 15 }}
-                radio_props={gender}
-                initial={2}
-                formHorizontal={true}
-                onPress={(value) => this.setState({ gender: value })}
-              />
-
-              <Button onPress={() => this.checkRegister()} info style={styles.button}><Text style={{ fontSize: 15, color: 'white', textAlign: 'center' }} >CREATE ACCOUNT</Text></Button>
-
-            </View>
+            </Button>
           </View>
-        </LinearGradient>
+          <Item floatingLabel>
+            <Label>Email</Label>
+            <Input onChangeText={(value) => this.setState({ email: value })} />
+          </Item>
 
+          <Item floatingLabel last>
+            <Label>Password</Label>
+            <Input onChangeText={(value) => this.setState({ password: value })} />
+          </Item>
+          {/* <Item floatingLabel >
+                        <Label></Label>
+                        <Input onChangeText={(value) => this.setState({ picture: value })} />
+                    </Item> */}
+        </Form >
 
-      </ScrollView>
+        <View style={styles.genderArea}>
+          <Text style={{ fontSize: 20, textAlign: 'center', marginTop: 20 }}>Your Gender</Text>
+          <RadioForm
+            style={{ alignSelf: 'center', marginTop: 15 }}
+            radio_props={gender}
+            initial={2}
+            formHorizontal={true}
+            onPress={(value) => this.setState({ gender: value })}
+          />
+          <Button onPress={() => this.checkRegister()} info style={styles.button}><Text style={{ fontSize: 15, color: 'white', textAlign: 'center' }} >CREATE ACCOUNT</Text></Button>
+        </View>
+
+      </LinearGradient>
+
     );
   }
 }
@@ -145,9 +139,7 @@ const styles = {
     fontSize: 50,
     marginTop: 35
   },
-  redTex: {
-    color: 'red'
-  },
+
   button: {
     // backgroundColor: 'white',
     alignSelf: 'center',
@@ -160,17 +152,17 @@ const styles = {
   },
   form: {
     backgroundColor: 'white',
-    // textAlign: 'center',
     alignSelf: 'center',
-    // position:'absolute',
     elevation: 3,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // zIndex: 99,
     width: 330,
     minHeight: 250,
   },
+  genderArea: {
+    backgroundColor: '#F5FCFF'
+  },
   container: {
-    flex: 2,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
   }
 };
