@@ -9,17 +9,29 @@ import eventSetup from './pages/eventSetup'; // imports create event page
 import { Text, View, PermissionsAndroid } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import Dashboard from './pages/Dashboard';
+
 import Chat from './pages/Chat';
 
 
+import decode from 'jwt-decode';
+
+
 export default class RouterComp extends Component {
+
+
 
     constructor(props) {
         super(props);
         this.state = {
             lat: 0,
             long: 0,
-            permission: false
+            permission: false,
+            userInfo: {
+                id: '',
+                email: '',
+                picture: '',
+                name: '',
+            }
         };
     }
 
@@ -49,36 +61,65 @@ export default class RouterComp extends Component {
             console.warn(err);
         }
     }
-   
+
+    _retrieveData = async () => {
+        try {
+
+            const value = await AsyncStorage.getItem('token');
+
+            if (value !== null) {
+                // We have data!!
+                console.log('my val: ' +value);
+            }
+        } catch (error) {
+            // Error retrieving data
+        }
+    };
 
     async componentDidMount() {
+        this._retrieveData();
         await this.requestGeoPermission();
+     
+    }
+
+     handlesomthing (token) {
+
+        var decoded = decode(token);
+        console.log(decoded);
+        
+
+        this.setState({ 
+            userInfo :{
+                email: decoded.email,
+                id: decoded.id,
+                picture: decoded.picture,
+                name: decoded.name
+            } 
+        });
+        console.log(this.state.userInfo);
+
     }
 
 
     render() {
-    return (
-       
-        <Router>
-             
-            <Scene key="root" titleStyle={styles.navigationBarTitleStyle}>
-            
-                <Scene key="login" component={Login}  hideNavBar='true'  type={ActionConst.REPLACE} />
-                <Scene key="dashboard" component={Dashboard}  type={ActionConst.REPLACE} initial title="Dashboard"/>
-                <Scene key="signup" component={Signup}  hideNavBar='true'  type={ActionConst.REPLACE}  />
-                <Scene key="eventSetup" component={eventSetup}  hideNavBar='true'  type={ActionConst.REPLACE}  />
-                <Scene key="main" component={Main}  hideNavBar='true' type={ActionConst.REPLACE}/>
-                <Scene key="groupChat" component={GroupChat}  hideNavBar='true' type={ActionConst.REPLACE} />  
-                <Scene 
+
+        return (
+            <Router>
+                <Scene key="root">
+
+                    <Scene key="login" handlesomthing={(e) => this.handlesomthing(e)} component={Login} hideNavBar='true'  />
+                    <Scene key="dashboard" userInfo = {this.state.userInfo} component={Dashboard} hideNavBar='true' type={ActionConst.REPLACE} />
+                    <Scene key="signup" component={Signup} hideNavBar='true' type={ActionConst.REPLACE} />
+                    <Scene key="eventSetup" component={eventSetup} hideNavBar='true' type={ActionConst.REPLACE} />
+                    <Scene key="main" component={Main} hideNavBar='true' type={ActionConst.REPLACE} initial />
+                    <Scene key="groupChat"  component={GroupChat} hideNavBar='true' type={ActionConst.REPLACE} />
+                      <Scene 
                     
                     key="Chat" component={Chat} 
                     title="Chat Page"  />  
-                         
-            </Scene>
-            
-        </Router>
-        
-    );
+                </Scene>
+            </Router>
+        );
     };
 
 };
@@ -89,4 +130,5 @@ const styles = {
 
    }
 };
+
 

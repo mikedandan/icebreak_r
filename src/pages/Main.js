@@ -1,11 +1,42 @@
 import React, { Component } from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, AsyncStorage,} from 'react-native';
 import Nav from '../components/Nav';
-import { Container, Header, Content, Text, Button } from 'native-base';
+import { Container,  Header, Content, Text, Button } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
 
 export default class Main extends Component {
+    
+    componentDidMount = () =>{
+        console.log('sup');
+        this._retrieveData();
+    }
+
+    _retrieveData = async () => {
+        console.log('hello');
+        try {
+
+            const value = await AsyncStorage.getItem('token');
+
+            if (value !== null) {
+                // We have data!!
+                console.log('user saved locally');
+                console.log(value);
+                Actions.dashboard();
+                
+            }else {
+
+                console.log('no data');
+
+            }
+
+        } catch (error) {
+            // Error retrieving data
+        }
+    };
+    
+
+    
 
     render() {
 
