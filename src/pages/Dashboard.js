@@ -20,10 +20,11 @@ export default class Dashboard extends Component {
                         colors={['#42AAD8', '#A8D7F7']}
                         style={styles.container}>
 
-                        <Header />
+                        {/* <Header /> */}
 
                         <View>
                             <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
+                            <Text onPress={() => Actions.Chat()}>Go To Chat</Text>
                             <Image source={require('../images/icebreakr-logo-icon.png')} style={{ alignSelf: 'center' }} />
                             <Text style={{ color: 'white', textAlign: 'center', marginTop: 30, marginBottom: 30 }}>What do you want to do?</Text>
                             <Card>
