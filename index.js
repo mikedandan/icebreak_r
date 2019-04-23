@@ -17,3 +17,4 @@ const App = () => {
 
 // Render it to the device 
 AppRegistry.registerComponent('icebreakr', () => App);
+console.disableYellowBox = true
