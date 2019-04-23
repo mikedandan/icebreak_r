@@ -1,17 +1,71 @@
 import React, { Component } from 'react';
-import { View, Image, AppRegistry } from 'react-native';
+import { View, Image, AppRegistry, TouchableHighlight, AsyncStorage } from 'react-native';
 import DashHeaderCard from '../components/DashHeaderCard';
 import { Container, Header, Button, Content, Card, CardItem, Text, Body } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
 import { Col, Row, Grid } from "react-native-easy-grid";
+import decode from 'jwt-decode';
+// import { getTopFrame } from 'jest-message-util';
 
 // import { Actions } from 'react-native-router-flux';
 
+
+
 export default class Dashboard extends Component {
+    state = {
+        userInfo : {
 
+        }
+    }
+    componentDidMount = () =>{
+        console.log('sup');
+        this._retrieveData();
+    }
 
+    _handleLogOut = () => {
+        console.log('hello world');
+        AsyncStorage.removeItem('token');
+        alert('You have been logged out.');
+        Actions.main();
+    }
+
+    _retrieveData = async () => {
+        console.log('hello');
+        try {
+
+            const token = await AsyncStorage.getItem('token');
+
+            if (token !== null) {
+                // We have data!!
+                console.log('user saved locally');
+                console.log(token);
+                var decoded = decode(token);
+            
+                
+        
+                this.setState({ 
+                    userInfo :{
+                        email: decoded.email,
+                        id: decoded.id,
+                        picture: decoded.picture,
+                        name: decoded.name
+                    } 
+                });
+                console.log(this.state.userInfo);
+                
+            }else {
+
+                console.log('no data');
+
+            }
+
+        } catch (error) {
+            // Error retrieving data
+        }
+    };
+    
     render() {
         return (
             <ScrollView >
@@ -33,7 +87,7 @@ export default class Dashboard extends Component {
                                 </CardItem>
                                 <Text style={{ color: 'black', textAlign: 'center', marginTop: 10, marginBottom: 10 }}>Private Message</Text>
                                 <Body>
-                                    <View style={{
+                                    {/* <View style={{
                                         flex: 1,
                                         // flexDirection: 'column',
                                         justifyContent: 'center',
@@ -41,8 +95,9 @@ export default class Dashboard extends Component {
                                     }}>
                                         <View style={{ width: 50, height: 50, backgroundColor: 'powderblue' }} />
                                         <View style={{ height: 50, backgroundColor: 'skyblue' }} />
-                                        <View style={{ height: 100, backgroundColor: 'steelblue' }} />
-                                    </View>
+                                        <View style={{ height: 100, backgroundColor: 'steelblue' }} /> 
+                                    </View>*/}
+                                    
                                 </Body>
                                 {/* </CardItem> */}
 
@@ -87,6 +142,12 @@ export default class Dashboard extends Component {
                                 {/* </CardItem> */}
 
                             </Card>
+                            <TouchableHighlight onPress={this._handleLogOut}>
+                                <Text style={[styles.button, styles.greyButton]}>
+                                    Log Out
+                                </Text>
+                            </TouchableHighlight>
+
                         </View>
                     </LinearGradient>
                 </View>
@@ -107,6 +168,9 @@ const styles = {
         marginBottom: 25,
         borderRadius: 10
     },
-
+    greyButton: {
+        backgroundColor: '#777',
+        color: '#fff'
+      }
 };
 

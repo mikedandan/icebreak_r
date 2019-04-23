@@ -10,9 +10,8 @@ export class Message extends Component {
     render() {
         return (
             <ListItem>
-                <Text>TEST</Text>
                 <Text>{this.props.displayName}</Text>
-                <Text>{this.props.email}</Text>
+                <Text>{this.props.message}</Text>
                 <Text>{this.props.id}</Text>
             </ListItem>
         );
@@ -20,12 +19,14 @@ export class Message extends Component {
 }
 
 export class ChatFooter extends Component {
+
+
     render() {
         return (
             <View style={styles.inputContainer}>
 
                 <Form>
-                    <Textarea rowSpan={2} placeholder="Your message here"/>
+                    <Textarea rowSpan={2} placeholder="Your message here" onChangeText={(value) => this.props.onInputChange(value)}/>
                 </Form>
 
                 <Icon style={styles.sendButton} type="FontAwesome" name="arrow-right" onPress={this.props.onClick}/>

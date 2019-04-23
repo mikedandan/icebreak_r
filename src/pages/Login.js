@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, AsyncStorage, KeyboardAvoidingView, Navigation } from 'react-native';
+import { View, AsyncStorage, Navigation, Image } from 'react-native';
 import { Container, Text, Header, Left, Right, Icon, Button, Body, Title, Content, Form, Input, Label, Item } from 'native-base';
 import Nav from '../components/Nav';
 import LinearGradient from 'react-native-linear-gradient';
@@ -15,28 +15,76 @@ export default class Signup extends Component {
         state = {
             username: '',
             password: '',
+            token: '',
+            auth: 'hi'
         }
     }
 
     checkLogin = () => {
-        console.log(`VOID ENTERED \n User: ${this.state.username} \n PW: ${this.state.password} \n Remeber to comment this log out`)
+        const self = this;
+        // console.log(`VOID ENTERED \n User: ${this.state.username} \n PW: ${this.state.password} \n Remeber to comment this log out`)
         axios.post('https://icebreakr-serv.herokuapp.com/api/user/login', {
             email: this.state.username,
-            password: this.state.password
+            password: this.state.password,
         })
             .then(function (response) {
-                console.log(response);
+                // console.log(response.data.token);
+                // let tok = response.data.token;
+                // self.props.handlesomthing(response.data.token);
+
+                self._storeData(response.data.token);
+
+                // try {
+                //     await AsyncStorage.setItem('token', response.data.token);
+                //   } catch (error) {
+                //     // Error saving data
+                //   }
             })
             .catch(function (error) {
                 console.log(error);
             });
+
+
+
     }
+
+    _storeData = (e) => {
+   
+            AsyncStorage.setItem('token', e);
+            this._retrieveData();
+            Actions.dashboard();
+    };
+    _retrieveData = async () => {
+        try {
+
+            const value = await AsyncStorage.getItem('token');
+
+            // if (value !== null) {
+            //     // We have data!!
+                console.log(value);
+            // }
+
+        } catch (error) {
+            // Error retrieving data
+        }
+    };
 
     componentDidMount() {
         // this.loadInitialState().done();
+        // axios.get('https://icebreakr-serv.herokuapp.com/api/user')
+        // .then(function (response) {
+        //    console.log(response);
+        // })
+        // .catch(function (error) {
+        //     console.log(error);
+        // });
 
 
-
+        // jwt.verify("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjYjkzYTQ2Yjk5MDBlMDAxNzdlZGQ3ZCIsImlhdCI6MTU1NTcwMTg4OCwiZXhwIjoxNTg3MjU4ODE0fQ.d89O3fZoE87E5gW5V9V_6JbxNGIFEsYm3NbLH5tXqqY", 'secret', function(err, decoded) {
+        //     console.log(decoded.foo) // bar
+        //   });
+        // var decoded = decode("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjYmEzMGU3ZjZmZmU1MTBhMDU4MmQyMSIsIm5hbWUiOiJqcGl6emxleGN2eGN2IiwiaWF0IjoxNTU1NzA2Mjg1LCJleHAiOjE1ODcyNjMyMTF9.PP8lY49PA83XQpMSJDCfIokjcoHXXlJw4R216YSOxPU");
+        // console.log(decoded);
     }
 
     loadInitialState = async () => {
@@ -52,16 +100,22 @@ export default class Signup extends Component {
             <LinearGradient
                 colors={['#42AAD8', '#A8D7F7']}
                 style={styles.container}>
-                <View>
 
-                    {/* <Text style={styles.thisIsAStyle}> this is the signup page</Text> */}
-                    <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
-                    <View>
+
+                <Image source={require('../images/icebreakr-logo-icon.png')} style={{ position: 'absolute', top: 15, alignSelf: 'center' }} />
+                <View style={{ height: '100%', justifyContent: 'center', }} >
+
+                    <View style={{ marginBottom: 90 }}>
+                        <Text style={{ color: 'white', textAlign: 'center', fontSize: 40 }}>Log In</Text>
+                    </View>
+                    <View style={{ marginBottom: 0 }}>
                         <Form style={styles.form}>
                             <Item floatingLabel >
-                                <Label>Username</Label>
+                                <Label>Email</Label>
                                 <Input onChangeText={(value) => this.setState({ username: value })} />
                             </Item>
+                        </Form>
+                        <Form style={styles.form}>
                             <Item floatingLabel last >
                                 <Label>Password</Label>
                                 <Input onChangeText={(value) => this.setState({ password: value })} />
@@ -70,19 +124,22 @@ export default class Signup extends Component {
 
                         </Form>
                     </View>
-                    <View style={{
-                        backgroundColor: '#F5FCFF',
-                        alignSelf: 'center',
-                        marginTop: 70,
-                        justifyContent: 'center',
-                        width: '100%'
+                </View>
+                <View style={{
+                    backgroundColor: '#F5FCFF',
+                    alignItems: 'center',
+                    width: '100%',
+                    minHeight: 290,
+                    position: 'absolute',
+                    bottom: 0,
+                    justifyContent: 'flex-end',
 
-                    }}>
-                        <Button style={styles.button} onPress={this.checkLogin}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} >Sign in user</Text></Button>
-                        <Text>FORGOT PASSWORD? GET NEW!</Text>
-                        <Text onPress={() => Actions.signup()}>DON'T HAVE AN ACCOUNT? Signup!</Text>
-                    </View>
-                </View >
+                }}>
+                    <Button info style={styles.button} onPress={this.checkLogin}><Text style={{ color: 'white', textAlign: 'center', width: 150, alignSelf: 'center' }} >Sign in user</Text></Button>
+                    <Text>FORGOT PASSWORD? GET NEW!</Text>
+                    <Text style={{ marginBottom: 30 }} onPress={() => Actions.signup()}>DON'T HAVE AN ACCOUNT? Signup!</Text>
+                </View>
+
             </LinearGradient>
         );
     }
@@ -101,8 +158,13 @@ const styles = {
     button: {
         // backgroundColor: 'white',
         alignSelf: 'center',
+        // alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10,
         marginBottom: 25,
-        borderRadius: 10
+        borderRadius: 10,
+        width: "80%",
+        height: 50
     },
     form: {
         backgroundColor: 'white',
@@ -115,7 +177,9 @@ const styles = {
         zIndex: 99,
         width: 330,
         // minHeight: 280,
-        marginTop: 200
+        marginTop: 10
+    },
+    container: {
+        flex: 1,
     },
 };
-
