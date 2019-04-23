@@ -2,7 +2,7 @@
 import React from 'react';
 import { AppRegistry, Text, View } from 'react-native';
 import RouterComp from './src/Router';
-import GroupChat from './src/pages/GroupChat';
+import Chat from './src/pages/Chat';
 // Create a component 
 
 

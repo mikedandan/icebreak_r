@@ -15,11 +15,11 @@ import decode from 'jwt-decode';
 
 export default class Dashboard extends Component {
     state = {
-        userInfo : {
+        userInfo: {
 
         }
     }
-    componentDidMount = () =>{
+    componentDidMount = () => {
         console.log('sup');
         this._retrieveData();
     }
@@ -42,20 +42,20 @@ export default class Dashboard extends Component {
                 console.log('user saved locally');
                 console.log(token);
                 var decoded = decode(token);
-            
-                
-        
-                this.setState({ 
-                    userInfo :{
+
+
+
+                this.setState({
+                    userInfo: {
                         email: decoded.email,
                         id: decoded.id,
                         picture: decoded.picture,
                         name: decoded.name
-                    } 
+                    }
                 });
                 console.log(this.state.userInfo);
-                
-            }else {
+
+            } else {
 
                 console.log('no data');
 
@@ -65,7 +65,7 @@ export default class Dashboard extends Component {
             // Error retrieving data
         }
     };
-    
+
     render() {
         return (
             <ScrollView >
@@ -74,29 +74,74 @@ export default class Dashboard extends Component {
                         colors={['#42AAD8', '#A8D7F7']}
                         style={styles.container}>
 
-                        <Header />
+                        {/* <Header /> */}
 
                         <View>
                             <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
+                            <Text onPress={() => Actions.Chat()}>Go To Chat</Text>
                             <Image source={require('../images/icebreakr-logo-icon.png')} style={{ alignSelf: 'center' }} />
                             <Text style={{ color: 'white', textAlign: 'center', marginTop: 30, marginBottom: 30 }}>What do you want to do?</Text>
                             <Card>
                                 <CardItem header>
 
                                 </CardItem>
-                                <Text style={{ color: 'black', textAlign: 'center', marginTop: 10, marginBottom: 10 }}>Private Message</Text>
+                                <Text style={{ color: 'black', textAlign: 'center', marginTop: 0, marginBottom: 0 }}>Private Messages</Text>
                                 <Body>
-                                    {/* <View style={{
-                                        flex: 1,
-                                        // flexDirection: 'column',
-                                        justifyContent: 'center',
-                                        alignItems: 'stretch',
-                                    }}>
-                                        <View style={{ width: 50, height: 50, backgroundColor: 'powderblue' }} />
-                                        <View style={{ height: 50, backgroundColor: 'skyblue' }} />
-                                        <View style={{ height: 100, backgroundColor: 'steelblue' }} /> 
-                                    </View>*/}
-                                    
+                                    <ScrollView>
+                                        <View style={{ height: 130, marginTop: 20, marginBottom: 20 }}>
+                                            <ScrollView
+                                                horizontal={true}
+                                                showsHorizontalScrollIndicator={false}
+                                            >
+                                                <View style={{ flex: 2, paddingLeft: 5 }}>
+                                                    <Image source={require('../images/avatars/RandomAnimals_brown_bear.png')}
+                                                        name="Avatar"
+                                                    />
+                                                    <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
+                                                        <Text>AvatarName</Text>
+                                                    </View>
+                                                </View>
+
+                                                <View style={{ flex: 2, paddingLeft: 5 }}>
+                                                    <Image source={require('../images/avatars/RandomAnimals_brown_bear.png')}
+                                                        name="Avatar"
+                                                    />
+                                                    <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
+                                                        <Text>AvatarName</Text>
+                                                    </View>
+                                                </View>
+
+                                                <View style={{ flex: 2, paddingLeft: 5 }}>
+                                                    <Image source={require('../images/avatars/RandomAnimals_brown_bear.png')}
+                                                        name="Avatar"
+                                                    />
+                                                    <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
+                                                        <Text>AvatarName</Text>
+                                                    </View>
+                                                </View>
+
+                                                <View style={{ flex: 2, paddingLeft: 5 }}>
+                                                    <Image source={require('../images/avatars/RandomAnimals_brown_bear.png')}
+                                                        name="Avatar"
+                                                    />
+                                                    <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
+                                                        <Text>AvatarName</Text>
+                                                    </View>
+                                                </View>
+
+                                                <View style={{ flex: 2, paddingLeft: 5 }}>
+                                                    <Image source={require('../images/avatars/RandomAnimals_brown_bear.png')}
+                                                        name="Avatar"
+                                                    />
+                                                    <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
+                                                        <Text>AvatarName</Text>
+                                                    </View>
+                                                </View>
+                                                
+                                            </ScrollView>
+                                        </View>
+                                    </ScrollView>
+
                                 </Body>
                                 {/* </CardItem> */}
 
@@ -110,7 +155,6 @@ export default class Dashboard extends Component {
                                 {/* <CardItem> */}
                                 <Body>
                                     <Image source={require('../images/group-icon.png')} style={{ alignSelf: 'center' }} />
-
                                     <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 10 }}>
                                         Chat with a bunch of people. Answer questions and meet meme-able people like yourself
                                         </Text>
@@ -132,7 +176,7 @@ export default class Dashboard extends Component {
                                 <Body>
                                     <Image source={require('../images/calendar-icon.png')} style={{ alignSelf: 'center' }} />
                                     <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 30 }}>
-                                        Set up an event in your area. A social meetup or hangout with people.
+                                        Set up an event in your area. Create a social meetup or hangout with people.
                                         </Text>
                                     <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 300 }} onPress={() => Actions.signup()}>SET UP EVENT</Text></Button>
 
@@ -170,6 +214,6 @@ const styles = {
     greyButton: {
         backgroundColor: '#777',
         color: '#fff'
-      }
+    }
 };
 
