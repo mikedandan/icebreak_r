@@ -11,7 +11,7 @@ import Dashboard from './src/pages/Dashboard';
 const App = () => {
     return (
 
-            <Chat />
+            <RouterComp />
     
     );
 };
