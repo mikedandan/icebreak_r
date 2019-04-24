@@ -7,12 +7,14 @@ import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../components/BackButton';
 import { ChatWindow, ChatFooter } from '../components/ChatWindow';
-import { io, openSocket } from 'socket.io-client'
+import { io, SocketIOClient } from 'socket.io-client'
 import decode from 'jwt-decode';
 
-const socket = openSocket(`https://icebreakr-serv.herokuapp.com/group`);
+//const socket = openSocket(`https://icebreakr-serv.herokuapp.com/group`);
 
 export default function GroupChat() {
+
+    const socket = SocketIOClient("https://icebreakr-serv.herokuapp.com/group")
 
     const [positions, setPositions] = useState({ lat: 0, lon: 0 });
     const [messages, setMessages] = useState([]);
@@ -104,11 +106,11 @@ export default function GroupChat() {
         }
         //http://10.0.2.2:3000/
         //https://icebreakr-serv.herokuapp.com/
-        socket = io(`https://icebreakr-serv.herokuapp.com/group`, {
-            query: {
-                username
-            }
-        });
+        // socket = io(`https://icebreakr-serv.herokuapp.com/group`, {
+        //     query: {
+        //         username
+        //     }
+        // });
         console.log(userInput);
         await socket.emit('newMessageToServer', newMessage);
         await postMessage(newMessage);
@@ -117,12 +119,12 @@ export default function GroupChat() {
     useEffect(() => {
         load();
         getToken()
-        // socket.on('messageToClients',async () =>{
-        //     // const newMsg = buildHTML(msg);
-        //     // document.querySelector('#messages').innerHTML += newMsg;
-        //     const newMessages = await getChatHistory();
-        //     setMessages(newMessages);
-        // });
+        socket.on('messageToClients',async () =>{
+            // const newMsg = buildHTML(msg);
+            // document.querySelector('#messages').innerHTML += newMsg;
+            const newMessages = await getChatHistory();
+            setMessages(newMessages);
+        });
     }, []);
 
     return (
