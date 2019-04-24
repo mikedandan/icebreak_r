@@ -14,6 +14,7 @@ import Chat from './pages/Chat';
 
 
 import decode from 'jwt-decode';
+import InboxPrivateMessage from './components/InboxPrivateMessage';
 
 
 export default class RouterComp extends Component {
@@ -113,6 +114,8 @@ export default class RouterComp extends Component {
                     <Scene key="eventSetup" component={eventSetup} hideNavBar='true' type={ActionConst.REPLACE} />
                     <Scene key="main" component={Main} hideNavBar='true' type={ActionConst.REPLACE} initial />
                     <Scene key="groupChat"  component={GroupChat} hideNavBar='true' type={ActionConst.REPLACE} />
+                    <Scene key="Inbox"  component={InboxPrivateMessage} hideNavBar='true' type={ActionConst.REPLACE}  /> 
+
                       <Scene 
                     
                     key="Chat" component={Chat} 
