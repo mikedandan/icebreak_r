@@ -22,7 +22,7 @@ export default class Chat extends Component {
         this.state = {
           active: false,
           typing: '',
-        messages: ['test1', 'test2', 'new message', '4th message'],
+        messages: ['test1', 'test2', 'new message', '4th message', 'test','','','',''],
         messageType: ''
         };
       }
@@ -82,9 +82,9 @@ export default class Chat extends Component {
                     data={this.state.messages}
                     renderItem={this.renderItem.bind(this)}
                     inverted
-                ></FlatList>
-
-                {/* Sample Direct message  */}
+                />
+{/* 
+                Sample Direct message 
                 <View style={styles.row}>
                     <Image style={styles.avatar} source={{ uri: 'https://res.cloudinary.com/teepublic/image/private/s--gfS65FhK--/t_Preview/b_rgb:fffefe,c_limit,f_jpg,h_630,q_90,w_630/v1530450914/production/designs/2844623_1.jpg' }} />
                     <View style={styles.rowTextDirect}>
@@ -93,14 +93,14 @@ export default class Chat extends Component {
                     </View>
                 </View>
 
-                {/* Sample User sent message  */}
+                Sample User sent message 
                 <View style={styles.row}>
                     <Image style={styles.avatar} source={{ uri: 'https://res.cloudinary.com/teepublic/image/private/s--gfS65FhK--/t_Preview/b_rgb:fffefe,c_limit,f_jpg,h_630,q_90,w_630/v1530450914/production/designs/2844623_1.jpg' }} />
                     <View style={styles.rowTextSender}>
                         <Text style={styles.sender}>Sender Sender</Text>
                         <Text style={styles.message}>Sender message sample text. Lorem  Ipsum thiealra;sjdk tlka jsdlj a;lwjeflaskj ;laj tlkj lkjsa lskjal;ekj als;dfj lkarsjtg kldhnxclkjgaioselkjt sdoiflhk szxjfa E df.</Text>
                     </View>
-                </View>
+                </View> */}
 
                 <KeyboardAvoidingView behavior="padding">
                     <View style={styles.footer}>
