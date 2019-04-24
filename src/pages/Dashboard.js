@@ -57,7 +57,6 @@ export default class Dashboard extends Component {
                 console.log(this.state.userInfo);
 
             } else {
-
                 console.log('no data');
 
             }
@@ -79,7 +78,7 @@ export default class Dashboard extends Component {
 
                         <View>
                             <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
-                            <Text onPress={() => Actions.Chat()}>Go To Chat</Text>
+                            <Text onPress={() => Actions.groupChat()}>Go To Chat</Text>
                             <Image source={require('../images/icebreakr-logo-icon.png')} style={{ alignSelf: 'center' }} />
                             <Text style={{ color: 'white', textAlign: 'center', marginTop: 30, marginBottom: 30 }}>What do you want to do?</Text>
                             <Card>

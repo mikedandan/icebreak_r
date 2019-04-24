@@ -103,9 +103,8 @@ export default class RouterComp extends Component {
 
 
     render() {
-
         return (
-            <Router>
+            <Router navigationBarStyle={{ backgroundColor: '#81b71a' }}>
                 <Scene key="root">
 
                     <Scene key="login" handlesomthing={(e) => this.handlesomthing(e)} component={Login} hideNavBar='true'  />
@@ -114,12 +113,8 @@ export default class RouterComp extends Component {
                     <Scene key="eventSetup" component={eventSetup} hideNavBar='true' type={ActionConst.REPLACE} />
                     <Scene key="main" component={Main} hideNavBar='true' type={ActionConst.REPLACE} initial />
                     <Scene key="groupChat"  component={GroupChat} hideNavBar='true' type={ActionConst.REPLACE} />
-                    <Scene key="Inbox"  component={InboxPrivateMessage} hideNavBar='true' type={ActionConst.REPLACE}  /> 
+                    <Scene key="Chat" component={Chat} title="Chat Page"  />  
 
-                      <Scene 
-                    
-                    key="Chat" component={Chat} 
-                    title="Chat Page"  />  
                 </Scene>
             </Router>
         );

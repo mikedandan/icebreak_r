@@ -5,27 +5,53 @@ import Nav from '../components/Nav';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
+import Geolocation from 'react-native-geolocation-service';
+import Geocoder from 'react-native-geocoding'; // https://www.npmjs.com/package/react-native-geocoding
+Geocoder.init('AIzaSyBBZGkvHG2ppz-zp15e9QHR3FnrEhDy8Fk');
 export default class Signup extends Component {
 
   state = {
     eventName: '',
     eventLocation: '',
     eventTime: '',
-    eventCode: ''
+    eventMsg: '',
+    eventCode: '',
+    lat: 0,
+    lng: 0
   }
 
-  // Use this function to check if data from the page is being passed on to variables
-  checkVariables = () => {
-    console.log(this.state.eventName)
-    console.log(this.state.eventLocation)
-    console.log(this.state.eventTime)
-  }
+  generateEvent = async () => {
+    await Geocoder.from(this.state.eventLocation)
+      .then(json => {
+        var location = json.results[0].geometry.location;
+        this.setState({ lat: location.lat })
+        this.setState({ lng: location.lng })
+      })
+      .catch(error => console.warn(error));
 
-  // Use this fuction to post variables to the DB
-  addEventDB = () => {
-    console.log(this.state.eventName)
-    console.log(this.state.eventLocation)
-    console.log(this.state.eventTime)
+    eventCode = this.state.eventName + Math.floor(10000 + Math.random() * 90000)
+    eventMsg = 'Your new event ID is'
+    this.setState({ eventCode: eventCode })
+    this.setState({ eventMsg: eventMsg })
+    let event = {
+      eventName: this.state.eventName,
+      eventLocation: this.state.eventLocation,
+      eventLat: this.state.lat,
+      eventLng: this.state.lng,
+      eventId: eventCode,
+      eventOwner: "eventOwner" // WHERE DO I GRAB EVENT OWNER FROM?
+    }
+
+    // console.log('*** Event Variables ***')
+    // console.log('Event Name: ' + this.state.eventName)
+    // console.log('Event Location: ' + this.state.eventLocation)
+    // console.log('Event Latitude: ' + locationLat)
+    // console.log('Event Longitude: ' + locationLng)
+    // console.log('Event ID: ' + eventCode)
+    // console.log('')
+    console.log('*** Event Object ***')
+    console.log(event)
+
     // CHANGE URL TO POINT TO ANOTHER DATABASE
     // axios.post('https://icebreakr-serv.herokuapp.com/api/user/register', {
     //   evname: this.state.eventName,
@@ -47,47 +73,45 @@ export default class Signup extends Component {
           colors={['#42AAD8', '#A8D7F7']}
           style={styles.container}>
 
-          <View style={{ marginBottom: 75 }}>
+          <View style={{ marginBottom: 50 }}>
             <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
           </View>
 
           <Image source={require('../images/icebreakr-logo-icon.png')} style={{ position: 'absolute', top: 15, alignSelf: 'center' }} />
           <View style={{ height: '100%', justifyContent: 'center', }} >
-          
-          <View style={{ marginBottom: 130 }}>
-                        <Text style={{ color: 'white', textAlign: 'center', fontSize: 40 }}>Event Setup</Text>
+            <View style={{ marginBottom: 5 }}>
+              <Text style={{ color: 'white', textAlign: 'center', fontSize: 40 }}>Event Setup</Text>
+            </View>
+
+            <View style={{ marginBottom: 45 }}>
+              <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Your event chat will be specific to your event</Text>
+              <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Only people with your event ID will be able to join your event</Text>
+            </View>
+
+            <Form style={styles.form}>
+              <Item floatingLabel>
+                <Label>Event Name</Label>
+                <Input onChangeText={(value) => this.setState({ eventName: value })} />
+              </Item>
+              <Item floatingLabel>
+                <Label>Event Location (Venue or Address)</Label>
+                <Input onChangeText={(value) => this.setState({ eventLocation: value })} />
+              </Item>
+            </Form>
+
+            <View style={{ marginBottom: 45 }}></View>
+
+            <View style={{ backgroundColor: '#F5FCFF', zIndex: 98 }}>
+              <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 10 }}>{this.state.eventMsg}</Text>
+              <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 10 }}>{this.state.eventCode}</Text>
+              <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} onPress={() => this.generateEvent()}>SETUP EVENT</Text></Button>
+            </View>
           </View>
-          
-          <Form style={styles.form}>
-             <Item >
-               <Label>Event Setup</Label>
-             </Item>
-             <Item floatingLabel>
-               <Label>Event Name</Label>
-               <Input onChangeText={(value) => this.setState({ eventName: value })} />
-             </Item>
-             <Item floatingLabel>
-               <Label>Event Location</Label>
-               <Input onChangeText={(value) => this.setState({ eventLocation: value })} />
-             </Item>
-             <Item floatingLabel last>
-               <Label>Event Time</Label>
-               <Input onChangeText={(value) => this.setState({ eventTime: value })} />
-             </Item>
-           </Form >
-
-           <View style={{ backgroundColor: '#F5FCFF', zIndex: 98 }}>
-             <Text style={{ textAlign: 'center', marginTop: 30, marginBottom: 15 }}>Your Event Details</Text>
-             <Text style={{ textAlign: 'center', marginTop: 30, marginBottom: 15 }}>Your event chat will be specific to your event. Only people with your event QR code or ID will be able to join yor event</Text>
-
-             <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} onPress={() => this.checkVariables()}>SETUP EVENT</Text></Button>
-           </View>
-         </View>
-       </LinearGradient>
-     </ScrollView>
-   );
- }
- }
+        </LinearGradient>
+      </ScrollView>
+    );
+  }
+}
 
 const styles = {
   thisIsAStyle: {
@@ -120,49 +144,4 @@ const styles = {
   }
 };
 
-// BACKUP
-// render() {
-//   return (
-//     <ScrollView >
-//       <LinearGradient
-//         colors={['#42AAD8', '#A8D7F7']}
-//         style={styles.container}>
-
-//         <View style={{ zIndex: 97 }}>
-//         <View style={{ marginBottom: 130 }}></View>
-//           <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
-
-//           <Text style={{ textAlign: 'center', marginBottom: 75 }}></Text>
-//           <Image source={require('../images/icebreakr-logo-icon.png')} style={{ position: 'absolute', top: 15, alignSelf: 'center' }} />
-
-//           <Form style={styles.form}>
-//             <Item >
-//               <Label>Event Setup</Label>
-//             </Item>
-//             <Item floatingLabel>
-//               <Label>Event Name</Label>
-//               <Input onChangeText={(value) => this.setState({ eventName: value })} />
-//             </Item>
-//             <Item floatingLabel>
-//               <Label>Event Location</Label>
-//               <Input onChangeText={(value) => this.setState({ eventLocation: value })} />
-//             </Item>
-//             <Item floatingLabel last>
-//               <Label>Event Time</Label>
-//               <Input onChangeText={(value) => this.setState({ eventTime: value })} />
-//             </Item>
-//           </Form >
-
-//           <View style={{ backgroundColor: '#F5FCFF', zIndex: 98 }}>
-//             <Text style={{ textAlign: 'center', marginTop: 30, marginBottom: 15 }}>Your Event Details</Text>
-//             <Text style={{ textAlign: 'center', marginTop: 30, marginBottom: 15 }}>Your event chat will be specific to your event. Only people with your event QR code or ID will be able to join yor event</Text>
-
-//             <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} onPress={() => this.checkVariables()}>SETUP EVENT</Text></Button>
-//           </View>
-//         </View>
-//       </LinearGradient>
-//     </ScrollView>
-//   );
-// }
-// }
 
