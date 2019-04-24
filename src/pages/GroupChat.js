@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../components/BackButton';
-import { ChatWindow, Message, ChatFooter } from '../components/ChatWindow';
+import { ChatWindow, ChatFooter } from '../components/ChatWindow';
 import io from 'socket.io-client'
 
 let socket = io(`http://10.0.2.2:3000/group`);
@@ -16,6 +16,8 @@ export default function GroupChat() {
     const [positions, setPositions] = useState({ lat: 0, lon: 0 });
     const [messages, setMessages] = useState([]);
     const [userInput, setInput] = useState("Your Message Here");
+    const [user, setUser] = useState({});
+
 
     const getChatHistory = async (position) => {
         console.log("VOID")
@@ -34,6 +36,7 @@ export default function GroupChat() {
     };
 
     const load = async () => {
+
         Geolocation.getCurrentPosition(
             async (position) => {
                 console.log("In Geolocation Function" + position.coords.latitude + position.coords.longitude);
@@ -91,6 +94,8 @@ export default function GroupChat() {
     }
 
     useEffect(() => {
+      setUser({userID: 12345})
+
         load();
         // socket.on('messageToClients',async () =>{
         //     // const newMsg = buildHTML(msg);
@@ -101,42 +106,34 @@ export default function GroupChat() {
     }, []);
 
     return (
-        <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-            <LinearGradient colors={['#42AAD8', '#A8D7F7']} style={{ flex: 1 }}>
-                {/* <Text>YIKES:{number}</Text>
-                <Button onPress={uponLoad}><Text>Test</Text></Button> */}
+        <View style={styles.container} behavior="padding" enabled>
+            
                 {/* BackButton */}
                 <Text>Lat: {positions.lat}Lon: {positions.lon}</Text>
-                <View style={styles.backButton}>
-                    <BackButton />
-                </View>
+                <Text>User: {user.userID}</Text>
+               
 
                 {/* Chat Container */}
                 <View style={{ backgroundColor: '#E3E9EC', flex: 7 }}>
-                    <ChatWindow>
-                        {messages.map((r, i) =>
-                            <Message
-                                displayName={r.nickName}
-                                message={r.message}
-                                id={r._id}
-                                key={i}
-                            />
-                        )}
-                    </ChatWindow>
+                    <ChatWindow
+                      state={messages}
+                      currentUser={user}
+                    />
                 </View>
 
                 {/* Chat Footer */}
-                <View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
+                <KeyboardAvoidingView  behavior="padding">
 
                     <ChatFooter
                         onClick={handleMessageSent}
                         onInputChange={setInput}
+                        state={userInput}
                     />
-                </View>
+                </KeyboardAvoidingView>
 
                 {/* <Text style={styles.instructions}>Test Loc: Long: {this.state.long} Lat: {this.state.lat}</Text> */}
-            </LinearGradient>
-        </KeyboardAvoidingView>
+           
+        </View>
     );
 }
 
