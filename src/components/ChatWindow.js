@@ -20,14 +20,14 @@ export function ChatWindow(props) {
         // console.log(item);
         console.log(`Message ID ${item.userID} \n Current User: ${currentUser}`)
         //  === props.user.userID
-        if (tem.userID === currentUser){
+        if (item.userID === currentUser){
             console.log("DEREKUUU")
             return (
                 <View style={styles.row}>
                 
                     <Image style={styles.avatar} source={{ uri: 'https://www.andrew.cmu.edu/user/adowling/pokemon!/Images/pikachu.jpg' }} />
                     <View style={styles.rowTextSender}>
-                        <Text style={styles.sender}>{item.nickname}</Text>
+                        <Text style={styles.sender}>{item.nickName}</Text>
                         <Text style={styles.message}>{item.message}</Text>
                     </View>
                 </View>

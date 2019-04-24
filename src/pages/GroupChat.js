@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Header, Left, Right, Icon, Button, Body, Title, Content, Form, Input, Label, Item } from 'native-base';
-import { Text, View, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { Button } from 'native-base';
+import { Text, View, ScrollView, KeyboardAvoidingView, AsyncStorage} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
@@ -8,6 +8,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../components/BackButton';
 import { ChatWindow, ChatFooter } from '../components/ChatWindow';
 import io from 'socket.io-client'
+import decode from 'jwt-decode';
 
 let socket = io(`http://10.0.2.2:3000/group`);
 
@@ -18,6 +19,30 @@ export default function GroupChat() {
     const [userInput, setInput] = useState("Your Message Here");
     const [user, setUser] = useState({});
 
+    const getToken = async () => {
+        console.log("==============================");
+        try {
+            console.log("YAOZORS")
+            const token = await AsyncStorage.getItem('token');
+            if (token !== null) {
+                // We have data!!
+                console.log('user saved locally');
+                //console.log(token);
+                const decoded = decode(token);
+                console.log(decoded);
+                setUser({ 
+                    userID: decoded.id,
+                    nickName: decoded.displayName,
+                    picture: decoded.picture
+                 });
+            } else {
+                console.log('no data');
+            }
+
+        } catch (error) {
+            // Error retrieving data
+        }
+    }
 
     const getChatHistory = async (position) => {
         console.log("VOID")
@@ -41,7 +66,7 @@ export default function GroupChat() {
             async (position) => {
                 console.log("In Geolocation Function" + position.coords.latitude + position.coords.longitude);
                 setPositions({ lat: position.coords.latitude, lon: position.coords.longitude });
-                const chatHistory = await getChatHistory({lat: position.coords.latitude, lon: position.coords.longitude});
+                const chatHistory = await getChatHistory({ lat: position.coords.latitude, lon: position.coords.longitude });
                 setMessages(chatHistory);
             },
             (error) => {
@@ -71,12 +96,11 @@ export default function GroupChat() {
 
     const handleMessageSent = async () => {
         console.log("WEEEWOO");
-        const username = "Potato";
         const newMessage = {
-            "nickName": username,
+            "nickName": user.nickName,
             "message": userInput,
-            "picture": "test.png",
-            "userID": "12345",
+            "picture": user.picture,
+            "userID": user.userID,
             "lon": positions.lon,
             "lat": positions.lat,
             "namespace": "group",
@@ -94,9 +118,8 @@ export default function GroupChat() {
     }
 
     useEffect(() => {
-      setUser({userID: 12345})
-
         load();
+        getToken()
         // socket.on('messageToClients',async () =>{
         //     // const newMsg = buildHTML(msg);
         //     // document.querySelector('#messages').innerHTML += newMsg;
@@ -107,32 +130,34 @@ export default function GroupChat() {
 
     return (
         <View style={styles.container} behavior="padding" enabled>
-            
-                {/* BackButton */}
-                <Text>Lat: {positions.lat}Lon: {positions.lon}</Text>
-                <Text>User: {user.userID}</Text>
-               
 
-                {/* Chat Container */}
-                <View style={{ backgroundColor: '#E3E9EC', flex: 7 }}>
-                    <ChatWindow
-                      state={messages}
-                      currentUser={user}
-                    />
-                </View>
+            {/* BackButton */}
+            <Text>Lat: {positions.lat}Lon: {positions.lon}</Text>
+            <Text>User: {user.userID}</Text>
+            <Text>Picture: {user.picture}</Text>
+            <Text>Name: {user.nickName}</Text>
 
-                {/* Chat Footer */}
-                <KeyboardAvoidingView  behavior="padding">
 
-                    <ChatFooter
-                        onClick={handleMessageSent}
-                        onInputChange={setInput}
-                        state={userInput}
-                    />
-                </KeyboardAvoidingView>
+            {/* Chat Container */}
+            <View style={{ backgroundColor: '#E3E9EC', flex: 7 }}>
+                <ChatWindow
+                    state={messages}
+                    currentUser={user}
+                />
+            </View>
 
-                {/* <Text style={styles.instructions}>Test Loc: Long: {this.state.long} Lat: {this.state.lat}</Text> */}
-           
+            {/* Chat Footer */}
+            <KeyboardAvoidingView behavior="padding">
+
+                <ChatFooter
+                    onClick={handleMessageSent}
+                    onInputChange={setInput}
+                    state={userInput}
+                />
+            </KeyboardAvoidingView>
+
+            {/* <Text style={styles.instructions}>Test Loc: Long: {this.state.long} Lat: {this.state.lat}</Text> */}
+
         </View>
     );
 }
