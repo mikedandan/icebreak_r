@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Scene, Router, Actions, ActionConst } from 'react-native-router-flux';
-import Boilerplate from './components/Boilerplate';
+import LinearGradient from 'react-native-linear-gradient';
 import Main from './pages/Main';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -9,7 +9,12 @@ import eventSetup from './pages/eventSetup'; // imports create event page
 import { Text, View, PermissionsAndroid } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import Dashboard from './pages/Dashboard';
+
+import Chat from './pages/Chat';
+
+
 import decode from 'jwt-decode';
+
 
 export default class RouterComp extends Component {
 
@@ -98,7 +103,7 @@ export default class RouterComp extends Component {
 
     render() {
         return (
-            <Router>
+            <Router navigationBarStyle={{ backgroundColor: '#81b71a' }}>
                 <Scene key="root">
 
                     <Scene key="login" handlesomthing={(e) => this.handlesomthing(e)} component={Login} hideNavBar='true'  />
@@ -106,8 +111,10 @@ export default class RouterComp extends Component {
                     <Scene key="signup" component={Signup} hideNavBar='true' type={ActionConst.REPLACE} />
                     <Scene key="eventSetup" component={eventSetup} hideNavBar='true' type={ActionConst.REPLACE} />
                     <Scene key="main" component={Main} hideNavBar='true' type={ActionConst.REPLACE} initial />
-                    <Scene key="groupChat"  component={GroupChat} hideNavBar='true' type={ActionConst.REPLACE} />
-            
+                    <Scene key="groupChat"  component={GroupChat} title="Group Chat" />
+                    <Scene
+                        key="Chat" component={Chat} 
+                        title="Chat Page"  />  
                 </Scene>
             </Router>
         );
@@ -116,6 +123,10 @@ export default class RouterComp extends Component {
 };
 
 
+const styles = {
+    navigationBarTitleStyle: {
 
+   }
+};
 
 

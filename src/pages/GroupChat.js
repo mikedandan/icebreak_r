@@ -1,176 +1,141 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Container, Header, Left, Right, Icon, Button, Body, Title, Content, Form, Input, Label, Item } from 'native-base';
 import { Text, View, ScrollView, KeyboardAvoidingView } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../components/BackButton';
-import { ChatWindow, Message, ChatFooter } from '../components/ChatWindow';
+import { ChatWindow, ChatFooter } from '../components/ChatWindow';
 import io from 'socket.io-client'
 
+let socket = io(`http://10.0.2.2:3000/group`);
 
-export default class GroupChat extends Component {
+export default function GroupChat() {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            lat: 0,
-            long: 0,
-            permission: false,
-            messages: [],
-            userInput: ""
-        };
-    }
+    const [positions, setPositions] = useState({ lat: 0, lon: 0 });
+    const [messages, setMessages] = useState([]);
+    const [userInput, setInput] = useState("Your Message Here");
+    const [user, setUser] = useState({});
 
-    setPosition(pos) {
-        console.log(pos.coords.latitude);
-        console.log(pos.coords.longitude);
-        this.setState({
-            lat: pos.coords.latitude,
-            long: pos.coords.longitude
-        });
-    }
 
-    setPermission(bool) {
-        this.setState({ permission: bool });
-    }
-
-    setMessages(array) {
-        this.setState({ messages: array });
-    }
-
-    setUserInput(value) {
-        this.setState({ userInput: value });
-    }
-
-    setLocation(hasLocationPermission) {
-        console.log("ENTERED VOID");
-        console.log(hasLocationPermission);
-        if (hasLocationPermission) {
-            Geolocation.getCurrentPosition(
-                (position) => {
-                    console.log(position);
-                    this.setPosition(position);
-                },
-                (error) => {
-                    // See error code charts below.
-                    console.log(error.code, error.message);
-                },
-                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-            );
-        }
-    }
-
-    getChatHistory() {
-        const self = this;
+    const getChatHistory = async (position) => {
         console.log("VOID")
-        axios.get('http://10.0.2.2:3000/api/message/')
-            .then(function (response) {
-                self.setMessages(response.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        try {
+            console.log(`Location before sent to backend: \n ${position.lat},${position.lon}`);
+            const data = {
+                namespace: "group",
+                lat: position.lat,
+                lon: position.lon
+            };
+            const res = await axios.post('http://10.0.2.2:3000/api/message/filterHistory', data);
+            return res.data;
+        } catch (err) {
+            console.log(err);
+        }
     };
 
-    async checkPermission() {
-        await navigator.geolocation.getCurrentPosition(
-            () => this.setPermission(true),
-            () => this.setPermission(false)
-        )
-        return this.setPermission;
+    const load = async () => {
+
+        Geolocation.getCurrentPosition(
+            async (position) => {
+                console.log("In Geolocation Function" + position.coords.latitude + position.coords.longitude);
+                setPositions({ lat: position.coords.latitude, lon: position.coords.longitude });
+                const chatHistory = await getChatHistory({lat: position.coords.latitude, lon: position.coords.longitude});
+                setMessages(chatHistory);
+            },
+            (error) => {
+                // See error code charts below.
+                console.log(error.code, error.message);
+            },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        );
     }
 
-    async componentDidMount() {
-      
-
-        let hasLocationPermission = this.checkPermission();
-        console.log("Permission Status: " + hasLocationPermission);
-        await this.setLocation(hasLocationPermission);
-        await this.getChatHistory();
-    }
-
-    async postMessage(newMessage) {
-        let messageArray = this.state.messages;
-        await messageArray.push(newMessage);
-        const self = this;
-        axios.post('http://10.0.2.2:3000/api/message/new', newMessage)
-            .then(function (response) {
+    const postMessage = async (newMessage) => {
+        // let messageArray = this.state.messages;
+        // await messageArray.push(newMessage);
+        // const self = this;
+        return axios.post('http://10.0.2.2:3000/api/message/new', newMessage)
+            .then(async function (response) {
                 console.log(response);
                 //after pushing to database, clear the input
-                self.setUserInput("");
-                self.setMessages(messageArray);
+                //setInput(""); this part doesnt work 100% yet will fix once we get everything done
+                let chatHistory = await getChatHistory(positions);
+                setMessages(chatHistory);
             })
             .catch(function (error) {
                 console.log(error);
             });
     }
 
-    handleMessageSent = async () => {
+    const handleMessageSent = async () => {
         console.log("WEEEWOO");
         const username = "Potato";
         const newMessage = {
-            "nickName":username,
-            "message": this.state.userInput,
-            "picture":"test.png",
-            "userID":"12345",
-            "lon": this.state.long,
-            "lat": this.state.lat,
+            "nickName": username,
+            "message": userInput,
+            "picture": "test.png",
+            "userID": "12345",
+            "lon": positions.lon,
+            "lat": positions.lat,
             "namespace": "group",
-            "date":Date.now()
+            "date": Date.now()
         }
         //https://icebreakr-serv.herokuapp.com/
-        let socket = io(`http://10.0.2.2:3000`, {
+        socket = io(`http://10.0.2.2:3000/group`, {
             query: {
                 username
             }
         });
-        await socket.emit('GroupMsgToServer', this.state.userInput);
-        await this.postMessage(newMessage);
+        console.log(userInput);
+        await socket.emit('newMessageToServer', newMessage);
+        await postMessage(newMessage);
     }
 
-    render() {
+    useEffect(() => {
+      setUser({userID: 12345})
 
-        return (
-            <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-                <LinearGradient colors={['#42AAD8', '#A8D7F7']} style={{ flex: 1 }}>
+        load();
+        // socket.on('messageToClients',async () =>{
+        //     // const newMsg = buildHTML(msg);
+        //     // document.querySelector('#messages').innerHTML += newMsg;
+        //     const newMessages = await getChatHistory();
+        //     setMessages(newMessages);
+        // });
+    }, []);
 
-                    {/* BackButton */}
-                    <View style={styles.backButton}>
-                        <BackButton />
-                    </View>
+    return (
+        <View style={styles.container} behavior="padding" enabled>
+            
+                {/* BackButton */}
+                <Text>Lat: {positions.lat}Lon: {positions.lon}</Text>
+                <Text>User: {user.userID}</Text>
+               
 
-                    {/* Chat Container */}
-                    <View style={{ backgroundColor: '#E3E9EC', flex: 7 }}>
-                        <ChatWindow>
-                            {this.state.messages.map((r, i) =>
-                                <Message
-                                    displayName={r.nickName}
-                                    message={r.message}
-                                    id={r._id}
-                                    key={i}
-                                />
-                            )}
-                        </ChatWindow>
-                    </View>
+                {/* Chat Container */}
+                <View style={{ backgroundColor: '#E3E9EC', flex: 7 }}>
+                    <ChatWindow
+                      state={messages}
+                      currentUser={user}
+                    />
+                </View>
 
-                    {/* Chat Footer */}
-                    <View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
-                        <ChatFooter
-                            onClick={this.handleMessageSent.bind(this)}
-                            onInputChange={this.setUserInput.bind(this)}
-                        />
-                    </View>
+                {/* Chat Footer */}
+                <KeyboardAvoidingView  behavior="padding">
 
-                    {/* <Text style={styles.instructions}>Test Loc: Long: {this.state.long} Lat: {this.state.lat}</Text> */}
-                </LinearGradient>
-            </KeyboardAvoidingView>
+                    <ChatFooter
+                        onClick={handleMessageSent}
+                        onInputChange={setInput}
+                        state={userInput}
+                    />
+                </KeyboardAvoidingView>
 
-
-        );
-    }
+                {/* <Text style={styles.instructions}>Test Loc: Long: {this.state.long} Lat: {this.state.lat}</Text> */}
+           
+        </View>
+    );
 }
-
 
 const styles = {
     thisIsAStyle: {
