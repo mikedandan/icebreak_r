@@ -7,10 +7,10 @@ import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../components/BackButton';
 import { ChatWindow, ChatFooter } from '../components/ChatWindow';
-import io from 'socket.io-client'
+import { io, openSocket } from 'socket.io-client'
 import decode from 'jwt-decode';
 
-let socket = io(`http://10.0.2.2:3000/group`);
+const socket = openSocket(`https://icebreakr-serv.herokuapp.com/group`);
 
 export default function GroupChat() {
 
@@ -53,7 +53,7 @@ export default function GroupChat() {
                 lat: position.lat,
                 lon: position.lon
             };
-            const res = await axios.post('http://10.0.2.2:3000/api/message/filterHistory', data);
+            const res = await axios.post('https://icebreakr-serv.herokuapp.com/api/message/filterHistory', data);
             return res.data;
         } catch (err) {
             console.log(err);
@@ -70,7 +70,6 @@ export default function GroupChat() {
                 setMessages(chatHistory);
             },
             (error) => {
-                // See error code charts below.
                 console.log(error.code, error.message);
             },
             { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
@@ -78,10 +77,7 @@ export default function GroupChat() {
     }
 
     const postMessage = async (newMessage) => {
-        // let messageArray = this.state.messages;
-        // await messageArray.push(newMessage);
-        // const self = this;
-        return axios.post('http://10.0.2.2:3000/api/message/new', newMessage)
+        return axios.post('https://icebreakr-serv.herokuapp.com/api/message/new', newMessage)
             .then(async function (response) {
                 console.log(response);
                 //after pushing to database, clear the input
@@ -106,8 +102,9 @@ export default function GroupChat() {
             "namespace": "group",
             "date": Date.now()
         }
+        //http://10.0.2.2:3000/
         //https://icebreakr-serv.herokuapp.com/
-        socket = io(`http://10.0.2.2:3000/group`, {
+        socket = io(`https://icebreakr-serv.herokuapp.com/group`, {
             query: {
                 username
             }
