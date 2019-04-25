@@ -7,6 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import decode from 'jwt-decode';
+import  InboxPrivateMessage from '../components/InboxPrivateMessage';
 // import { getTopFrame } from 'jest-message-util';
 
 // import { Actions } from 'react-native-router-flux';
@@ -56,7 +57,6 @@ export default class Dashboard extends Component {
                 console.log(this.state.userInfo);
 
             } else {
-
                 console.log('no data');
 
             }
@@ -78,7 +78,7 @@ export default class Dashboard extends Component {
 
                         <View>
                             <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
-                            <Text onPress={() => Actions.Chat()}>Go To Chat</Text>
+                            <Text onPress={() => Actions.groupChat()}>Go To Chat</Text>
                             <Image source={require('../images/icebreakr-logo-icon.png')} style={{ alignSelf: 'center' }} />
                             <Text style={{ color: 'white', textAlign: 'center', marginTop: 30, marginBottom: 30 }}>What do you want to do?</Text>
                             <Card>
@@ -88,58 +88,7 @@ export default class Dashboard extends Component {
                                 <Text style={{ color: 'black', textAlign: 'center', marginTop: 0, marginBottom: 0 }}>Private Messages</Text>
                                 <Body>
                                     <ScrollView>
-                                        <View style={{ height: 130, marginTop: 20, marginBottom: 20 }}>
-                                            <ScrollView
-                                                horizontal={true}
-                                                showsHorizontalScrollIndicator={false}
-                                            >
-                                                <View style={{ flex: 2, paddingLeft: 5 }}>
-                                                    <Image source={require('../images/avatars/RandomAnimals_brown_bear.png')}
-                                                        name="Avatar"
-                                                    />
-                                                    <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
-                                                        <Text>AvatarName</Text>
-                                                    </View>
-                                                </View>
-
-                                                <View style={{ flex: 2, paddingLeft: 5 }}>
-                                                    <Image source={require('../images/avatars/RandomAnimals_brown_bear.png')}
-                                                        name="Avatar"
-                                                    />
-                                                    <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
-                                                        <Text>AvatarName</Text>
-                                                    </View>
-                                                </View>
-
-                                                <View style={{ flex: 2, paddingLeft: 5 }}>
-                                                    <Image source={require('../images/avatars/RandomAnimals_brown_bear.png')}
-                                                        name="Avatar"
-                                                    />
-                                                    <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
-                                                        <Text>AvatarName</Text>
-                                                    </View>
-                                                </View>
-
-                                                <View style={{ flex: 2, paddingLeft: 5 }}>
-                                                    <Image source={require('../images/avatars/RandomAnimals_brown_bear.png')}
-                                                        name="Avatar"
-                                                    />
-                                                    <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
-                                                        <Text>AvatarName</Text>
-                                                    </View>
-                                                </View>
-
-                                                <View style={{ flex: 2, paddingLeft: 5 }}>
-                                                    <Image source={require('../images/avatars/RandomAnimals_brown_bear.png')}
-                                                        name="Avatar"
-                                                    />
-                                                    <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
-                                                        <Text>AvatarName</Text>
-                                                    </View>
-                                                </View>
-                                                
-                                            </ScrollView>
-                                        </View>
+                                        <InboxPrivateMessage />
                                     </ScrollView>
 
                                 </Body>

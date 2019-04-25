@@ -14,6 +14,7 @@ import Chat from './pages/Chat';
 
 
 import decode from 'jwt-decode';
+import InboxPrivateMessage from './components/InboxPrivateMessage';
 
 
 export default class RouterComp extends Component {
