@@ -3,16 +3,6 @@ import { Text, View, FlatList, Image, TextInput, TouchableOpacity } from 'react-
 import { Fab, Icon, Textarea, Form } from 'native-base';
 
 
-
-// {messages.map((r, i) =>
-//     <Message
-//         displayName={r.nickName}
-//         message={r.message}
-//         id={r._id}
-//         key={i}
-//     />
-// )}
-
 export function ChatWindow(props) {
     const currentUser = props.currentUser.userID;
     //console.log(props);
@@ -21,7 +11,7 @@ export function ChatWindow(props) {
             return (
                 <View style={styles.row}>
 
-                    <Image style={styles.avatar} source={{ uri: 'https://www.andrew.cmu.edu/user/adowling/pokemon!/Images/pikachu.jpg' }} />
+                    <Image style={styles.avatar} source={{ uri: item.picture }} />
                     <View style={styles.rowTextSender}>
                         <Text style={styles.sender}>{item.nickName}</Text>
                         <Text style={styles.message}>{item.message}</Text>
@@ -33,7 +23,7 @@ export function ChatWindow(props) {
             return (
                 <View style={styles.row}>
 
-                    <Image style={styles.avatar} source={{ uri: 'https://www.andrew.cmu.edu/user/adowling/pokemon!/Images/pikachu.jpg' }} />
+                    <Image style={styles.avatar} source={{ uri: item.picture }} />
                     <View style={styles.rowText}>
                         <Text style={styles.sender}>{item.nickName}</Text>
                         <Text style={styles.message}>{item.message}</Text>
