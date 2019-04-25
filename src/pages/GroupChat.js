@@ -13,7 +13,7 @@ import decode from 'jwt-decode';
 
 export default function GroupChat() {
 
-    const socket = io(`http://10.0.2.2:3000/group`);
+    const socket = io(`https://icebreakr-serv.herokuapp.com/group`);
 
     const [positions, setPositions] = useState({ lat: 0, lon: 0 });
     const [messages, setMessages] = useState([]);
@@ -54,7 +54,7 @@ export default function GroupChat() {
                 lat: position.lat,
                 lon: position.lon
             };
-            const res = await axios.post('http://10.0.2.2:3000/api/message/filterHistory', data);
+            const res = await axios.post('https://icebreakr-serv.herokuapp.com/api/message/filterHistory', data);
             return res.data;
         } catch (err) {
             console.log(err);
@@ -79,10 +79,7 @@ export default function GroupChat() {
     }
 
     const postMessage = async (newMessage) => {
-        // let messageArray = this.state.messages;
-        // await messageArray.push(newMessage);
-        // const self = this;
-        return axios.post('http://10.0.2.2:3000/api/message/new', newMessage)
+        return axios.post('https://icebreakr-serv.herokuapp.com/api/message/new', newMessage)
             .then(async function (response) {
                 console.log(response);
                 //after pushing to database, clear the input
