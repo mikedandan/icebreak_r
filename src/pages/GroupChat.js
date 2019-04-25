@@ -7,7 +7,8 @@ import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../components/BackButton';
 import { ChatWindow, ChatFooter } from '../components/ChatWindow';
-import io from 'socket.io-client'
+import io from 'socket.io-client';
+import NavBar from '../components/Nav';
 import decode from 'jwt-decode';
 
 let socket = io(`http://10.0.2.2:3000/group`);
@@ -160,20 +161,22 @@ export default function GroupChat() {
 
         </View>
     );
-}
+  }
+
+ 
 
 const styles = {
-    thisIsAStyle: {
-        fontSize: 50,
-    },
-    container: {
-        flex: 1,
-        flexDirection: "column"
-    },
-    backButton: {
-        left: 0,
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-    }
+  thisIsAStyle: {
+    fontSize: 50,
+  },
+  container: {
+    flex: 1,
+    flexDirection: "column"
+  },
+  backButton: {
+    left: 0,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  }
 };
