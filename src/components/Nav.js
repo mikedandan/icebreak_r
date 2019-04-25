@@ -1,41 +1,63 @@
 import React, { Component } from 'react';
-import { View} from 'react-native';
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base';
-
+import { Text, View, TouchableOpacity } from 'react-native';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import {Icon} from 'native-base'
 export default class Nav extends Component {
+  
+  render() {
 
-    render() {
+    return (
+      <View>
+        <View style={styles.status}></View> 
+        <View style={styles.containerStyle}>
+          <TouchableOpacity onPress={this.props.openDrawer} onShowUnderlay={false} style={{ width: 100 }}>
+            <Icon style={styles.sendButton} type="FontAwesome" name="chevron-left" onPress={() => Actions.main()} />
 
-        return (
-            <Container>
-            <Header>
-              <Left>
-                <Button transparent>
-                  <Icon name='menu' />
-                </Button>
-              </Left>
-              <Body>
-                <Title>Header</Title>
-              </Body>
-              <Right />
-            </Header>
-            <Content>
-              <Text>
-                This is Content Section
-              </Text>
-            </Content>
+          </TouchableOpacity> 
+
+
+          <Text style={styles.navHeader}> Group Chat? </Text>
+          <View style={styles.spacer} ></View>
+
+        </View> 
         
-          </Container>
-        );
-    }
+      </View>
+    );
+  }
 }
 
 
 const styles = {
-    thisIsAStyle: {
-        fontSize: 20,
-        backgroundColor: 'red',
-        height: 25
-    },
-};
+  containerStyle: {
+    height: 45,
+    width: '100%',
+    backgroundColor: 'blue',
 
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    // alignItems: 'center',
+    // justifyContent: 'center'
+  },
+  status: {
+    height: getStatusBarHeight(),
+    backgroundColor: 'blue',
+  },
+  logo: {
+    marginLeft: 15,
+    marginTop: 5,
+    height: 15,
+    width: 20,
+    resizeMode: 'contain'
+  },
+  navHeader: {
+    fontWeight: 'bold',
+    alignItems: 'center',
+  },
+  spacer: {
+    width: 100,
+  },
+  sendButton: {
+    // color: "#42AAD8"
+    color: "#FF7F4F",
+  }
+};

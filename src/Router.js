@@ -111,10 +111,10 @@ export default class RouterComp extends Component {
                     <Scene key="signup" component={Signup} hideNavBar='true' type={ActionConst.REPLACE} />
                     <Scene key="eventSetup" component={eventSetup} hideNavBar='true' type={ActionConst.REPLACE} />
                     <Scene key="main" component={Main} hideNavBar='true' type={ActionConst.REPLACE} initial />
-                    <Scene key="groupChat"  component={GroupChat} title="Group Chat" />
+                    <Scene key="groupChat"  component={GroupChat} title="Group Chat" hideNavBar='true' type={ActionConst.REPLACE}/>
                     <Scene
                         key="Chat" component={Chat} 
-                        title="Chat Page"  />  
+                        title="Chat Page"  hideNavBar='true' type={ActionConst.REPLACE}  />  
                 </Scene>
             </Router>
         );
