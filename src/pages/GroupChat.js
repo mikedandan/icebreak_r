@@ -12,11 +12,13 @@ import io from 'socket.io-client';
 import NavBar from '../components/Nav';
 import decode from 'jwt-decode';
 
+//https://icebreakr-serv.herokuapp.com/
+// socket = io(`http://10.0.2.2:3000/group`);
 // const socket = io.connect(`http://10.0.2.2:3000/`);
 const socket = io('https://icebreakr-serv.herokuapp.com/', {
     transports: ['websocket'],
     secure: true
- });
+});
 
 export default function GroupChat() {
 
@@ -109,8 +111,6 @@ export default function GroupChat() {
             "namespace": "group",
             "date": Date.now()
         }
-        //https://icebreakr-serv.herokuapp.com/
-        // socket = io(`http://10.0.2.2:3000/group`);
         console.log(userInput);
         socket.emit('newMessageToServer', newMessage);
         await postMessage(newMessage);
@@ -125,9 +125,6 @@ export default function GroupChat() {
         socket.on('messageToClients', async () => {
             console.log("we here bois!!!!!");
             load();
-            // console.log(positions);
-            // const newMessages = await getChatHistory(positions);
-            // setMessages(newMessages);
         });
     }, []);
 
