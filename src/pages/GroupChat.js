@@ -117,12 +117,12 @@ export default function GroupChat() {
     useEffect(() => {
         load();
         getToken()
-        // socket.on('messageToClients',async () =>{
-        //     // const newMsg = buildHTML(msg);
-        //     // document.querySelector('#messages').innerHTML += newMsg;
-        //     const newMessages = await getChatHistory();
-        //     setMessages(newMessages);
-        // });
+        socket.on('messageToClients',async () =>{
+            // const newMsg = buildHTML(msg);
+            // document.querySelector('#messages').innerHTML += newMsg;
+            const newMessages = await getChatHistory();
+            setMessages(newMessages);
+        });
     }, []);
 
     return (
