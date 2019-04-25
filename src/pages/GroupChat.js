@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'native-base';
-import { Text, View, ScrollView, KeyboardAvoidingView, AsyncStorage} from 'react-native';
+import { Text, View, ScrollView, KeyboardAvoidingView, AsyncStorage } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../components/BackButton';
 import { ChatWindow, ChatFooter } from '../components/ChatWindow';
-import socketIOClient from 'socket.io-client';
+// import socketIOClient from 'socket.io-client';
+import io from 'socket.io-client';
 import NavBar from '../components/Nav';
 import decode from 'jwt-decode';
+
+const socket = io.connect(`http://10.0.2.2:3000/`);
 
 export default function GroupChat() {
 
@@ -29,11 +32,11 @@ export default function GroupChat() {
                 //console.log(token);
                 const decoded = decode(token);
                 console.log(decoded);
-                setUser({ 
+                setUser({
                     userID: decoded.id,
                     nickName: decoded.displayName,
                     picture: decoded.picture
-                 });
+                });
             } else {
                 console.log('no data');
             }
@@ -52,7 +55,7 @@ export default function GroupChat() {
                 lat: position.lat,
                 lon: position.lon
             };
-            const res = await axios.post('https://icebreakr-serv.herokuapp.com/api/message/filterHistory', data);
+            const res = await axios.post('http://10.0.2.2:3000/api/message/filterHistory', data);
             return res.data;
         } catch (err) {
             console.log(err);
@@ -63,7 +66,7 @@ export default function GroupChat() {
 
         Geolocation.getCurrentPosition(
             async (position) => {
-                console.log("In Geolocation Function" + position.coords.latitude + position.coords.longitude);
+                // console.log("In Geolocation Function" + position.coords.latitude + position.coords.longitude);
                 setPositions({ lat: position.coords.latitude, lon: position.coords.longitude });
                 const chatHistory = await getChatHistory({ lat: position.coords.latitude, lon: position.coords.longitude });
                 setMessages(chatHistory);
@@ -77,11 +80,11 @@ export default function GroupChat() {
     }
 
     const postMessage = async (newMessage) => {
-        return axios.post('https://icebreakr-serv.herokuapp.com/api/message/new', newMessage)
+        return axios.post('http://10.0.2.2:3000/api/message/new', newMessage)
             .then(async function (response) {
                 //console.log(response);
                 //after pushing to database, clear the input
-                setInput(""); 
+                setInput("");
                 let chatHistory = await getChatHistory(positions);
                 setMessages(chatHistory);
             })
@@ -104,16 +107,17 @@ export default function GroupChat() {
         }
         //https://icebreakr-serv.herokuapp.com/
         // socket = io(`http://10.0.2.2:3000/group`);
-        const socket = socketIOClient(`https://icebreakr-serv.herokuapp.com/`);
         console.log(userInput);
         socket.emit('newMessageToServer', newMessage);
         await postMessage(newMessage);
     }
 
     useEffect(() => {
+        console.log("in use effect")
         load();
         getToken();
-        const socket = socketIOClient(`https://icebreakr-serv.herokuapp.com/`);
+        console.log("socket" + socket.id);
+
         socket.on('messageToClients', async () => {
             console.log("we here bois!!!!!");
             const newMessages = await getChatHistory(positions);
@@ -153,22 +157,22 @@ export default function GroupChat() {
 
         </View>
     );
-  }
+}
 
- 
+
 
 const styles = {
-  thisIsAStyle: {
-    fontSize: 50,
-  },
-  container: {
-    flex: 1,
-    flexDirection: "column"
-  },
-  backButton: {
-    left: 0,
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-  }
+    thisIsAStyle: {
+        fontSize: 50,
+    },
+    container: {
+        flex: 1,
+        flexDirection: "column"
+    },
+    backButton: {
+        left: 0,
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+    }
 };

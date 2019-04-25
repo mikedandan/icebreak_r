@@ -28,7 +28,7 @@ export default class Dashboard extends Component {
     _handleLogOut = () => {
         console.log('hello world');
         AsyncStorage.removeItem('token');
-        alert('You have been logged out.');
+        alert('Icebreakr','You have been logged out.');
         Actions.main();
     }
 

@@ -115,7 +115,7 @@ export default class Signup extends Component {
 
             <Item floatingLabel last>
               <Label>Password</Label>
-              <Input onChangeText={(value) => this.setState({ password: value })} />
+              <Input secureTextEntry={true} onChangeText={(value) => this.setState({ password: value })} />
             </Item>
           </Form >
 
