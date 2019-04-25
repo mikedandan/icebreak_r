@@ -12,7 +12,11 @@ import io from 'socket.io-client';
 import NavBar from '../components/Nav';
 import decode from 'jwt-decode';
 
-const socket = io.connect(`http://10.0.2.2:3000/`);
+// const socket = io.connect(`http://10.0.2.2:3000/`);
+const socket = io('https://icebreakr-serv.herokuapp.com/', {
+    transports: ['websocket'],
+    secure: true
+ });
 
 export default function GroupChat() {
 
@@ -55,7 +59,7 @@ export default function GroupChat() {
                 lat: position.lat,
                 lon: position.lon
             };
-            const res = await axios.post('http://10.0.2.2:3000/api/message/filterHistory', data);
+            const res = await axios.post('https://icebreakr-serv.herokuapp.com/api/message/filterHistory', data);
             return res.data;
         } catch (err) {
             console.log(err);
@@ -80,7 +84,7 @@ export default function GroupChat() {
     }
 
     const postMessage = async (newMessage) => {
-        return axios.post('http://10.0.2.2:3000/api/message/new', newMessage)
+        return axios.post('https://icebreakr-serv.herokuapp.com/api/message/new', newMessage)
             .then(async function (response) {
                 //console.log(response);
                 //after pushing to database, clear the input
@@ -120,8 +124,10 @@ export default function GroupChat() {
 
         socket.on('messageToClients', async () => {
             console.log("we here bois!!!!!");
-            const newMessages = await getChatHistory(positions);
-            setMessages(newMessages);
+            load();
+            // console.log(positions);
+            // const newMessages = await getChatHistory(positions);
+            // setMessages(newMessages);
         });
     }, []);
 
