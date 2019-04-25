@@ -15,14 +15,9 @@ import { Fab, Icon, Textarea, Form } from 'native-base';
 
 export function ChatWindow(props) {
     const currentUser = props.currentUser.userID;
-    console.log(props);
+    //console.log(props);
     const renderItem = ({ item }) => {
-        console.log("Chat window function No fun derek is here");
-        // console.log(item);
-        console.log(`Message ID ${item.userID} \n Current User: ${currentUser}`)
-        //  === props.user.userID
         if (item.userID === currentUser) {
-            console.log("DEREKUUU")
             return (
                 <View style={styles.row}>
 
@@ -35,7 +30,6 @@ export function ChatWindow(props) {
             );
         }
         else {
-            console.log("SAMMMUU")
             return (
                 <View style={styles.row}>
 
