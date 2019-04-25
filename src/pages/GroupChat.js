@@ -11,13 +11,13 @@ import io from 'socket.io-client';
 import NavBar from '../components/Nav';
 import decode from 'jwt-decode';
 
-let socket = io(`http://10.0.2.2:3000/group`);
-
 export default function GroupChat() {
+
+    const socket = io(`http://10.0.2.2:3000/group`);
 
     const [positions, setPositions] = useState({ lat: 0, lon: 0 });
     const [messages, setMessages] = useState([]);
-    const [userInput, setInput] = useState("Your Message Here");
+    const [userInput, setInput] = useState("");
     const [user, setUser] = useState({});
 
     const getToken = async () => {
@@ -86,7 +86,7 @@ export default function GroupChat() {
             .then(async function (response) {
                 console.log(response);
                 //after pushing to database, clear the input
-                //setInput(""); this part doesnt work 100% yet will fix once we get everything done
+                setInput(""); 
                 let chatHistory = await getChatHistory(positions);
                 setMessages(chatHistory);
             })
@@ -108,11 +108,7 @@ export default function GroupChat() {
             "date": Date.now()
         }
         //https://icebreakr-serv.herokuapp.com/
-        socket = io(`http://10.0.2.2:3000/group`, {
-            query: {
-                username
-            }
-        });
+        // socket = io(`http://10.0.2.2:3000/group`);
         console.log(userInput);
         await socket.emit('newMessageToServer', newMessage);
         await postMessage(newMessage);
