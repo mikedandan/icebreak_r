@@ -120,8 +120,8 @@ export default class Signup extends Component {
           </Form >
 
           <View style={{ backgroundColor: '#F5FCFF', flex: 1, justifyContent: 'space-around' }}>
-            <View style={{ alignSelf: 'center',  }}>
-            {/* position: 'absolute', bottom: 10 */}
+            <View style={{ alignSelf: 'center', position: 'absolute', bottom: 10  }}>
+
               <Text style={{ fontSize: 25, textAlign: 'center', marginTop: 20 }}>Your Gender</Text>
               <RadioForm
                 style={{ alignSelf: 'center', marginTop: 15 }}

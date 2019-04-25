@@ -119,7 +119,7 @@ export default class Dashboard extends Component {
                                         <Col><Text style={{ textAlign: 'center' }}>7</Text></Col>
                                     </Grid>
                                 </Body>
-                                <Button style={styles.button} warning><Text style={{ textAlign: 'center', width: 300 }} onPress={() => Actions.signup()}> JOIN GROUP CHAT </Text></Button>
+                                <Button style={styles.button} warning><Text style={{ textAlign: 'center', width: 300 }} onPress={() => Actions.groupChat()}> JOIN GROUP CHAT </Text></Button>
 
                             </Card>
 
@@ -140,15 +140,17 @@ export default class Dashboard extends Component {
                                 {/* </CardItem> */}
 
                             </Card>
+                            
                             <TouchableHighlight onPress={this._handleLogOut}>
                                 {/* <Text style={[styles.button, styles.greyButton]}>
                                     Log Out
                                 </Text> */}
 
-                                <Button bordered light style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 200 }} onPress={() => Actions.signup()}>LOG OUT</Text></Button>
+                                <Button bordered light style={styles.button}><Text style={{ color: 'black', textAlign: 'center', width: 200 }} onPress={() => this._handleLogOut()}>LOG OUT</Text></Button>
 
 
                             </TouchableHighlight>
+                            
 
                         </View>
                     </LinearGradient>
