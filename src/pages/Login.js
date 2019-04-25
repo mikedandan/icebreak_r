@@ -49,10 +49,10 @@ export default class Signup extends Component {
     }
 
     _storeData = (e) => {
-   
-            AsyncStorage.setItem('token', e);
-            this._retrieveData();
-            Actions.dashboard();
+
+        AsyncStorage.setItem('token', e);
+        this._retrieveData();
+        Actions.dashboard();
     };
     _retrieveData = async () => {
         try {
@@ -61,7 +61,7 @@ export default class Signup extends Component {
 
             // if (value !== null) {
             //     // We have data!!
-                console.log(value);
+            console.log(value);
             // }
 
         } catch (error) {
@@ -181,5 +181,7 @@ const styles = {
     },
     container: {
         flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
     },
 };
