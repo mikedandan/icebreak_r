@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, AppRegistry, TouchableHighlight, AsyncStorage } from 'react-native';
+import { View, Image, AppRegistry, TouchableHighlight, AsyncStorage, Alert } from 'react-native';
 import DashHeaderCard from '../components/DashHeaderCard';
 import { Container, Header, Button, Content, Card, CardItem, Text, Body } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -28,7 +28,7 @@ export default class Dashboard extends Component {
     _handleLogOut = () => {
         console.log('hello world');
         AsyncStorage.removeItem('token');
-        alert('Icebreakr','You have been logged out.');
+        Alert.alert('Icebreakr','You have been logged out.');
         Actions.main();
     }
 

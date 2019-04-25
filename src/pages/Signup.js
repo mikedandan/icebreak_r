@@ -72,7 +72,7 @@ export default class Signup extends Component {
   checkRegister = () => {
 
     console.log(`VOID ENTERED \n email: ${this.state.email} \n password: ${this.state.password} \n picture: ${this.state.picture} \n Remeber to comment this log out`)
-    axios.post('http://10.0.2.2:3000/api/user/register', {
+    axios.post('https://icebreakr-serv.herokuapp.com/api/user/register', {
       displayName: this.state.myName,
       email: this.state.email,
       password: this.state.password,
