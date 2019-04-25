@@ -7,7 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import decode from 'jwt-decode';
-import  InboxPrivateMessage from '../components/InboxPrivateMessage';
+import InboxPrivateMessage from '../components/InboxPrivateMessage';
 // import { getTopFrame } from 'jest-message-util';
 
 // import { Actions } from 'react-native-router-flux';
@@ -107,13 +107,19 @@ export default class Dashboard extends Component {
                                     <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 10 }}>
                                         Chat with a bunch of people. Answer questions and meet meme-able people like yourself
                                         </Text>
-                                    <Grid style={{ textAlign: 'center', marginTop: 10, marginBottom: 30 }}>
+                                    <Grid style={{ textAlign: 'center', marginTop: 10, marginBottom: 0 }}>
                                         <Col><Text style={{ textAlign: 'center' }}>People around</Text></Col>
                                         <Text>|</Text>
                                         <Col><Text style={{ textAlign: 'center' }}>Already chatted with</Text></Col>
                                     </Grid>
+
+                                    <Grid style={{ textAlign: 'center', marginTop: 10, marginBottom: 30 }}>
+                                        <Col><Text style={{ textAlign: 'center' }}>36</Text></Col>
+
+                                        <Col><Text style={{ textAlign: 'center' }}>7</Text></Col>
+                                    </Grid>
                                 </Body>
-                                <Button style={styles.button} warning><Text style={{ textAlign: 'center', width: 300 }} onPress={() => Actions.signup()}> JOIN GROUP CHAT </Text></Button>
+                                <Button style={styles.button} warning><Text style={{ textAlign: 'center', width: 300 }} onPress={() => Actions.groupChat()}> JOIN GROUP CHAT </Text></Button>
 
                             </Card>
 
@@ -134,11 +140,17 @@ export default class Dashboard extends Component {
                                 {/* </CardItem> */}
 
                             </Card>
+                            
                             <TouchableHighlight onPress={this._handleLogOut}>
-                                <Text style={[styles.button, styles.greyButton]}>
+                                {/* <Text style={[styles.button, styles.greyButton]}>
                                     Log Out
-                                </Text>
+                                </Text> */}
+
+                                <Button bordered light style={styles.button}><Text style={{ color: 'black', textAlign: 'center', width: 200 }} onPress={() => this._handleLogOut()}>LOG OUT</Text></Button>
+
+
                             </TouchableHighlight>
+                            
 
                         </View>
                     </LinearGradient>
