@@ -7,13 +7,11 @@ import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../components/BackButton';
 import { ChatWindow, ChatFooter } from '../components/ChatWindow';
-import io from 'socket.io-client';
+import socketIOClient from 'socket.io-client';
 import NavBar from '../components/Nav';
 import decode from 'jwt-decode';
 
 export default function GroupChat() {
-
-    const socket = io(`https://icebreakr-serv.herokuapp.com/group`);
 
     const [positions, setPositions] = useState({ lat: 0, lon: 0 });
     const [messages, setMessages] = useState([]);
@@ -81,7 +79,7 @@ export default function GroupChat() {
     const postMessage = async (newMessage) => {
         return axios.post('https://icebreakr-serv.herokuapp.com/api/message/new', newMessage)
             .then(async function (response) {
-                console.log(response);
+                //console.log(response);
                 //after pushing to database, clear the input
                 setInput(""); 
                 let chatHistory = await getChatHistory(positions);
@@ -106,18 +104,19 @@ export default function GroupChat() {
         }
         //https://icebreakr-serv.herokuapp.com/
         // socket = io(`http://10.0.2.2:3000/group`);
+        const socket = socketIOClient(`https://icebreakr-serv.herokuapp.com/`);
         console.log(userInput);
-        await socket.emit('newMessageToServer', newMessage);
+        socket.emit('newMessageToServer', newMessage);
         await postMessage(newMessage);
     }
 
     useEffect(() => {
         load();
-        getToken()
-        socket.on('messageToClients',async () =>{
-            // const newMsg = buildHTML(msg);
-            // document.querySelector('#messages').innerHTML += newMsg;
-            const newMessages = await getChatHistory();
+        getToken();
+        const socket = socketIOClient(`https://icebreakr-serv.herokuapp.com/`);
+        socket.on('messageToClients', async () => {
+            console.log("we here bois!!!!!");
+            const newMessages = await getChatHistory(positions);
             setMessages(newMessages);
         });
     }, []);
