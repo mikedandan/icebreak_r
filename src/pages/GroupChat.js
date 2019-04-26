@@ -11,6 +11,7 @@ import { ChatWindow, ChatFooter } from '../components/ChatWindow';
 import io from 'socket.io-client';
 import NavBar from '../components/Nav';
 import decode from 'jwt-decode';
+import { pushNotifications } from '../components/pushNotifications';
 
 //https://icebreakr-serv.herokuapp.com/
 // socket = io(`http://10.0.2.2:3000/group`);
@@ -19,6 +20,8 @@ const socket = io('https://icebreakr-serv.herokuapp.com/', {
     transports: ['websocket'],
     secure: true
 });
+
+pushNotifications.configure();
 
 export default function GroupChat() {
 
@@ -99,6 +102,11 @@ export default function GroupChat() {
             });
     }
 
+    const testNo = () => {
+        console.log("testing notification!!")
+        pushNotifications.localNotification();
+    }
+
     const handleMessageSent = async () => {
         console.log("WEEEWOO");
         const newMessage = {
@@ -125,11 +133,14 @@ export default function GroupChat() {
         socket.on('messageToClients', async () => {
             console.log("we here bois!!!!!");
             load();
+            pushNotifications.localNotification();
         });
     }, []);
 
+
     return (
         <View style={styles.container} behavior="padding" enabled>
+            <Button onPress = {testNo}><Text>Test Notifcations</Text></Button>
 
             {/* BackButton */}
             <Text>Lat: {positions.lat}Lon: {positions.lon}</Text>
