@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Image, AppRegistry, TouchableHighlight, AsyncStorage, Alert } from 'react-native';
 import DashHeaderCard from '../components/DashHeaderCard';
-import { Container, Header, Button, Content, Card, CardItem, Text, Body } from 'native-base';
+import { Container, Header, Button, Content, Card, Text, Body, Form, Item, Label, Input, CardItem } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
@@ -18,7 +18,8 @@ export default class Dashboard extends Component {
     state = {
         userInfo: {
 
-        }
+        },
+        eventName: '',
     }
     componentDidMount = () => {
         console.log('sup');
@@ -28,7 +29,7 @@ export default class Dashboard extends Component {
     _handleLogOut = () => {
         console.log('hello world');
         AsyncStorage.removeItem('token');
-        Alert.alert('Icebreakr','You have been logged out.');
+        Alert.alert('Icebreakr', 'You have been logged out.');
         Actions.main();
     }
 
@@ -81,8 +82,8 @@ export default class Dashboard extends Component {
                             <Text onPress={() => Actions.groupChat()}>Go To Chat</Text>
                             <Image source={require('../images/icebreakr-logo-icon.png')} style={{ alignSelf: 'center' }} />
                             <Text style={{ color: 'white', textAlign: 'center', marginTop: 30, marginBottom: 30 }}>What do you want to do?</Text>
-                            <Card>
-                                <CardItem header>
+                            {/* <Card> */}
+                            {/* <CardItem header>
 
                                 </CardItem>
                                 <Text style={{ color: 'black', textAlign: 'center', marginTop: 0, marginBottom: 0 }}>Private Messages</Text>
@@ -91,10 +92,10 @@ export default class Dashboard extends Component {
                                         <InboxPrivateMessage />
                                     </ScrollView>
 
-                                </Body>
-                                {/* </CardItem> */}
+                                </Body> */}
+                            {/* </CardItem> */}
 
-                            </Card>
+                            {/* </Card> */}
 
                             <Card>
                                 <CardItem header>
@@ -105,19 +106,19 @@ export default class Dashboard extends Component {
                                 <Body>
                                     <Image source={require('../images/group-icon.png')} style={{ alignSelf: 'center' }} />
                                     <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 10 }}>
-                                        Chat with a bunch of people. Answer questions and meet meme-able people like yourself
+                                        Chat with a bunch of people located in your immediate area.
                                         </Text>
-                                    <Grid style={{ textAlign: 'center', marginTop: 10, marginBottom: 0 }}>
+                                    {/* <Grid style={{ textAlign: 'center', marginTop: 10, marginBottom: 0 }}>
                                         <Col><Text style={{ textAlign: 'center' }}>People around</Text></Col>
                                         <Text>|</Text>
                                         <Col><Text style={{ textAlign: 'center' }}>Already chatted with</Text></Col>
-                                    </Grid>
+                                    </Grid> */}
 
-                                    <Grid style={{ textAlign: 'center', marginTop: 10, marginBottom: 30 }}>
+                                    {/* <Grid style={{ textAlign: 'center', marginTop: 10, marginBottom: 30 }}>
                                         <Col><Text style={{ textAlign: 'center' }}>36</Text></Col>
 
                                         <Col><Text style={{ textAlign: 'center' }}>7</Text></Col>
-                                    </Grid>
+                                    </Grid> */}
                                 </Body>
                                 <Button style={styles.button} warning><Text style={{ textAlign: 'center', width: 300 }} onPress={() => Actions.groupChat()}> JOIN GROUP CHAT </Text></Button>
 
@@ -131,16 +132,34 @@ export default class Dashboard extends Component {
                                 <Body>
                                     <Image source={require('../images/calendar-icon.png')} style={{ alignSelf: 'center' }} />
                                     <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 30 }}>
-                                        Set up an event in your area. Create a social meetup or hangout with people.
+                                        Find new people to talk to. Create a new event to have people meet in your group or join an existing event
                                         </Text>
-                                    <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 300 }} onPress={() => Actions.eventSetup()}>SET UP EVENT</Text></Button>
+                                    <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 300 }} onPress={() => Actions.eventSetup()}>CREATE EVENT</Text></Button>
+                                    
 
-
+                                    
                                 </Body>
+
+                                <CardItem bordered style={{borderTopWidth: 1, borderTopColor: '#E3E9EC', marginTop: -15}}>
+                                <Body>
+                            <Form style={styles.form}>
+                                        <Item regular>
+                                            <Label style={{textAlign: 'center', width: '100%'}}>Event Name</Label>
+                                            <Input onChangeText={(value) => this.setState({ eventName: value })} />
+                                        </Item>
+                                    </Form>
+
+                                    <Button warning style={styles.button2}><Text style={{ color: 'white', textAlign: 'center', width: 300 }} onPress={() => Actions.eventChat()}>JOIN EVENT</Text></Button>
+
+                                    </Body>
+                            </CardItem>
+                                
                                 {/* </CardItem> */}
 
                             </Card>
+
                             
+
                             <TouchableHighlight onPress={this._handleLogOut}>
                                 {/* <Text style={[styles.button, styles.greyButton]}>
                                     Log Out
@@ -150,7 +169,7 @@ export default class Dashboard extends Component {
 
 
                             </TouchableHighlight>
-                            
+
 
                         </View>
                     </LinearGradient>
@@ -172,9 +191,24 @@ const styles = {
         marginBottom: 25,
         borderRadius: 10
     },
+
+    button2: {
+        // backgroundColor: 'orange',
+        alignSelf: 'center',
+        marginTop: 15,
+        marginBottom: 25,
+        borderRadius: 10
+    },
+
     greyButton: {
         backgroundColor: '#777',
         color: '#fff'
+    },
+
+    form: {
+        color: '#fff',
+        width: '100%'
     }
 };
+
 
