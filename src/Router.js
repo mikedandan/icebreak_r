@@ -9,6 +9,7 @@ import eventSetup from './pages/eventSetup'; // imports create event page
 import { Text, View, PermissionsAndroid } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import Dashboard from './pages/Dashboard';
+import EventChat from './pages/EventChat';
 
 import Chat from './pages/Chat';
 
@@ -113,6 +114,7 @@ export default class RouterComp extends Component {
                     <Scene key="eventSetup" component={eventSetup} hideNavBar='true' type={ActionConst.REPLACE} />
                     <Scene key="main" component={Main} hideNavBar='true' type={ActionConst.REPLACE} initial />
                     <Scene key="groupChat"  component={GroupChat} title="Group Chat" hideNavBar='true' type={ActionConst.REPLACE}/>
+                    <Scene key="eventChat" component={EventChat} title="Event Chat" hideNavBar='true' type={ActionConst.REPLACE}/>
                     <Scene
                         key="Chat" component={Chat} 
                         title="Chat Page"  hideNavBar='true' type={ActionConst.REPLACE}  />  
