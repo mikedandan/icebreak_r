@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView } from 'react-native';
+import { Text, View, Image, ScrollView, AsyncStorage } from 'react-native';
 import { Container, Header, Left, Right, Icon, Button, Radio, ListItem, Body, Title, Content, Form, Input, Label, Item } from 'native-base';
-import Nav from '../components/Nav';
-import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
-import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding'; // https://www.npmjs.com/package/react-native-geocoding
+import axios from 'axios';
+import decode from 'jwt-decode';
 Geocoder.init('AIzaSyBBZGkvHG2ppz-zp15e9QHR3FnrEhDy8Fk');
+
 export default class Signup extends Component {
 
   state = {
@@ -17,8 +17,60 @@ export default class Signup extends Component {
     eventMsg: '',
     eventCode: '',
     lat: 0,
-    lng: 0
+    lng: 0,
+    userInfo: {}
   }
+
+componentDidMount = () => {
+    console.log('sup');
+    this._retrieveData();
+}
+
+_handleLogOut = () => {
+    console.log('hello world');
+    AsyncStorage.removeItem('token');
+    alert('You have been logged out.');
+    Actions.main();
+}
+
+
+_retrieveData = async () => {
+    console.log('hello');
+    try {
+
+        const token = await AsyncStorage.getItem('token');
+
+        if (token !== null) {
+            // We have data!!
+            console.log('user saved locally');
+            console.log(token);
+            var decoded = decode(token);
+
+          console.log("decoded"+decoded);
+
+            this.setState({
+                userInfo: {
+                    email: decoded.email,
+                    id: decoded.id,
+                    picture: decoded.picture,
+                    name: decoded.name
+                }
+            });
+            console.log(this.state.userInfo);
+
+        } else {
+
+            console.log('no data');
+
+        }
+
+    } catch (error) {
+      console.log(error);
+        // Error retrieving data
+    }
+};
+
+  // **************************************************************************************************
 
   generateEvent = async () => {
     await Geocoder.from(this.state.eventLocation)
@@ -39,31 +91,29 @@ export default class Signup extends Component {
       eventLat: this.state.lat,
       eventLng: this.state.lng,
       eventId: eventCode,
-      eventOwner: "eventOwner" // WHERE DO I GRAB EVENT OWNER FROM?
+      eventOwner: this.state.userInfo.id
+    
     }
 
-    // console.log('*** Event Variables ***')
-    // console.log('Event Name: ' + this.state.eventName)
-    // console.log('Event Location: ' + this.state.eventLocation)
-    // console.log('Event Latitude: ' + locationLat)
-    // console.log('Event Longitude: ' + locationLng)
-    // console.log('Event ID: ' + eventCode)
-    // console.log('')
-    console.log('*** Event Object ***')
     console.log(event)
 
-    // CHANGE URL TO POINT TO ANOTHER DATABASE
-    // axios.post('https://icebreakr-serv.herokuapp.com/api/user/register', {
-    //   evname: this.state.eventName,
-    //   evlocation: this.state.eventLocation,
-    //   evtime: this.state.eventTime
-    // })
-    // .then(function (response) {
-    //   console.log(response);
-    // })
-    // .catch(function (error) {
-    //   console.log(error.response);
-    // });
+    //CHANGE URL TO POINT TO ANOTHER DATABASE
+    //https://icebreakr-serv.herokuapp.com/
+    //http://10.0.2.2:3000/
+    axios.post('https://icebreakr-serv.herokuapp.com/api/event/newevent', {
+      eventName: this.state.eventName,
+      eventLocation: this.state.eventLocation,
+      lat: this.state.lat,
+      lng: this.state.lng,
+      eventCode: eventCode,
+      id: this.state.userInfo.id
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error.response);
+    });
   }
 
   render() {
