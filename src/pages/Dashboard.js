@@ -133,7 +133,7 @@ export default class Dashboard extends Component {
                                     <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 30 }}>
                                         Set up an event in your area. Create a social meetup or hangout with people.
                                         </Text>
-                                    <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 300 }} onPress={() => Actions.signup()}>SET UP EVENT</Text></Button>
+                                    <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 300 }} onPress={() => Actions.eventSetup()}>SET UP EVENT</Text></Button>
 
 
                                 </Body>
@@ -146,7 +146,7 @@ export default class Dashboard extends Component {
                                     Log Out
                                 </Text> */}
 
-                                <Button bordered light style={styles.button}><Text style={{ color: 'black', textAlign: 'center', width: 200 }} onPress={() => this._handleLogOut()}>LOG OUT</Text></Button>
+                                <Button bordered light style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 200 }} onPress={() => this._handleLogOut()}>LOG OUT</Text></Button>
 
 
                             </TouchableHighlight>
