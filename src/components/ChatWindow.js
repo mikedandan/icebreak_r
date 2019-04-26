@@ -1,69 +1,47 @@
 import React, { Component } from 'react';
-import { Text, View, FlatList, Image, TextInput } from 'react-native';
+import { Text, View, FlatList, Image, TextInput, TouchableOpacity } from 'react-native';
 import { Fab, Icon, Textarea, Form } from 'native-base';
 
 
-// {messages.map((r, i) =>
-//     <Message
-//         displayName={r.nickName}
-//         message={r.message}
-//         id={r._id}
-//         key={i}
-//     />
-// )}
-
 export function ChatWindow(props) {
     const currentUser = props.currentUser.userID;
-    console.log(props);
+    //console.log(props);
     const renderItem = ({ item }) => {
-        console.log("Chat window function No fun derek is here");
-        // console.log(item);
-        console.log(`Message ID ${item.userID} \n Current User: ${currentUser}`)
-        //  === props.user.userID
-        if (tem.userID === currentUser){
-            console.log("DEREKUUU")
+        if (item.userID === currentUser) {
             return (
                 <View style={styles.row}>
-                
-                    <Image style={styles.avatar} source={{ uri: 'https://www.andrew.cmu.edu/user/adowling/pokemon!/Images/pikachu.jpg' }} />
+
+                    <Image style={styles.avatar} source={{ uri: item.picture }} />
                     <View style={styles.rowTextSender}>
-                        <Text style={styles.sender}>{item.nickname}</Text>
+                        <Text style={styles.sender}>{item.nickName}</Text>
                         <Text style={styles.message}>{item.message}</Text>
                     </View>
                 </View>
             );
         }
-        else{
-            console.log("SAMMMUU")
+        else {
             return (
                 <View style={styles.row}>
-                
-                    <Image style={styles.avatar} source={{ uri: 'https://www.andrew.cmu.edu/user/adowling/pokemon!/Images/pikachu.jpg' }} />
+
+                    <Image style={styles.avatar} source={{ uri: item.picture }} />
                     <View style={styles.rowText}>
-                        <Text style={styles.sender}>{item.nickname}</Text>
+                        <Text style={styles.sender}>{item.nickName}</Text>
                         <Text style={styles.message}>{item.message}</Text>
                     </View>
                 </View>
             );
         }
-        
-        // return (
-        //     <View style={styles.row}>
-            
-        //         <Image style={styles.avatar} source={{ uri: 'https://www.andrew.cmu.edu/user/adowling/pokemon!/Images/pikachu.jpg' }} />
-        //         <View style={styles.rowText}>
-        //             <Text style={styles.sender}>{item.nickname}</Text>
-        //             <Text style={styles.message}>{item.message}</Text>
-        //         </View>
-        //     </View>
-        // );
+
     }
 
     return <View>
         <FlatList
+            ref={ ( ref ) => this.scrollView = ref }
+            onContentSizeChange={ () => {        
+                this.scrollView.scrollToEnd( { animated: false } )
+            } }
             data={props.state}
             renderItem={renderItem}
-            
         />
     </View>
     // return <Text>Testing the stuffzzzzzz</Text>
@@ -72,25 +50,26 @@ export function ChatWindow(props) {
 
 export function ChatFooter(props) {
 
-        return (
-            <View style={styles.footer}>
+    return (
+        <View style={styles.footer}>
 
-                <TextInput
-                    value={props.state}
-                    style={styles.input}
-                    underlineColorAndroid="transparent"
-                    placeholder="Type something nice"
-                    onChangeText={(value) => props.onInputChange(value)}
-                />
-                {/* <Form>
+            <TextInput
+                value={props.state}
+                style={styles.input}
+                underlineColorAndroid="transparent"
+                placeholder="Type something nice"
+                onChangeText={(value) => props.onInputChange(value)}
+            />
+            {/* <Form>
                     <Textarea rowSpan={2} placeholder="Your message here" onChangeText={(value) => this.props.onInputChange(value)} />
                 </Form> */}
+            <TouchableOpacity >
+            <Text onPress={props.onClick} style={styles.send}>Send</Text>
+            </TouchableOpacity>
 
-                <Icon style={styles.sendButton} type="FontAwesome" name="arrow-right" onPress={props.onClick} />
+        </View>
+    );
 
-            </View>
-        );
-    
 }
 
 

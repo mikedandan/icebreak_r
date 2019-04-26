@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, AppRegistry, TouchableHighlight, AsyncStorage } from 'react-native';
+import { View, Image, AppRegistry, TouchableHighlight, AsyncStorage, Alert } from 'react-native';
 import DashHeaderCard from '../components/DashHeaderCard';
 import { Container, Header, Button, Content, Card, CardItem, Text, Body } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -7,6 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import decode from 'jwt-decode';
+import InboxPrivateMessage from '../components/InboxPrivateMessage';
 // import { getTopFrame } from 'jest-message-util';
 
 // import { Actions } from 'react-native-router-flux';
@@ -27,7 +28,7 @@ export default class Dashboard extends Component {
     _handleLogOut = () => {
         console.log('hello world');
         AsyncStorage.removeItem('token');
-        alert('You have been logged out.');
+        Alert.alert('Icebreakr','You have been logged out.');
         Actions.main();
     }
 
@@ -56,7 +57,6 @@ export default class Dashboard extends Component {
                 console.log(this.state.userInfo);
 
             } else {
-
                 console.log('no data');
 
             }
@@ -78,7 +78,7 @@ export default class Dashboard extends Component {
 
                         <View>
                             <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
-                            <Text onPress={() => Actions.Chat()}>Go To Chat</Text>
+                            <Text onPress={() => Actions.groupChat()}>Go To Chat</Text>
                             <Image source={require('../images/icebreakr-logo-icon.png')} style={{ alignSelf: 'center' }} />
                             <Text style={{ color: 'white', textAlign: 'center', marginTop: 30, marginBottom: 30 }}>What do you want to do?</Text>
                             <Card>
@@ -88,58 +88,7 @@ export default class Dashboard extends Component {
                                 <Text style={{ color: 'black', textAlign: 'center', marginTop: 0, marginBottom: 0 }}>Private Messages</Text>
                                 <Body>
                                     <ScrollView>
-                                        <View style={{ height: 130, marginTop: 20, marginBottom: 20 }}>
-                                            <ScrollView
-                                                horizontal={true}
-                                                showsHorizontalScrollIndicator={false}
-                                            >
-                                                <View style={{ flex: 2, paddingLeft: 5 }}>
-                                                    <Image source={require('../images/avatars/RandomAnimals_brown_bear.png')}
-                                                        name="Avatar"
-                                                    />
-                                                    <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
-                                                        <Text>AvatarName</Text>
-                                                    </View>
-                                                </View>
-
-                                                <View style={{ flex: 2, paddingLeft: 5 }}>
-                                                    <Image source={require('../images/avatars/RandomAnimals_brown_bear.png')}
-                                                        name="Avatar"
-                                                    />
-                                                    <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
-                                                        <Text>AvatarName</Text>
-                                                    </View>
-                                                </View>
-
-                                                <View style={{ flex: 2, paddingLeft: 5 }}>
-                                                    <Image source={require('../images/avatars/RandomAnimals_brown_bear.png')}
-                                                        name="Avatar"
-                                                    />
-                                                    <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
-                                                        <Text>AvatarName</Text>
-                                                    </View>
-                                                </View>
-
-                                                <View style={{ flex: 2, paddingLeft: 5 }}>
-                                                    <Image source={require('../images/avatars/RandomAnimals_brown_bear.png')}
-                                                        name="Avatar"
-                                                    />
-                                                    <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
-                                                        <Text>AvatarName</Text>
-                                                    </View>
-                                                </View>
-
-                                                <View style={{ flex: 2, paddingLeft: 5 }}>
-                                                    <Image source={require('../images/avatars/RandomAnimals_brown_bear.png')}
-                                                        name="Avatar"
-                                                    />
-                                                    <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
-                                                        <Text>AvatarName</Text>
-                                                    </View>
-                                                </View>
-                                                
-                                            </ScrollView>
-                                        </View>
+                                        <InboxPrivateMessage />
                                     </ScrollView>
 
                                 </Body>
@@ -158,13 +107,19 @@ export default class Dashboard extends Component {
                                     <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 10 }}>
                                         Chat with a bunch of people. Answer questions and meet meme-able people like yourself
                                         </Text>
-                                    <Grid style={{ textAlign: 'center', marginTop: 10, marginBottom: 30 }}>
+                                    <Grid style={{ textAlign: 'center', marginTop: 10, marginBottom: 0 }}>
                                         <Col><Text style={{ textAlign: 'center' }}>People around</Text></Col>
                                         <Text>|</Text>
                                         <Col><Text style={{ textAlign: 'center' }}>Already chatted with</Text></Col>
                                     </Grid>
+
+                                    <Grid style={{ textAlign: 'center', marginTop: 10, marginBottom: 30 }}>
+                                        <Col><Text style={{ textAlign: 'center' }}>36</Text></Col>
+
+                                        <Col><Text style={{ textAlign: 'center' }}>7</Text></Col>
+                                    </Grid>
                                 </Body>
-                                <Button style={styles.button} warning><Text style={{ textAlign: 'center', width: 300 }} onPress={() => Actions.signup()}> JOIN GROUP CHAT </Text></Button>
+                                <Button style={styles.button} warning><Text style={{ textAlign: 'center', width: 300 }} onPress={() => Actions.groupChat()}> JOIN GROUP CHAT </Text></Button>
 
                             </Card>
 
@@ -178,18 +133,24 @@ export default class Dashboard extends Component {
                                     <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 30 }}>
                                         Set up an event in your area. Create a social meetup or hangout with people.
                                         </Text>
-                                    <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 300 }} onPress={() => Actions.signup()}>SET UP EVENT</Text></Button>
+                                    <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 300 }} onPress={() => Actions.eventSetup()}>SET UP EVENT</Text></Button>
 
 
                                 </Body>
                                 {/* </CardItem> */}
 
                             </Card>
+                            
                             <TouchableHighlight onPress={this._handleLogOut}>
-                                <Text style={[styles.button, styles.greyButton]}>
+                                {/* <Text style={[styles.button, styles.greyButton]}>
                                     Log Out
-                                </Text>
+                                </Text> */}
+
+                                <Button bordered light style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 200 }} onPress={() => this._handleLogOut()}>LOG OUT</Text></Button>
+
+
                             </TouchableHighlight>
+                            
 
                         </View>
                     </LinearGradient>
