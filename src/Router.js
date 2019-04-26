@@ -109,8 +109,8 @@ export default class RouterComp extends Component {
 
                     <Scene key="login" handlesomthing={(e) => this.handlesomthing(e)} component={Login} hideNavBar='true'  />
                     <Scene key="dashboard" userInfo = {this.state.userInfo} component={Dashboard} hideNavBar='true' type={ActionConst.REPLACE} />
-                    <Scene key="signup" component={Signup} hideNavBar='true' type={ActionConst.REPLACE} />
-                    <Scene key="eventSetup" component={eventSetup} hideNavBar='true' type={ActionConst.REPLACE} />
+                    <Scene key="signup" component={Signup} hideNavBar='true' />
+                    <Scene key="eventSetup" component={eventSetup} hideNavBar='true'  />
                     <Scene key="main" component={Main} hideNavBar='true' type={ActionConst.REPLACE} initial />
                     <Scene key="groupChat"  component={GroupChat} title="Group Chat" hideNavBar='true' type={ActionConst.REPLACE}/>
                     <Scene
