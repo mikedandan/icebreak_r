@@ -5,7 +5,9 @@ import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
 import Geocoder from 'react-native-geocoding'; // https://www.npmjs.com/package/react-native-geocoding
 import axios from 'axios';
+import decode from 'jwt-decode';
 Geocoder.init('AIzaSyBBZGkvHG2ppz-zp15e9QHR3FnrEhDy8Fk');
+
 export default class Signup extends Component {
 
   state = {
@@ -31,6 +33,7 @@ _handleLogOut = () => {
     Actions.main();
 }
 
+
 _retrieveData = async () => {
     console.log('hello');
     try {
@@ -43,7 +46,7 @@ _retrieveData = async () => {
             console.log(token);
             var decoded = decode(token);
 
-
+          console.log("decoded"+decoded);
 
             this.setState({
                 userInfo: {
@@ -62,6 +65,7 @@ _retrieveData = async () => {
         }
 
     } catch (error) {
+      console.log(error);
         // Error retrieving data
     }
 };
@@ -87,20 +91,22 @@ _retrieveData = async () => {
       eventLat: this.state.lat,
       eventLng: this.state.lng,
       eventId: eventCode,
-      // eventOwner: this.state.userInfo.id
+      eventOwner: this.state.userInfo.id
     
     }
 
     console.log(event)
 
     //CHANGE URL TO POINT TO ANOTHER DATABASE
-    axios.post('http://localhost:3000/api/event/newevent', {
+    //https://icebreakr-serv.herokuapp.com/
+    //http://10.0.2.2:3000/
+    axios.post('https://icebreakr-serv.herokuapp.com/api/event/newevent', {
       eventName: this.state.eventName,
       eventLocation: this.state.eventLocation,
       lat: this.state.lat,
       lng: this.state.lng,
-      eventCode: eventCode
-      // id: this.state.userInfo.id
+      eventCode: eventCode,
+      id: this.state.userInfo.id
     })
     .then(function (response) {
       console.log(response);
