@@ -130,12 +130,12 @@ export default function GroupChat() {
 
     return (
         <View style={styles.container} behavior="padding" enabled>
-
+            <NavBar title ={'Group Chat'}/>
             {/* BackButton */}
             <Text>Lat: {positions.lat}Lon: {positions.lon}</Text>
-            <Text>User: {user.userID}</Text>
+            {/* <Text>User: {user.userID}</Text>
             <Text>Picture: {user.picture}</Text>
-            <Text>Name: {user.nickName}</Text>
+            <Text>Name: {user.nickName}</Text>  */}
 
 
             {/* Chat Container */}
