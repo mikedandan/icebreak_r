@@ -8,6 +8,7 @@ import { Actions } from 'react-native-router-flux';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import decode from 'jwt-decode';
 import InboxPrivateMessage from '../components/InboxPrivateMessage';
+import Axios from 'axios';
 // import { getTopFrame } from 'jest-message-util';
 
 // import { Actions } from 'react-native-router-flux';
@@ -20,10 +21,30 @@ export default class Dashboard extends Component {
 
         },
         eventName: '',
+        errorCode: '',
     }
     componentDidMount = () => {
         console.log('sup');
         this._retrieveData();
+    }
+    joinEvent = () => {
+        const self = this;
+        console.log("y:"+this.state.eventName);
+
+        Axios.post(`https://icebreakr-serv.herokuapp.com/api/message/eventHistory`, { namespace: this.state.eventName })
+            .then(function (res) {
+                //console.log(res);
+                console.log("i have eneterd here")
+                AsyncStorage.setItem('eventID', self.state.eventName);
+                Actions.eventChat();
+            })
+            .catch(error => {
+                console.log(error)
+                console.log("Sam doesn't like emojis")
+                this.setState({ errorCode: 'No Event Found' })
+            })
+
+
     }
 
     _handleLogOut = () => {
@@ -107,7 +128,7 @@ export default class Dashboard extends Component {
                                     <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 10 }}>
                                         Chat with a bunch of people located in your immediate area.
                                         </Text>
-                                 
+
                                 </Body>
                                 <Button style={styles.button} warning><Text style={{ textAlign: 'center', width: 300 }} onPress={() => Actions.groupChat()}> JOIN GROUP CHAT </Text></Button>
 
@@ -131,21 +152,22 @@ export default class Dashboard extends Component {
 
                                 <CardItem bordered style={{ borderTopWidth: 1, borderTopColor: '#E3E9EC', marginTop: -15 }}>
                                     <Body>
-                                       
-                                            <Form style={{width: '100%'}}>
-                                               
-                                                <Item regular stackedLabel>
-                                                <Label style={{ fontSize: 15, textAlign: 'center', width: '100%'}}>Event Name</Label>
 
-                                                    <Input style={{ textAlign: 'center', width: '100%'}} onChangeText={(value) => this.setState({ eventName: value })} />
-                                                </Item>
-                                            </Form>
-                                     
+                                        <Form style={{ width: '100%' }}>
+
+                                            <Item regular stackedLabel>
+                                                <View ><Text style={{ fontSize: 15, textAlign: 'center', width: '100%', color: 'red' }}>{this.state.errorCode}</Text></View>
+                                                <Label style={{ fontSize: 15, textAlign: 'center', width: '100%' }}>Event ID</Label>
+
+                                                <Input style={{ textAlign: 'center', width: '100%' }} onChangeText={(value) => this.setState({ eventName: value },console.log("r"+this.state.eventName))} />
+                                            </Item>
+                                        </Form>
 
 
-                                       
 
-                                        <Button warning style={styles.button2}><Text style={{ color: 'white', textAlign: 'center', width: 300 }} onPress={() => Actions.eventChat()}>JOIN EVENT</Text></Button>
+
+
+                                        <Button warning style={styles.button2}><Text style={{ color: 'white', textAlign: 'center', width: 300 }} state={this.state.eventName} onPress={this.joinEvent.bind(this)}>JOIN EVENT</Text></Button>
 
                                     </Body>
                                 </CardItem>
@@ -157,7 +179,7 @@ export default class Dashboard extends Component {
 
 
                             <TouchableHighlight onPress={this._handleLogOut}>
-                               
+
 
                                 <Button bordered light style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 200 }} onPress={() => this._handleLogOut()}>LOG OUT</Text></Button>
 

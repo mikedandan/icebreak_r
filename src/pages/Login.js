@@ -21,13 +21,16 @@ export default class Signup extends Component {
     }
 
     checkLogin = () => {
+        console.log('checking...');
         const self = this;
         // console.log(`VOID ENTERED \n User: ${this.state.username} \n PW: ${this.state.password} \n Remeber to comment this log out`)
         axios.post('https://icebreakr-serv.herokuapp.com/api/user/login', {
+        
             email: this.state.username,
             password: this.state.password,
         })
             .then(function (response) {
+                console.log('-------- /n Axios did its thing. Not this:');
                 // console.log(response.data.token);
                 // let tok = response.data.token;
                 // self.props.handlesomthing(response.data.token);
@@ -70,14 +73,14 @@ export default class Signup extends Component {
     };
 
     componentDidMount() {
-        // this.loadInitialState().done();
-        // axios.get('https://icebreakr-serv.herokuapp.com/api/user')
-        // .then(function (response) {
-        //    console.log(response);
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // });
+        this.loadInitialState().done();
+        axios.get('https://icebreakr-serv.herokuapp.com/api/user')
+        .then(function (response) {
+           console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 
 
         // jwt.verify("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjYjkzYTQ2Yjk5MDBlMDAxNzdlZGQ3ZCIsImlhdCI6MTU1NTcwMTg4OCwiZXhwIjoxNTg3MjU4ODE0fQ.d89O3fZoE87E5gW5V9V_6JbxNGIFEsYm3NbLH5tXqqY", 'secret', function(err, decoded) {
