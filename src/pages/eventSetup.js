@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { Text, View, Image, ScrollView, AsyncStorage } from 'react-native';
 import { Container, Header, Left, Right, Icon, Button, Radio, ListItem, Body, Title, Content, Form, Input, Label, Item } from 'native-base';
-import Nav from '../components/Nav';
-import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
-import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding'; // https://www.npmjs.com/package/react-native-geocoding
+import axios from 'axios';
+import decode from 'jwt-decode';
+import NavBar from '../components/Nav2';
 Geocoder.init('AIzaSyBBZGkvHG2ppz-zp15e9QHR3FnrEhDy8Fk');
+
 export default class Signup extends Component {
 
   state = {
@@ -17,8 +18,49 @@ export default class Signup extends Component {
     eventMsg: '',
     eventCode: '',
     lat: 0,
-    lng: 0
+    lng: 0,
+    userInfo: {}
   }
+
+  componentDidMount = () => {
+    console.log('sup');
+    this._retrieveData();
+  }
+  _retrieveData = async () => {
+    console.log('hello');
+    try {
+
+      const token = await AsyncStorage.getItem('token');
+
+      if (token !== null) {
+        // We have data!!
+        console.log('user saved locally');
+        console.log(token);
+        var decoded = decode(token);
+
+        console.log("decoded" + decoded);
+
+        this.setState({
+          userInfo: {
+            email: decoded.email,
+            id: decoded.id,
+            picture: decoded.picture,
+            name: decoded.name
+          }
+        });
+        console.log(this.state.userInfo);
+
+      } else {
+
+        console.log('no data');
+
+      }
+
+    } catch (error) {
+      console.log(error);
+      // Error retrieving data
+    }
+  };
 
   formExpand = () => {
     if (this.state.eventCode === '') {
@@ -27,7 +69,7 @@ export default class Signup extends Component {
     }
     else {
       return (
-        <View style={{borderColor: 'orange', borderWidth: 4, borderRadius: 15, margin: 20}}>
+        <View style={{ borderColor: 'orange', borderWidth: 4, borderRadius: 15, margin: 20 }}>
           <Text style={{ color: 'black', fontSize: 20, textAlign: 'center', marginTop: 10, marginBottom: 10 }}>{this.state.eventMsg}</Text>
           <Text style={{ color: 'black', fontSize: 20, textAlign: 'center', marginTop: 10, marginBottom: 10 }}>{this.state.eventCode}</Text>
         </View>
@@ -35,7 +77,9 @@ export default class Signup extends Component {
     }
 
   }
+
   generateEvent = async () => {
+    const self = this;
     await Geocoder.from(this.state.eventLocation)
       .then(json => {
         var location = json.results[0].geometry.location;
@@ -54,32 +98,55 @@ export default class Signup extends Component {
       eventLat: this.state.lat,
       eventLng: this.state.lng,
       eventId: eventCode,
-      eventOwner: "eventOwner" // WHERE DO I GRAB EVENT OWNER FROM?
+      eventOwner: this.state.userInfo.id
     }
 
-    // console.log('*** Event Variables ***')
-    // console.log('Event Name: ' + this.state.eventName)
-    // console.log('Event Location: ' + this.state.eventLocation)
-    // console.log('Event Latitude: ' + locationLat)
-    // console.log('Event Longitude: ' + locationLng)
-    // console.log('Event ID: ' + eventCode)
-    // console.log('')
-    console.log('*** Event Object ***')
     console.log(event)
 
-    // CHANGE URL TO POINT TO ANOTHER DATABASE
-    // axios.post('https://icebreakr-serv.herokuapp.com/api/user/register', {
-    //   evname: this.state.eventName,
-    //   evlocation: this.state.eventLocation,
-    //   evtime: this.state.eventTime
-    // })
-    // .then(function (response) {
-    //   console.log(response);
-    // })
-    // .catch(function (error) {
-    //   console.log(error.response);
-    // });
+
+    //CHANGE URL TO POINT TO ANOTHER DATABASE
+    //https://icebreakr-serv.herokuapp.com/
+    //http://10.0.2.2:3000/
+    axios.post('https://icebreakr-serv.herokuapp.com/api/event/newevent', {
+      eventName: this.state.eventName,
+      eventLocation: this.state.eventLocation,
+      lat: this.state.lat,
+      lng: this.state.lng,
+      eventCode: eventCode,
+      id: this.state.userInfo.id
+    })
+      .then(function (response) {
+        console.log("testors");
+        console.log("response: ", response)
+        //console.log(response);
+        const newMessage = {
+          "nickName": "Event Admin",
+          "message": `Welcome to ${eventCode} chat.`,
+          "picture": self.state.userInfo.picture,
+          "userID": self.state.userInfo.id,
+          "lon":  self.state.lng,
+          "lat": self.state.lat,
+          "namespace": eventCode,
+          "date": Date.now()
+        }
+        console.log("HELLO"+newMessage);
+        console.log(newMessage);
+        axios.post('https://icebreakr-serv.herokuapp.com/api/message/new', newMessage)
+            .then(function (response) {
+                console.log("YIKESSS")
+                //console.log(response);
+                //after pushing to database, clear the input
+                console.log(response)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
+
 
   render() {
     return (
@@ -93,13 +160,10 @@ export default class Signup extends Component {
           <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
         </View> */}
 
-        <View style={{ marginBottom: 5, flex: 1, justifyContent: 'flex-end', marginBottom: 20 }}>
-          <Image source={require('../images/icebreakr-logo-icon.png')} style={{ alignSelf: 'center', marginBottom: 20 }} />
-          <Text style={{ fontSize: 20, color: 'white', textAlign: 'center' }}>Event Setup</Text>
-        </View>
 
 
-        <KeyboardAvoidingView style={{ flex: 2 }}>
+
+        <View style={{ flex: 2 }}>
 
           <Form style={styles.form}>
             <Item floatingLabel>
@@ -121,14 +185,14 @@ export default class Signup extends Component {
 
           </View>
 
-        </KeyboardAvoidingView>
+        </View>
 
       </LinearGradient>
 
-    );
-  }
-}
+    )
+  };
 
+}
 const styles = {
 
   redTex: {

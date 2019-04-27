@@ -26,12 +26,17 @@ export default function EventChat() {
     const [messages, setMessages] = useState([]);
     const [userInput, setInput] = useState("");
     const [user, setUser] = useState({});
+    const [eventID, setEventID] = useState("");
 
     const getToken = async () => {
         console.log("==============================");
         try {
             console.log("YAOZORS")
             const token = await AsyncStorage.getItem('token');
+            const event = await AsyncStorage.getItem("eventID");
+            console.log("EVENTID:"+event);
+            setEventID(event);
+            console.log("state"+event);
             if (token !== null) {
                 // We have data!!
                 console.log('user saved locally');
@@ -43,6 +48,7 @@ export default function EventChat() {
                     nickName: decoded.displayName,
                     picture: decoded.picture
                 });
+                
             } else {
                 console.log('no data');
             }
@@ -52,16 +58,12 @@ export default function EventChat() {
         }
     }
 
-    const getChatHistory = async (position) => {
+    const getChatHistory = async () => {
         console.log("VOID")
         try {
-            console.log(`Location before sent to backend: \n ${position.lat},${position.lon}`);
-            const data = {
-                namespace: "event",
-                lat: position.lat,
-                lon: position.lon
-            };
-            const res = await axios.post('https://icebreakr-serv.herokuapp.com/api/message/filterHistory', data);
+            console.log("here:"+ eventID)
+            const event = await AsyncStorage.getItem("eventID");
+            const res = await axios.post(`https://icebreakr-serv.herokuapp.com/api/message/eventHistory`, { namespace: event});
             return res.data;
         } catch (err) {
             console.log(err);
@@ -74,7 +76,7 @@ export default function EventChat() {
             async (position) => {
                 // console.log("In Geolocation Function" + position.coords.latitude + position.coords.longitude);
                 setPositions({ lat: position.coords.latitude, lon: position.coords.longitude });
-                const chatHistory = await getChatHistory({ lat: position.coords.latitude, lon: position.coords.longitude });
+                const chatHistory = await getChatHistory();
                 setMessages(chatHistory);
             },
             (error) => {
@@ -91,7 +93,7 @@ export default function EventChat() {
                 //console.log(response);
                 //after pushing to database, clear the input
                 setInput("");
-                let chatHistory = await getChatHistory(positions);
+                let chatHistory = await getChatHistory();
                 setMessages(chatHistory);
             })
             .catch(function (error) {
@@ -108,7 +110,7 @@ export default function EventChat() {
             "userID": user.userID,
             "lon": positions.lon,
             "lat": positions.lat,
-            "namespace": "event",
+            "namespace": eventID,
             "date": Date.now()
         }
         console.log(userInput);
@@ -117,7 +119,8 @@ export default function EventChat() {
     }
 
     useEffect(() => {
-        console.log("in use effect")
+        console.log("in use effect");
+        //console.log(AsyncStorage.getItem("eventID"));
         load();
         getToken();
         console.log("socket" + socket.id);
@@ -133,12 +136,6 @@ export default function EventChat() {
             <NavBar title ={'Event Chat'}/>
 
             {/* BackButton */}
-            <Text>Lat: {positions.lat}Lon: {positions.lon}</Text>
-            <Text>User: {user.userID}</Text>
-            <Text>Picture: {user.picture}</Text>
-            <Text>Name: {user.nickName}</Text>
-
-
             {/* Chat Container */}
             <View style={{ backgroundColor: '#E3E9EC', flex: 7 }}>
                 <ChatWindow
