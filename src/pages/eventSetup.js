@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView } from 'react-native';
+import { Text, View, Image, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Container, Header, Left, Right, Icon, Button, Radio, ListItem, Body, Title, Content, Form, Input, Label, Item } from 'native-base';
 import Nav from '../components/Nav';
 import { Col, Row, Grid } from 'react-native-easy-grid';
@@ -20,6 +20,21 @@ export default class Signup extends Component {
     lng: 0
   }
 
+  formExpand = () => {
+    if (this.state.eventCode === '') {
+      return console.log('do nothing');
+
+    }
+    else {
+      return (
+        <View style={{borderColor: 'orange', borderWidth: 4, borderRadius: 15, margin: 20}}>
+          <Text style={{ color: 'black', fontSize: 20, textAlign: 'center', marginTop: 10, marginBottom: 10 }}>{this.state.eventMsg}</Text>
+          <Text style={{ color: 'black', fontSize: 20, textAlign: 'center', marginTop: 10, marginBottom: 10 }}>{this.state.eventCode}</Text>
+        </View>
+      );
+    }
+
+  }
   generateEvent = async () => {
     await Geocoder.from(this.state.eventLocation)
       .then(json => {
@@ -68,79 +83,81 @@ export default class Signup extends Component {
 
   render() {
     return (
-      <ScrollView >
-        <LinearGradient
-          colors={['#42AAD8', '#A8D7F7']}
-          style={styles.container}>
 
-          <View style={{ marginBottom: 50 }}>
-            <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
+      <LinearGradient
+        colors={['#42AAD8', '#A8D7F7']}
+        style={styles.container}>
+
+
+        {/* <View style={{ marginBottom: 50 }}>
+          <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
+        </View> */}
+
+        <View style={{ marginBottom: 5, flex: 1, justifyContent: 'flex-end', marginBottom: 20 }}>
+          <Image source={require('../images/icebreakr-logo-icon.png')} style={{ alignSelf: 'center', marginBottom: 20 }} />
+          <Text style={{ fontSize: 20, color: 'white', textAlign: 'center' }}>Event Setup</Text>
+        </View>
+
+
+        <KeyboardAvoidingView style={{ flex: 2 }}>
+
+          <Form style={styles.form}>
+            <Item floatingLabel>
+              <Label>Event Name</Label>
+              <Input onChangeText={(value) => this.setState({ eventName: value })} />
+            </Item>
+            <Item floatingLabel>
+              <Label>Event Location (Venue or Address)</Label>
+              <Input onChangeText={(value) => this.setState({ eventLocation: value })} />
+            </Item>
+            {this.formExpand()}
+          </Form>
+
+          <View style={{ backgroundColor: '#F5FCFF', flex: 1, justifyContent: 'space-around' }}>
+            <View style={{ position: 'absolute', bottom: 10, justifyContent: 'center' }}>
+              <Text style={{ textAlign: 'center', fontSize: 20, marginLeft: 15, marginRight: 15, marginBottom: 40, }}>Your event chat will be specific to your event.  Only people with your event ID will be able to join your event</Text>
+              <Button info style={styles.button}><Text style={{ fontSize: 20, color: 'white', textAlign: 'center' }} onPress={() => this.generateEvent()}>SETUP EVENT</Text></Button>
+            </View>
+
           </View>
 
-          <Image source={require('../images/icebreakr-logo-icon.png')} style={{ position: 'absolute', top: 15, alignSelf: 'center' }} />
-          <View style={{ height: '100%', justifyContent: 'center', }} >
-            <View style={{ marginBottom: 5 }}>
-              <Text style={{ color: 'white', textAlign: 'center', fontSize: 40 }}>Event Setup</Text>
-            </View>
+        </KeyboardAvoidingView>
 
-            <View style={{ marginBottom: 45 }}>
-              <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Your event chat will be specific to your event</Text>
-              <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Only people with your event ID will be able to join your event</Text>
-            </View>
+      </LinearGradient>
 
-            <Form style={styles.form}>
-              <Item floatingLabel>
-                <Label>Event Name</Label>
-                <Input onChangeText={(value) => this.setState({ eventName: value })} />
-              </Item>
-              <Item floatingLabel>
-                <Label>Event Location (Venue or Address)</Label>
-                <Input onChangeText={(value) => this.setState({ eventLocation: value })} />
-              </Item>
-            </Form>
-
-            <View style={{ marginBottom: 45 }}></View>
-
-            <View style={{ backgroundColor: '#F5FCFF', zIndex: 98 }}>
-              <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 10 }}>{this.state.eventMsg}</Text>
-              <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 10 }}>{this.state.eventCode}</Text>
-              <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} onPress={() => this.generateEvent()}>SETUP EVENT</Text></Button>
-            </View>
-          </View>
-        </LinearGradient>
-      </ScrollView>
     );
   }
 }
 
 const styles = {
-  thisIsAStyle: {
-    fontSize: 50,
-    marginTop: 40
-  },
+
   redTex: {
     color: 'red'
   },
   button: {
     // backgroundColor: 'white',
     alignSelf: 'center',
-    marginBottom: 25,
-    marginTop: 20,
-    borderRadius: 10
+    marginBottom: 15,
+    marginTop: 15,
+    width: 250,
+    height: 55,
+    borderRadius: 15,
+    justifyContent: 'space-around'
   },
   form: {
     backgroundColor: 'white',
-    textAlign: 'center',
-    alignSelf: 'center',
+    // textAlign: 'center',
     // position:'absolute',
     elevation: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 99,
-    width: 330
+    // justifyContent: 'center',
+    alignSelf: 'center',
+    width: '90%',
+    marginBottom: -65,
+    minHeight: 180
   },
   container: {
     flex: 1,
+    flexDirection: 'column'
   }
 };
 
