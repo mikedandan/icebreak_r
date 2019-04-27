@@ -124,23 +124,23 @@ export default class Signup extends Component {
           "message": `Welcome to ${eventCode} chat.`,
           "picture": self.state.userInfo.picture,
           "userID": self.state.userInfo.id,
-          "lon":  self.state.lng,
+          "lon": self.state.lng,
           "lat": self.state.lat,
           "namespace": eventCode,
           "date": Date.now()
         }
-        console.log("HELLO"+newMessage);
+        console.log("HELLO" + newMessage);
         console.log(newMessage);
         axios.post('https://icebreakr-serv.herokuapp.com/api/message/new', newMessage)
-            .then(function (response) {
-                console.log("YIKESSS")
-                //console.log(response);
-                //after pushing to database, clear the input
-                console.log(response)
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+          .then(function (response) {
+            console.log("YIKESSS")
+            //console.log(response);
+            //after pushing to database, clear the input
+            console.log(response)
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       })
       .catch(function (error) {
         console.log(error);
@@ -162,15 +162,18 @@ export default class Signup extends Component {
 
 
 
-
+        <View style={{ marginBottom: 5, flex: 1, justifyContent: 'flex-end', marginBottom: 20 }}>
+          <Image source={require('../images/icebreakr-logo-icon.png')} style={{ alignSelf: 'center', marginBottom: 20 }} />
+          <Text style={{ fontSize: 20, color: 'white', textAlign: 'center' }}>Event Setup</Text>
+        </View>
         <View style={{ flex: 2 }}>
 
           <Form style={styles.form}>
-            <Item floatingLabel>
+            <Item stackedLabel>
               <Label>Event Name</Label>
               <Input onChangeText={(value) => this.setState({ eventName: value })} />
             </Item>
-            <Item floatingLabel>
+            <Item stackedLabel last>
               <Label>Event Location (Venue or Address)</Label>
               <Input onChangeText={(value) => this.setState({ eventLocation: value })} />
             </Item>
