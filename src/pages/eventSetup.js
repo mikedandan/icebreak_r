@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, AsyncStorage } from 'react-native';
+import { Text, View, Image, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Container, Header, Left, Right, Icon, Button, Radio, ListItem, Body, Title, Content, Form, Input, Label, Item } from 'native-base';
+import Nav from '../components/Nav';
+import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
+import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding'; // https://www.npmjs.com/package/react-native-geocoding
-import axios from 'axios';
-import decode from 'jwt-decode';
 Geocoder.init('AIzaSyBBZGkvHG2ppz-zp15e9QHR3FnrEhDy8Fk');
-
 export default class Signup extends Component {
 
   state = {
@@ -17,61 +17,24 @@ export default class Signup extends Component {
     eventMsg: '',
     eventCode: '',
     lat: 0,
-    lng: 0,
-    userInfo: {}
+    lng: 0
   }
 
-componentDidMount = () => {
-    console.log('sup');
-    this._retrieveData();
-}
+  formExpand = () => {
+    if (this.state.eventCode === '') {
+      return console.log('do nothing');
 
-_handleLogOut = () => {
-    console.log('hello world');
-    AsyncStorage.removeItem('token');
-    alert('You have been logged out.');
-    Actions.main();
-}
-
-
-_retrieveData = async () => {
-    console.log('hello');
-    try {
-
-        const token = await AsyncStorage.getItem('token');
-
-        if (token !== null) {
-            // We have data!!
-            console.log('user saved locally');
-            console.log(token);
-            var decoded = decode(token);
-
-          console.log("decoded"+decoded);
-
-            this.setState({
-                userInfo: {
-                    email: decoded.email,
-                    id: decoded.id,
-                    picture: decoded.picture,
-                    name: decoded.name
-                }
-            });
-            console.log(this.state.userInfo);
-
-        } else {
-
-            console.log('no data');
-
-        }
-
-    } catch (error) {
-      console.log(error);
-        // Error retrieving data
     }
-};
+    else {
+      return (
+        <View style={{borderColor: 'orange', borderWidth: 4, borderRadius: 15, margin: 20}}>
+          <Text style={{ color: 'black', fontSize: 20, textAlign: 'center', marginTop: 10, marginBottom: 10 }}>{this.state.eventMsg}</Text>
+          <Text style={{ color: 'black', fontSize: 20, textAlign: 'center', marginTop: 10, marginBottom: 10 }}>{this.state.eventCode}</Text>
+        </View>
+      );
+    }
 
-  // **************************************************************************************************
-
+  }
   generateEvent = async () => {
     await Geocoder.from(this.state.eventLocation)
       .then(json => {
@@ -91,106 +54,110 @@ _retrieveData = async () => {
       eventLat: this.state.lat,
       eventLng: this.state.lng,
       eventId: eventCode,
-      eventOwner: this.state.userInfo.id
-    
+      eventOwner: "eventOwner" // WHERE DO I GRAB EVENT OWNER FROM?
     }
 
+    // console.log('*** Event Variables ***')
+    // console.log('Event Name: ' + this.state.eventName)
+    // console.log('Event Location: ' + this.state.eventLocation)
+    // console.log('Event Latitude: ' + locationLat)
+    // console.log('Event Longitude: ' + locationLng)
+    // console.log('Event ID: ' + eventCode)
+    // console.log('')
+    console.log('*** Event Object ***')
     console.log(event)
 
-    //CHANGE URL TO POINT TO ANOTHER DATABASE
-    //https://icebreakr-serv.herokuapp.com/
-    //http://10.0.2.2:3000/
-    axios.post('https://icebreakr-serv.herokuapp.com/api/event/newevent', {
-      eventName: this.state.eventName,
-      eventLocation: this.state.eventLocation,
-      lat: this.state.lat,
-      lng: this.state.lng,
-      eventCode: eventCode,
-      id: this.state.userInfo.id
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error.response);
-    });
+    // CHANGE URL TO POINT TO ANOTHER DATABASE
+    // axios.post('https://icebreakr-serv.herokuapp.com/api/user/register', {
+    //   evname: this.state.eventName,
+    //   evlocation: this.state.eventLocation,
+    //   evtime: this.state.eventTime
+    // })
+    // .then(function (response) {
+    //   console.log(response);
+    // })
+    // .catch(function (error) {
+    //   console.log(error.response);
+    // });
   }
 
   render() {
     return (
-      <ScrollView >
-        <LinearGradient
-          colors={['#42AAD8', '#A8D7F7']}
-          style={styles.container}>
 
-          <View style={{ marginBottom: 50 }}>
-            <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
+      <LinearGradient
+        colors={['#42AAD8', '#A8D7F7']}
+        style={styles.container}>
+
+
+        {/* <View style={{ marginBottom: 50 }}>
+          <Text style={styles.redTex} onPress={() => Actions.main()}>go main page </Text>
+        </View> */}
+
+        <View style={{ marginBottom: 5, flex: 1, justifyContent: 'flex-end', marginBottom: 20 }}>
+          <Image source={require('../images/icebreakr-logo-icon.png')} style={{ alignSelf: 'center', marginBottom: 20 }} />
+          <Text style={{ fontSize: 20, color: 'white', textAlign: 'center' }}>Event Setup</Text>
+        </View>
+
+
+        <KeyboardAvoidingView style={{ flex: 2 }}>
+
+          <Form style={styles.form}>
+            <Item floatingLabel>
+              <Label>Event Name</Label>
+              <Input onChangeText={(value) => this.setState({ eventName: value })} />
+            </Item>
+            <Item floatingLabel>
+              <Label>Event Location (Venue or Address)</Label>
+              <Input onChangeText={(value) => this.setState({ eventLocation: value })} />
+            </Item>
+            {this.formExpand()}
+          </Form>
+
+          <View style={{ backgroundColor: '#F5FCFF', flex: 1, justifyContent: 'space-around' }}>
+            <View style={{ position: 'absolute', bottom: 10, justifyContent: 'center' }}>
+              <Text style={{ textAlign: 'center', fontSize: 20, marginLeft: 15, marginRight: 15, marginBottom: 40, }}>Your event chat will be specific to your event.  Only people with your event ID will be able to join your event</Text>
+              <Button info style={styles.button}><Text style={{ fontSize: 20, color: 'white', textAlign: 'center' }} onPress={() => this.generateEvent()}>SETUP EVENT</Text></Button>
+            </View>
+
           </View>
 
-          <Image source={require('../images/icebreakr-logo-icon.png')} style={{ position: 'absolute', top: 15, alignSelf: 'center' }} />
-          <View style={{ height: '100%', justifyContent: 'center', }} >
-            <View style={{ marginBottom: 5 }}>
-              <Text style={{ color: 'white', textAlign: 'center', fontSize: 40 }}>Event Setup</Text>
-            </View>
+        </KeyboardAvoidingView>
 
-            <View style={{ marginBottom: 45 }}>
-              <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Your event chat will be specific to your event</Text>
-              <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Only people with your event ID will be able to join your event</Text>
-            </View>
+      </LinearGradient>
 
-            <Form style={styles.form}>
-              <Item floatingLabel>
-                <Label>Event Name</Label>
-                <Input onChangeText={(value) => this.setState({ eventName: value })} />
-              </Item>
-              <Item floatingLabel>
-                <Label>Event Location (Venue or Address)</Label>
-                <Input onChangeText={(value) => this.setState({ eventLocation: value })} />
-              </Item>
-            </Form>
-
-            <View style={{ marginBottom: 45 }}></View>
-
-            <View style={{ backgroundColor: '#F5FCFF', zIndex: 98 }}>
-              <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 10 }}>{this.state.eventMsg}</Text>
-              <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 10 }}>{this.state.eventCode}</Text>
-              <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 150 }} onPress={() => this.generateEvent()}>SETUP EVENT</Text></Button>
-            </View>
-          </View>
-        </LinearGradient>
-      </ScrollView>
     );
   }
 }
 
 const styles = {
-  thisIsAStyle: {
-    fontSize: 50,
-    marginTop: 40
-  },
+
   redTex: {
     color: 'red'
   },
   button: {
     // backgroundColor: 'white',
     alignSelf: 'center',
-    marginBottom: 25,
-    marginTop: 20,
-    borderRadius: 10
+    marginBottom: 15,
+    marginTop: 15,
+    width: 250,
+    height: 55,
+    borderRadius: 15,
+    justifyContent: 'space-around'
   },
   form: {
     backgroundColor: 'white',
-    textAlign: 'center',
-    alignSelf: 'center',
+    // textAlign: 'center',
     // position:'absolute',
     elevation: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 99,
-    width: 330
+    // justifyContent: 'center',
+    alignSelf: 'center',
+    width: '90%',
+    marginBottom: -65,
+    minHeight: 180
   },
   container: {
     flex: 1,
+    flexDirection: 'column'
   }
 };
 

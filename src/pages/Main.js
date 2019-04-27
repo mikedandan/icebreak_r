@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { View, Image, AsyncStorage,} from 'react-native';
+import { View, Image, AsyncStorage, } from 'react-native';
 import Nav from '../components/Nav';
-import { Container,  Header, Content, Text, Button } from 'native-base';
+import { Container, Header, Content, Text, Button } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
 
 export default class Main extends Component {
-    
-    componentDidMount = () =>{
+
+    componentDidMount = () => {
         console.log('sup');
         this._retrieveData();
     }
@@ -23,8 +23,8 @@ export default class Main extends Component {
                 console.log('user saved locally');
                 console.log(value);
                 Actions.dashboard();
-                
-            }else {
+
+            } else {
 
                 console.log('no data');
 
@@ -34,9 +34,9 @@ export default class Main extends Component {
             // Error retrieving data
         }
     };
-    
 
-    
+
+
 
     render() {
 
@@ -44,31 +44,18 @@ export default class Main extends Component {
             <LinearGradient
                 colors={['#42AAD8', '#A8D7F7']}
                 style={styles.container}>
-                <View style={{
-                    height: "100%",
-                    // backgroundColor: "linear-gradient(to right, rgb(107, 205, 235) ,rgb(3, 110, 180))",
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}>
-                    <View style={{
-                        // height: 150,
-                        // width: 150,
-                        // backgroundColor: 'red',
-                        alignItems: 'center'
-                    }}><Image source={require('../images/icebreakr-logo-300.png')} style={{
-                        borderRadius: 18
-                    }} /></View>
+                <View style={{ flex: 1, height: "100%", alignItems: 'center', justifyContent: 'center' }}>
+                    
+                    <View style={{ alignItems: 'center' }}>
+                        <Image source={require('../images/icebreakr-logo-300.png')} style={{ borderRadius: 18 }} />
+                    </View>
+                    
                     <Text style={styles.thisIsAStyle}> Sign up and start chatting</Text>
 
-                    {/* <Button 
-                title="click me!"
-                color="black"
-                style={styles.button} /> */}
-                
-                    <Button style={styles.button}><Text style={{ color: 'black' }} onPress={() => Actions.signup()}>Sign up with email</Text></Button>
-                    <Text style={{ color: 'white' }} onPress={() => Actions.login()}>or Login</Text>
+                    <Button style={styles.button}><Text style={{ fontSize: 15, color: 'black' }} onPress={() => Actions.login()}>Login</Text></Button>
+                    <Text style={{ fontFamily: 'Roboto Regular', color: 'white' }} onPress={() => Actions.signup()}>or Signup with Email</Text>
                 </View>
-                
+
             </LinearGradient>
         );
     }
@@ -77,6 +64,7 @@ export default class Main extends Component {
 
 const styles = {
     thisIsAStyle: {
+        fontFamily: 'Roboto Bold',
         fontSize: 25,
         color: 'white',
         textAlign: 'center',
@@ -84,14 +72,19 @@ const styles = {
         marginBottom: 25
     },
     button: {
+        fontFamily: 'Roboto Bold',
         backgroundColor: 'white',
         alignSelf: 'center',
         marginBottom: 25,
-        borderRadius: 10
+        borderRadius: 15,
+        height: 55,
+        width: 150,
+        justifyContent: 'space-around'
 
     },
     container: {
         flex: 1,
+        flexDirection: 'column'
     }
 };
 
