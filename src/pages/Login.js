@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, AsyncStorage, Navigation, Image } from 'react-native';
+import { View, AsyncStorage, Navigation, Image, KeyboardAvoidingView } from 'react-native';
 import { Container, Text, Header, Left, Right, Icon, Button, Body, Title, Content, Form, Input, Label, Item } from 'native-base';
 import Nav from '../components/Nav';
 import LinearGradient from 'react-native-linear-gradient';
@@ -8,17 +8,16 @@ import { StackNavigator } from 'react-navigation';
 import axios from 'axios';
 
 
-export default class Signup extends Component {
+export default class Login extends Component {
 
-    constructor(props) {
-        super(props)
-        state = {
-            username: '',
-            password: '',
-            token: '',
-            auth: 'hi'
-        }
+
+    state = {
+        username: '',
+        password: '',
+        token: '',
+        auth: 'hi'
     }
+
 
     checkLogin = () => {
         const self = this;
@@ -102,44 +101,40 @@ export default class Signup extends Component {
                 style={styles.container}>
 
 
-                <Image source={require('../images/icebreakr-logo-icon.png')} style={{ position: 'absolute', top: 15, alignSelf: 'center' }} />
-                <View style={{ height: '100%', justifyContent: 'center', }} >
+                <View style={{ flex: 1, justifyContent: 'center' }} >
+                    <Image source={require('../images/icebreakr-logo-icon.png')} style={{ alignSelf: 'center' }} />
 
-                    <View style={{ marginBottom: 90 }}>
+                    <View style={{marginTop: 20}}>
                         <Text style={{ color: 'white', textAlign: 'center', fontSize: 40 }}>Log In</Text>
                     </View>
-                    <View style={{ marginBottom: 0 }}>
+                </View>
+                <KeyboardAvoidingView style={{ flex: 1 }}>
+                    <View style={{
+                        // backgroundColor: '#F5FCFF',
+                        alignItems: 'center',
+                        width: '100%',
+                        // minHeight: 290,
+                        // bottom: 0,
+                        flex: 1
+
+                    }}>
+
                         <Form style={styles.form}>
                             <Item floatingLabel >
                                 <Label>Email</Label>
                                 <Input onChangeText={(value) => this.setState({ username: value })} />
                             </Item>
-                        </Form>
-                        <Form style={styles.form}>
                             <Item floatingLabel last >
                                 <Label>Password</Label>
                                 <Input secureTextEntry={true} onChangeText={(value) => this.setState({ password: value })} />
                             </Item>
-
-
                         </Form>
+                        <View style={{ justifyContent: 'center', minHeight: 250, backgroundColor: 'white', width: '100%', position: 'absolute', bottom: 0, paddingBottom: 15 }}>
+                            <Button info style={styles.button} onPress={this.checkLogin}><Text style={{ color: 'white', textAlign: 'center', width: 150, alignSelf: 'center' }} >Sign in user</Text></Button>
+                            <Text style={{ alignSelf: 'center' }} onPress={() => Actions.signup()}>DON'T HAVE AN ACCOUNT? Signup!</Text>
+                        </View>
                     </View>
-                </View>
-                <View style={{
-                    backgroundColor: '#F5FCFF',
-                    alignItems: 'center',
-                    width: '100%',
-                    minHeight: 290,
-                    position: 'absolute',
-                    bottom: 0,
-                    justifyContent: 'flex-end',
-
-                }}>
-                    <Button info style={styles.button} onPress={this.checkLogin}><Text style={{ color: 'white', textAlign: 'center', width: 150, alignSelf: 'center' }} >Sign in user</Text></Button>
-                    <Text>FORGOT PASSWORD? GET NEW!</Text>
-                    <Text style={{ marginBottom: 30 }} onPress={() => Actions.signup()}>DON'T HAVE AN ACCOUNT? Signup!</Text>
-                </View>
-
+                </KeyboardAvoidingView>
             </LinearGradient>
         );
     }
@@ -148,36 +143,27 @@ export default class Signup extends Component {
 
 
 const styles = {
-    thisIsAStyle: {
-        fontSize: 50,
-        marginTop: 40
-    },
-    redTex: {
-        color: 'red'
-    },
+
     button: {
         // backgroundColor: 'white',
         alignSelf: 'center',
         // alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         marginTop: 10,
         marginBottom: 25,
         borderRadius: 10,
         width: "80%",
-        height: 50
+        height: 55
     },
     form: {
         backgroundColor: 'white',
-        // textAlign: 'center',
         alignSelf: 'center',
-        // position:'absolute',
         elevation: 3,
-        // justifyContent: 'center',
         alignItems: 'center',
-        zIndex: 99,
-        width: 330,
-        // minHeight: 280,
-        marginTop: 10
+        width: '90%',
+        marginTop: 10,
+        marginBotom: -20, 
+        minHeight: 150
     },
     container: {
         flex: 1,
