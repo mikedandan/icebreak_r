@@ -24,7 +24,7 @@ export default class Login extends Component {
         const self = this;
         // console.log(`VOID ENTERED \n User: ${this.state.username} \n PW: ${this.state.password} \n Remeber to comment this log out`)
         axios.post('https://icebreakr-serv.herokuapp.com/api/user/login', {
-        
+
             email: this.state.username,
             password: this.state.password,
         })
@@ -74,12 +74,12 @@ export default class Login extends Component {
     componentDidMount() {
         this.loadInitialState().done();
         axios.get('https://icebreakr-serv.herokuapp.com/api/user')
-        .then(function (response) {
-           console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
 
 
         // jwt.verify("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjYjkzYTQ2Yjk5MDBlMDAxNzdlZGQ3ZCIsImlhdCI6MTU1NTcwMTg4OCwiZXhwIjoxNTg3MjU4ODE0fQ.d89O3fZoE87E5gW5V9V_6JbxNGIFEsYm3NbLH5tXqqY", 'secret', function(err, decoded) {
@@ -107,34 +107,28 @@ export default class Login extends Component {
                 <View style={{ flex: 1, justifyContent: 'center' }} >
                     <Image source={require('../images/icebreakr-logo-icon.png')} style={{ alignSelf: 'center' }} />
 
-                    <View style={{marginTop: 20}}>
-                        <Text style={{ color: 'white', textAlign: 'center', fontSize: 40 }}>Log In</Text>
+                    <View style={{ marginTop: 20 }}>
+                        <Text style={{ fontFamily: 'Roboto Bold', color: 'white', textAlign: 'center', fontSize: 40 }}>Log In</Text>
                     </View>
                 </View>
                 <KeyboardAvoidingView style={{ flex: 1 }}>
-                    <View style={{
-                        // backgroundColor: '#F5FCFF',
-                        alignItems: 'center',
-                        width: '100%',
-                        // minHeight: 290,
-                        // bottom: 0,
-                        flex: 1
 
-                    }}>
-
-                        <Form style={styles.form}>
-                            <Item floatingLabel >
-                                <Label>Email</Label>
-                                <Input onChangeText={(value) => this.setState({ username: value })} />
-                            </Item>
-                            <Item floatingLabel last >
-                                <Label>Password</Label>
-                                <Input secureTextEntry={true} onChangeText={(value) => this.setState({ password: value })} />
-                            </Item>
-                        </Form>
-                        <View style={{ justifyContent: 'center', minHeight: 250, backgroundColor: 'white', width: '100%', position: 'absolute', bottom: 0, paddingBottom: 15 }}>
-                            <Button info style={styles.button} onPress={this.checkLogin}><Text style={{ color: 'white', textAlign: 'center', width: 150, alignSelf: 'center' }} >Sign in user</Text></Button>
-                            <Text style={{ alignSelf: 'center' }} onPress={() => Actions.signup()}>DON'T HAVE AN ACCOUNT? Signup!</Text>
+                    <View style={{ alignItems: 'center', width: '100%', flex: 1, justifyContent: 'flex-end' }}>
+                        <View style={{marginBottom: -30}}>
+                            <Form style={styles.form}>
+                                <Item floatingLabel >
+                                    <Label>Email</Label>
+                                    <Input onChangeText={(value) => this.setState({ username: value })} />
+                                </Item>
+                                <Item floatingLabel last >
+                                    <Label>Password</Label>
+                                    <Input secureTextEntry={true} onChangeText={(value) => this.setState({ password: value })} />
+                                </Item>
+                            </Form>
+                        </View>
+                        <View style={{ width: '100%', minHeight: 230, backgroundColor: 'white', justifyContent: 'center' }}>
+                            <Button info style={styles.button} onPress={this.checkLogin}><Text style={{ fontFamily: 'Roboto Regular', fontSize: 20, color: 'white', textAlign: 'center' }} >Sign in user</Text></Button>
+                            <Text style={{ fontFamily: 'Roboto Regular', textAlign: 'center', marginTop: 15 }} onPress={() => Actions.signup()}>DON'T HAVE AN ACCOUNT? Signup!</Text>
                         </View>
                     </View>
                 </KeyboardAvoidingView>
@@ -148,15 +142,12 @@ export default class Login extends Component {
 const styles = {
 
     button: {
-        // backgroundColor: 'white',
         alignSelf: 'center',
-        // alignItems: 'center',
+        width: 250,
+        height: 55,
+        borderRadius: 15,
+        marginTop: 15,
         justifyContent: 'space-around',
-        marginTop: 10,
-        marginBottom: 25,
-        borderRadius: 10,
-        width: "80%",
-        height: 55
     },
     form: {
         backgroundColor: 'white',
@@ -165,8 +156,8 @@ const styles = {
         alignItems: 'center',
         width: '90%',
         marginTop: 10,
-        marginBotom: -20, 
         minHeight: 150
+
     },
     container: {
         flex: 1,
