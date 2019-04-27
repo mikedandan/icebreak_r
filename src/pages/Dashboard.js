@@ -78,7 +78,7 @@ export default class Dashboard extends Component {
                         {/* <Header /> */}
 
                         <View>
-                          
+
                             <Image source={require('../images/icebreakr-logo-icon.png')} style={{ alignSelf: 'center' }} />
                             <Text style={{ color: 'white', textAlign: 'center', marginTop: 30, marginBottom: 30 }}>What do you want to do?</Text>
                             {/* <Card> */}
@@ -107,17 +107,7 @@ export default class Dashboard extends Component {
                                     <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 10 }}>
                                         Chat with a bunch of people located in your immediate area.
                                         </Text>
-                                    {/* <Grid style={{ textAlign: 'center', marginTop: 10, marginBottom: 0 }}>
-                                        <Col><Text style={{ textAlign: 'center' }}>People around</Text></Col>
-                                        <Text>|</Text>
-                                        <Col><Text style={{ textAlign: 'center' }}>Already chatted with</Text></Col>
-                                    </Grid> */}
-
-                                    {/* <Grid style={{ textAlign: 'center', marginTop: 10, marginBottom: 30 }}>
-                                        <Col><Text style={{ textAlign: 'center' }}>36</Text></Col>
-
-                                        <Col><Text style={{ textAlign: 'center' }}>7</Text></Col>
-                                    </Grid> */}
+                                 
                                 </Body>
                                 <Button style={styles.button} warning><Text style={{ textAlign: 'center', width: 300 }} onPress={() => Actions.groupChat()}> JOIN GROUP CHAT </Text></Button>
 
@@ -134,35 +124,40 @@ export default class Dashboard extends Component {
                                         Find new people to talk to. Create a new event to have people meet in your group or join an existing event
                                         </Text>
                                     <Button info style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 300 }} onPress={() => Actions.eventSetup()}>CREATE EVENT</Text></Button>
-                                    
 
-                                    
+
+
                                 </Body>
 
-                                <CardItem bordered style={{borderTopWidth: 1, borderTopColor: '#E3E9EC', marginTop: -15}}>
-                                <Body>
-                            <Form style={styles.form}>
-                                        <Item regular>
-                                            <Label style={{textAlign: 'center', width: '100%'}}>Event Name</Label>
-                                            <Input onChangeText={(value) => this.setState({ eventName: value })} />
-                                        </Item>
-                                    </Form>
+                                <CardItem bordered style={{ borderTopWidth: 1, borderTopColor: '#E3E9EC', marginTop: -15 }}>
+                                    <Body>
+                                       
+                                            <Form style={{width: '100%'}}>
+                                               
+                                                <Item regular stackedLabel>
+                                                <Label style={{ fontSize: 15, textAlign: 'center', width: '100%'}}>Event Name</Label>
 
-                                    <Button warning style={styles.button2}><Text style={{ color: 'white', textAlign: 'center', width: 300 }} onPress={() => Actions.eventChat()}>JOIN EVENT</Text></Button>
+                                                    <Input style={{ textAlign: 'center', width: '100%'}} onChangeText={(value) => this.setState({ eventName: value })} />
+                                                </Item>
+                                            </Form>
+                                     
+
+
+                                       
+
+                                        <Button warning style={styles.button2}><Text style={{ color: 'white', textAlign: 'center', width: 300 }} onPress={() => Actions.eventChat()}>JOIN EVENT</Text></Button>
 
                                     </Body>
-                            </CardItem>
-                                
+                                </CardItem>
+
                                 {/* </CardItem> */}
 
                             </Card>
 
-                            
+
 
                             <TouchableHighlight onPress={this._handleLogOut}>
-                                {/* <Text style={[styles.button, styles.greyButton]}>
-                                    Log Out
-                                </Text> */}
+                               
 
                                 <Button bordered light style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 200 }} onPress={() => this._handleLogOut()}>LOG OUT</Text></Button>
 
