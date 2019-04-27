@@ -114,7 +114,7 @@ export default class Login extends Component {
                 <KeyboardAvoidingView style={{ flex: 1 }}>
 
                     <View style={{ alignItems: 'center', width: '100%', flex: 1, justifyContent: 'flex-end' }}>
-                        <View style={{marginBottom: -30}}>
+                        <View style={{ marginBottom: -30 }}>
                             <Form style={styles.form}>
                                 <Item floatingLabel >
                                     <Label>Email</Label>
@@ -126,9 +126,11 @@ export default class Login extends Component {
                                 </Item>
                             </Form>
                         </View>
-                        <View style={{ width: '100%', minHeight: 230, backgroundColor: 'white', justifyContent: 'center' }}>
-                            <Button info style={styles.button} onPress={this.checkLogin}><Text style={{ fontFamily: 'Roboto Regular', fontSize: 20, color: 'white', textAlign: 'center' }} >Sign in user</Text></Button>
-                            <Text style={{ fontFamily: 'Roboto Regular', textAlign: 'center', marginTop: 15 }} onPress={() => Actions.signup()}>DON'T HAVE AN ACCOUNT? Signup!</Text>
+                        <View style={{width: '100%'}}>
+                            <View style={{ width: '100%', minHeight: 210, backgroundColor: 'white', justifyContent: 'center' }}>
+                                <Button info style={styles.button} onPress={this.checkLogin}><Text style={{ fontFamily: 'Roboto Regular', fontSize: 20, color: 'white', textAlign: 'center' }} >Sign in user</Text></Button>
+                                <Text style={{ fontFamily: 'Roboto Regular', textAlign: 'center', marginTop: 15 }} onPress={() => Actions.signup()}>DON'T HAVE AN ACCOUNT? Signup!</Text>
+                            </View>
                         </View>
                     </View>
                 </KeyboardAvoidingView>
