@@ -107,17 +107,7 @@ export default class Dashboard extends Component {
                                     <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 10 }}>
                                         Chat with a bunch of people located in your immediate area.
                                         </Text>
-                                    {/* <Grid style={{ textAlign: 'center', marginTop: 10, marginBottom: 0 }}>
-                                        <Col><Text style={{ textAlign: 'center' }}>People around</Text></Col>
-                                        <Text>|</Text>
-                                        <Col><Text style={{ textAlign: 'center' }}>Already chatted with</Text></Col>
-                                    </Grid> */}
-
-                                    {/* <Grid style={{ textAlign: 'center', marginTop: 10, marginBottom: 30 }}>
-                                        <Col><Text style={{ textAlign: 'center' }}>36</Text></Col>
-
-                                        <Col><Text style={{ textAlign: 'center' }}>7</Text></Col>
-                                    </Grid> */}
+                                 
                                 </Body>
                                 <Button style={styles.button} warning><Text style={{ textAlign: 'center', width: 300 }} onPress={() => Actions.groupChat()}> JOIN GROUP CHAT </Text></Button>
 
@@ -141,15 +131,7 @@ export default class Dashboard extends Component {
 
                                 <CardItem bordered style={{ borderTopWidth: 1, borderTopColor: '#E3E9EC', marginTop: -15 }}>
                                     <Body>
-                                        {/* <Content>
-                                            <Form style={styles.form}>
-                                                <Item regular>
-                                                    <Label style={{ textAlign: 'center', width: '100%' }}>Event Name</Label>
-                                                    <Input />
-                                                </Item>
-                                            </Form>
-                                        </Content> */}
-                                        {/* <Content> */}
+                                       
                                             <Form style={{width: '100%'}}>
                                                
                                                 <Item regular stackedLabel>
@@ -158,7 +140,7 @@ export default class Dashboard extends Component {
                                                     <Input style={{ textAlign: 'center', width: '100%'}} onChangeText={(value) => this.setState({ eventName: value })} />
                                                 </Item>
                                             </Form>
-                                        {/* </Content> */}
+                                     
 
 
                                        
@@ -175,9 +157,7 @@ export default class Dashboard extends Component {
 
 
                             <TouchableHighlight onPress={this._handleLogOut}>
-                                {/* <Text style={[styles.button, styles.greyButton]}>
-                                    Log Out
-                                </Text> */}
+                               
 
                                 <Button bordered light style={styles.button}><Text style={{ color: 'white', textAlign: 'center', width: 200 }} onPress={() => this._handleLogOut()}>LOG OUT</Text></Button>
 
