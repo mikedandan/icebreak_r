@@ -57,7 +57,7 @@ export default function EventChat() {
         try {
             console.log(`Location before sent to backend: \n ${position.lat},${position.lon}`);
             const data = {
-                namespace: "group",
+                namespace: "event",
                 lat: position.lat,
                 lon: position.lon
             };
@@ -108,7 +108,7 @@ export default function EventChat() {
             "userID": user.userID,
             "lon": positions.lon,
             "lat": positions.lat,
-            "namespace": "group",
+            "namespace": "event",
             "date": Date.now()
         }
         console.log(userInput);
@@ -130,6 +130,7 @@ export default function EventChat() {
 
     return (
         <View style={styles.container} behavior="padding" enabled>
+            <NavBar title ={'Event Chat'}/>
 
             {/* BackButton */}
             <Text>Lat: {positions.lat}Lon: {positions.lon}</Text>
