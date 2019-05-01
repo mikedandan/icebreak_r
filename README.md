@@ -15,16 +15,22 @@
 
 **Technology used**
 
-* React Native
+* React Native Cli
 * Adobe XD
-* 
+* Mongoose
+* MongoDB
+* Express Server
+* Node.js
+* JWT Authentication
+* Bcrypt encryption
+* many more!!!
 
 ---
 
 **Contributors**
 * Sam Wang: Role in project
 * Derek Moore: Role in project
-* Mike DanDan: Role in project
+* Mike DanDan: Signup and login authentication and token, page creation and styling, random image functionality and more
 * Ulrich Urhan: Role in project
 * Jose Puente (JP): Role in project 
 * Eric Magallan: Role in project
