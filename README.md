@@ -5,7 +5,7 @@
 ---
 
 **Description**
-
+Please view our backend here: https://github.com/mikedandan/icebreakr-server
 
 ---
 
@@ -15,7 +15,9 @@
 
 **Technology used**
 
+* Javascript/JSX
 * React Native Cli
+* React Hooks
 * Adobe XD
 * Mongoose
 * MongoDB
@@ -23,7 +25,8 @@
 * Node.js
 * JWT Authentication
 * Bcrypt encryption
-* many more!!!
+* Socket.io
+* Heroku
 
 ---
 
