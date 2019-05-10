@@ -1,4 +1,4 @@
-[logo]: ./img/logo.jpg
+![logo](/img/logo.jpg)
 # icebreak_r
 
 # Middle Grounds App
