@@ -1,4 +1,4 @@
-<center>Centered text</center>
+[logo]: ./img/logo.jpg
 # icebreak_r
 
 # Middle Grounds App
