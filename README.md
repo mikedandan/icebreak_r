@@ -1,16 +1,10 @@
 ![logo](/img/logo.jpg)
-# icebreak_r
-
-# Middle Grounds App
-
----
-
-**Description**
-Please view our backend here: https://github.com/mikedandan/icebreakr-server
+# Icebreakr - Middle Grounds App
+An app to meet people around you anonymously.
 
 ---
 
-**Launching**
+Please view our backend here server: https://github.com/mikedandan/icebreakr-server
 
 ---
 
@@ -28,6 +22,10 @@ Please view our backend here: https://github.com/mikedandan/icebreakr-server
 * Bcrypt encryption
 * Socket.io
 * Heroku
+
+---
+
+**User Login**
 
 ---
 
