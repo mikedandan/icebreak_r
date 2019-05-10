@@ -26,7 +26,7 @@ Please view our backend here server: https://github.com/mikedandan/icebreakr-ser
 ---
 
 ###**User Login**
-![login](/img/login.gif)
+![login](/img/login.gif =100x20)
 User is able to login with created email/password.  We validate that the email exists in our database and then validate the password with Bcrypt.  A token is then created and stored in Async storage.  User is then redirected to the dashboard.
 
 ---
