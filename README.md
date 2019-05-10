@@ -1,3 +1,4 @@
+<center>Centered text</center>
 # icebreak_r
 
 # Middle Grounds App
