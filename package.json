@@ -24,7 +24,7 @@
     "react-navigation": "^3.6.1",
     "react-navigation-drawer": "^1.2.1",
     "sillyname": "^0.1.0",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
