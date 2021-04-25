@@ -60,13 +60,7 @@ User is able to create an event.  The event name is used to generate a random un
 <img src="/img/joinevent.gif" width="300"><br>
 User is able to join an event using an unique event ID.  
 
-**Contributors**
-* Sam Wang: Worked on geolocation/socket based chat, styling, joining event page/chat, ensured cross compatibility between ios/android, and more 
-* Derek Moore: Worked on geolocation/socket based chat, worked on event chat, styling and more
-* Mike DanDan: Worked on signup and login authentication and token, page creation and styling, random image functionality and more
-* Ulrich Urhan: Worked on event creation page
-* Jose Puente (JP): Flex between all pages, ensured cross compatibility between ios/android, and more
-* Eric Magallan: Worked on dashboard
+
 
 ---
 
