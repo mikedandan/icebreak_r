@@ -84,6 +84,11 @@ export default class Login extends Component {
       this.props.Actions.main()
     }
   }
+
+  onSignUpButtonPress = () => {
+    this.props.navigation.navigate('Signup')
+  }
+
   render() {
     return (
       <LinearGradient colors={['#42AAD8', '#A8D7F7']} style={styles.container}>
@@ -155,7 +160,7 @@ export default class Login extends Component {
                     textAlign: 'center',
                     marginTop: 15,
                   }}
-                  onPress={() => Actions.signup()}>
+                  onPress={this.onSignUpButtonPress}>
                   DON'T HAVE AN ACCOUNT? Signup!
                 </Text>
               </View>
