@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { ActionConst, Router, Scene } from 'react-native-router-flux'
-import Main from './pages/Main'
-import Login from './pages/Login'
-import Signup from './pages/Signup'
-import GroupChat from './pages/GroupChat'
-import eventSetup from './pages/eventSetup' // imports create event page
+import Onboarding from './features/Onboarding'
+import Login from './features/login/Login'
+import Signup from './features/Signup'
+import GroupChat from './features/GroupChat'
+import eventSetup from './features/eventSetup' // imports create event page
 import { PermissionsAndroid } from 'react-native'
-import Dashboard from './pages/Dashboard'
-import EventChat from './pages/EventChat'
-import Chat from './pages/Chat'
+import Dashboard from './features/Dashboard'
+import EventChat from './features/EventChat'
+import Chat from './features/Chat'
 import decode from 'jwt-decode'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -107,7 +107,7 @@ export default class RouterComp extends Component {
           <Scene key="eventSetup" component={eventSetup} hideNavBar="true" />
           <Scene
             key="main"
-            component={Main}
+            component={Onboarding}
             hideNavBar="true"
             type={ActionConst.REPLACE}
             initial
