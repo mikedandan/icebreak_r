@@ -16,7 +16,13 @@ export interface DefaultTextInputProps extends TextInputProps {
 }
 
 function DefaultTextInput(props: DefaultTextInputProps) {
-  const { containerStyle, style, label, ...rest } = props
+  const {
+    containerStyle,
+    style,
+    label,
+    autoCapitalize = 'none',
+    ...rest
+  } = props
 
   return (
     <View style={[styles.container, containerStyle]}>
@@ -28,6 +34,7 @@ function DefaultTextInput(props: DefaultTextInputProps) {
       <View style={styles.inputContainer}>
         <TextInput
           style={[style, styles.input]}
+          autoCapitalize={autoCapitalize}
           {...rest}
           underlineColorAndroid={'transparent'}
         />

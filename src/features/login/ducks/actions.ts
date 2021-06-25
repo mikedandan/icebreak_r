@@ -1,26 +1,25 @@
-import * as ActionTypes from './action-types'
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import { userApi } from '../../api'
 
-export const loginRequest = (email: string, password: string) => ({
-  type: ActionTypes.LOGIN_REQUEST,
-  payload: {
-    email,
-    password,
-  },
-  showLoading: true,
-})
+export type LoginParams = {
+  email: string
+  password: string
+}
 
-export const loginSuccess = (result: any) => ({
-  type: ActionTypes.LOGIN_SUCCESS,
-  payload: {
-    result,
+export const login = createAsyncThunk(
+  'users/login',
+  async (params: LoginParams, { rejectWithValue }) => {
+    try {
+      console.log('params:', params)
+      const { email, password } = params
+      const res = await userApi.login(email, password)
+      console.log(res.data)
+      return res.data
+    } catch (error) {
+      if (error.response.data) {
+        return rejectWithValue(error.response.data)
+      }
+      return rejectWithValue(error)
+    }
   },
-  showLoading: false,
-})
-
-export const loginFailure = (error: string) => ({
-  type: ActionTypes.LOGIN_FAILURE,
-  payload: {
-    error,
-  },
-  showLoading: false,
-})
+)

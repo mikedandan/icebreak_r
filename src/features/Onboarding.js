@@ -55,12 +55,8 @@ export default class Onboarding extends Component {
 
           <Text style={styles.thisIsAStyle}> Sign up and start chatting</Text>
 
-          <Button style={styles.button}>
-            <Text
-              style={{ fontSize: 15, color: 'black' }}
-              onPress={this.onLoginButtonPress}>
-              Login
-            </Text>
+          <Button style={styles.button} onPress={this.onLoginButtonPress}>
+            <Text style={{ fontSize: 15, color: 'black' }}>Login</Text>
           </Button>
           <Text
             style={{ fontFamily: 'Roboto Regular', color: 'white' }}

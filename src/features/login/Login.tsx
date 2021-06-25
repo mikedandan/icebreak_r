@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Image,
   SafeAreaView,
@@ -15,6 +15,9 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { StackScreenProps } from '@react-navigation/stack'
 import { AuthenticationStackParamsList } from '../../navigation/types'
+import { login } from './ducks/actions'
+import { unwrapResult } from '@reduxjs/toolkit'
+import { useAppDispatch } from '../../redux/store'
 
 type FormData = {
   email: string
@@ -29,6 +32,7 @@ const schema = yup.object().shape({
 function Login(
   props: StackScreenProps<AuthenticationStackParamsList, 'Login'>,
 ) {
+  const [error, setError] = useState<string | null>(null)
   const {
     control,
     handleSubmit,
@@ -41,9 +45,22 @@ function Login(
     resolver: yupResolver(schema),
     mode: 'onChange',
   })
+  const dispatch = useAppDispatch()
 
-  const onSubmit = (data: FormData) => {
-    console.log(data)
+  const onSubmit = async (data: FormData) => {
+    setError(null)
+    try {
+      console.log('submit:', data)
+      const res = await dispatch(login(data))
+      await unwrapResult(res)
+    } catch (err) {
+      console.log('err:', err)
+      if (typeof err === 'string') {
+        setError(err)
+      } else {
+        setError('Login failed')
+      }
+    }
   }
 
   const onSignUp = () => {
@@ -91,6 +108,8 @@ function Login(
             )}
           />
         </View>
+
+        <DefaultText style={styles.error}>{error || ''}</DefaultText>
 
         <DefaultButton
           text={'Login'}
@@ -153,6 +172,10 @@ const styles = StyleSheet.create({
   },
   signUpButtonText: {
     textDecorationLine: 'underline',
+  },
+  error: {
+    color: 'red',
+    marginLeft: '10%',
   },
 })
 
