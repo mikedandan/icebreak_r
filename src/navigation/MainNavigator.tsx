@@ -1,11 +1,11 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import Dashboard from '../pages/Dashboard'
-import GroupChat from '../pages/GroupChat'
-import EventChat from '../pages/EventChat'
-import Chat from '../pages/Chat'
-import eventSetup from '../pages/eventSetup'
+import Dashboard from '../features/Dashboard'
+import GroupChat from '../features/GroupChat'
+import EventChat from '../features/EventChat'
+import Chat from '../features/Chat'
+import eventSetup from '../features/eventSetup'
 
 const Stack = createStackNavigator()
 

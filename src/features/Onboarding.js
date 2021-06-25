@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Button } from 'native-base'
 
-export default class Main extends Component {
+export default class Onboarding extends Component {
   componentDidMount = () => {
     this._retrieveData()
   }
@@ -28,6 +28,14 @@ export default class Main extends Component {
     }
   }
 
+  onLoginButtonPress = () => {
+    this.props.navigation.navigate('Login')
+  }
+
+  onSignUpButtonPress = () => {
+    this.props.navigation.navigate('Signup')
+  }
+
   render() {
     return (
       <LinearGradient colors={['#42AAD8', '#A8D7F7']} style={styles.container}>
@@ -47,16 +55,12 @@ export default class Main extends Component {
 
           <Text style={styles.thisIsAStyle}> Sign up and start chatting</Text>
 
-          <Button style={styles.button}>
-            <Text
-              style={{ fontSize: 15, color: 'black' }}
-              onPress={() => Actions.login()}>
-              Login
-            </Text>
+          <Button style={styles.button} onPress={this.onLoginButtonPress}>
+            <Text style={{ fontSize: 15, color: 'black' }}>Login</Text>
           </Button>
           <Text
             style={{ fontFamily: 'Roboto Regular', color: 'white' }}
-            onPress={() => Actions.signup()}>
+            onPress={this.onSignUpButtonPress}>
             or Signup with Email
           </Text>
         </View>
